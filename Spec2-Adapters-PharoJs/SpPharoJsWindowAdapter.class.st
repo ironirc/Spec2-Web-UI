@@ -54,11 +54,21 @@ SpPharoJsWindowAdapter >> beep [
 { #category : #factory }
 SpPharoJsWindowAdapter >> buildWidget [
 
-	^ SpWindow new
+	"^ SpWindow new
 		model: model;
 		isResizeable: self isResizable;
 		in: [ :this | self subscribeToAnnouncements: this ];
-		yourself
+		yourself"
+	| ctx msg start |
+	ctx := self application context. "is kind of req context (temp hack)"  
+	"NEED TO MAKE THE ASYNC CALL SYNCHRONOUS?"
+	self halt.
+	
+msg := SpStcmAddDivTest new.
+	start := Time millisecondClockValue.
+	(1 to: 1000) do: [ :i | 
+		msg message: (Time millisecondClockValue - start) printString.
+		ctx sendResponseMessage: msg ]
 ]
 
 { #category : #'widget API' }
