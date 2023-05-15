@@ -143,17 +143,23 @@ SpPharoJsBoxAdapter >> applyAlignmentToChild: aWidget [
 
 { #category : #private }
 SpPharoJsBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
-	| childMorph |
 
-	childMorph := self buildMorph: aPresenter constraints: constraints.	
+	| childMorph msg |
+	childMorph := self buildMorph: aPresenter constraints: constraints.
 
 	self applyAlignmentToChild: childMorph.
 	self verifyBoxExtentOf: aPanel withChild: childMorph.
 
-"	constraints isPlacedAtStart
+	"	constraints isPlacedAtStart
 		ifTrue: [ startPanel addMorphBack: childMorph ]
 		ifFalse: [ endPanel addMorphBack: childMorph ]."
-	widget children add: childMorph.
+	"	widget children add: childMorph."
+	msg := SpS2cUpdateElement2 new.
+	msg elementId: childMorph.
+	msg parentId: aPanel.
+	self sendUpdateMessageToClient: msg.
+
+
 
 	^ childMorph
 ]
@@ -178,9 +184,9 @@ SpPharoJsBoxAdapter >> layout: aLayout [
 	widget ifNil: [
 		"build of widget was differed up to here (to know what is the direction)"
 		widget := aLayout direction newWidgetOn: self.
-		widget borderWidth: aLayout borderWidth.
+	"	widget borderWidth: aLayout borderWidth.
 		aLayout hasAlignment 
-			ifTrue: [ widget := self applyAlignmentTo: widget ].
+			ifTrue: [ widget := self applyAlignmentTo: widget ]."
 		"the spacing needs to be applied to the inner sub-panels"
 		self flag: 'Ivo skipping panels'.
 	"	{ startPanel. endPanel } 
@@ -222,19 +228,28 @@ SpPharoJsBoxAdapter >> newPanelLayout [
 		specLayout: layout;
 		yourself"
 
-	^ SpjRemoteElement new
-		 " ownerAdapter: self;"
+	"^ SpjRemoteElement new
+	
 		  oldMorphClass: SpMorphicBoxLayout name;
 		  creatorMethod: thisContext method printString;
 		description: 'Is probably not a remote element!!! create SpPharoJsBoxLayout instead'
-		  yourself
+		  yourself"
+
+	| id msg |
+	id := SpjRemoteElement nextIdString.
+	msg := SpS2cUpdateElement2 new.
+	msg elementId: id.
+	msg tag: 'div'.
+	msg styles: { ('background-color' -> '#800') }.
+	self sendUpdateMessageToClient: msg.
+	^ id
 ]
 
 { #category : #factory }
 SpPharoJsBoxAdapter >> newVertical [
 
 	^ (self newPanelWith: self newPanelLayout)
-		listDirection: #topToBottom;
+	"	listDirection: #topToBottom;"
 	"	addMorphBack: ((startPanel := self newPanel)
 			listDirection: #topToBottom;
 			yourself);

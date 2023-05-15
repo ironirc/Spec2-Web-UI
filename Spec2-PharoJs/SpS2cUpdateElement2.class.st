@@ -7,7 +7,8 @@ Class {
 		'attributes',
 		'events',
 		'styles',
-		'textContent'
+		'textContent',
+		'parentId'
 	],
 	#category : #'Spec2-PharoJs'
 }
@@ -71,7 +72,21 @@ SpS2cUpdateElement2 >> executeInResponseContext: rc [
 	el := self ensuredElementIn: rc.
 	x := PjDomBuilder newOnElement: el.
 	self updateOn: x.
-	(document contains: el) ifFalse: [ document body appendChild: el ]
+	(document contains: el) ifFalse: [ document body appendChild: el ].
+	parentId ifNotNil: [ 
+		(self document getElementById: parentId) appendChild: el ]
+]
+
+{ #category : #accessing }
+SpS2cUpdateElement2 >> parentId [
+
+	^ parentId
+]
+
+{ #category : #accessing }
+SpS2cUpdateElement2 >> parentId: anObject [
+
+	parentId := anObject
 ]
 
 { #category : #accessing }
@@ -115,5 +130,6 @@ SpS2cUpdateElement2 >> updateOn: x [
 
 	styles ifNotNil: [x _style: styles].
 	attributes ifNotNil: [x _attr: attributes].
-	textContent ifNotNil: [ x _text: textContent ]
+	textContent ifNotNil: [ x _text: textContent ].
+
 ]

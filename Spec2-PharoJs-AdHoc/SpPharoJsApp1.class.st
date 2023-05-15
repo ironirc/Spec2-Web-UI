@@ -26,7 +26,7 @@ SpPharoJsApp1 class >> current [
 { #category : #'instance creation' }
 SpPharoJsApp1 class >> defaultBackendName [
 
-	^ #PharoJs
+	^ #PharoJs "#Morphic"
 ]
 
 { #category : #'instance creation' }

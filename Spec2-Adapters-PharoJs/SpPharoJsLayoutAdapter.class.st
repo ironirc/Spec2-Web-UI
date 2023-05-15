@@ -131,11 +131,11 @@ SpPharoJsLayoutAdapter >> layout: aLayout [
 
 	"Basic apply visibility to the widget.
 	This call is here because layouts and widgets work differently"
-	self widget presenter: self presenter.
+	"self widget presenter: self presenter.
 	self applyVisibility.
 	self applyStyle.
 	self addKeyBindingsTo: self widget.
-	self addEventsTo: self widget.
+	self addEventsTo: self widget."
 ]
 
 { #category : #factory }
@@ -159,13 +159,14 @@ SpPharoJsLayoutAdapter >> newPanelWith: aLayout [
 	  extent: 0 @ 0;
 	  yourself"
 
-	^ SpjRemoteElement new
-		  creatorMethod: thisContext method printString;
-		  oldMorphClass: Morph name;
-		  description: 'lots of properties skipped!!!';
-		  "ownerAdapter: self;"
-		  extent: 0 @ 0;
-		  yourself
+	| id msg |
+	id := SpjRemoteElement nextIdString.
+	msg := SpS2cUpdateElement2 new.
+	msg elementId: id.
+	msg tag: 'div'.
+	msg styles: { ('background-color' -> '#800') }.
+	self sendUpdateMessageToClient: msg.
+	^id
 ]
 
 { #category : #initialization }
