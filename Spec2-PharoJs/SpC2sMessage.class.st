@@ -1,10 +1,10 @@
 Class {
-	#name : #PhxSpecClientToServerMessage,
+	#name : #SpC2sMessage,
 	#superclass : #PhxSpaClientToServerMessage,
 	#category : #'Spec2-PharoJs'
 }
 
 { #category : #private }
-PhxSpecClientToServerMessage >> checkAccessToken: jwtString [
+SpC2sMessage >> checkAccessToken: jwtString [
 	^#()
 ]

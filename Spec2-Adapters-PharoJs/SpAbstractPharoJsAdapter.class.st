@@ -33,11 +33,12 @@ SpAbstractPharoJsAdapter >> acceptDroppingMorph: draggedMorph event: event inMor
 
 { #category : #initialization }
 SpAbstractPharoJsAdapter >> adapt: aPresenter [
-
+	
 	super adapt: aPresenter.
-	self addSettingsTo: self widget.
+	self subcribeToModel.
+	"self addSettingsTo: self widget.
 	self addKeyBindingsTo: self widget.
-	self addEventsTo: self widget
+	self addEventsTo: self widget"
 ]
 
 { #category : #protocol }
@@ -130,13 +131,23 @@ SpAbstractPharoJsAdapter >> applyVisibility [
 			ifFalse: [ self widget hide ] ]
 ]
 
+{ #category : #initialization }
+SpAbstractPharoJsAdapter >> bind: sourceAspect with: targetAspect of: target read: readBlock [
+
+	self model property: sourceAspect whenChangedDo: [ :val | 
+		target
+			perform: target asMutator
+			with: (val ifNotNil: [ readBlock cull: val ]) ].
+	self model observablePropertyNamed: sourceAspect
+]
+
 { #category : #'protocol - shortcuts' }
 SpAbstractPharoJsAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 
-	self widgetDo: [ :w | 
+	"self widgetDo: [ :w | 
 		w 
 			bindKeyCombination: aShortcut 
-			toAction: aBlock ]
+			toAction: aBlock ]"
 ]
 
 { #category : #protocol }
@@ -479,6 +490,12 @@ SpAbstractPharoJsAdapter >> presenterStyles [
 	^ self presenter styles
 ]
 
+{ #category : #printing }
+SpAbstractPharoJsAdapter >> printOn: ws [
+
+	ws << 'a ' << self class name
+]
+
 { #category : #'protocol - shortcuts' }
 SpAbstractPharoJsAdapter >> removeKeyCombination: aShortcut [
 
@@ -532,6 +549,12 @@ SpAbstractPharoJsAdapter >> sendRightClickEvent [
 		widget mouseUp: evt ]
 ]
 
+{ #category : #factory }
+SpAbstractPharoJsAdapter >> sendUpdateMessageToClient: msg [
+
+	self application context sendMessage: msg
+]
+
 { #category : #protocol }
 SpAbstractPharoJsAdapter >> setBalloonText: aString [
 
@@ -565,7 +588,7 @@ SpAbstractPharoJsAdapter >> showMenu: aValuable [
 { #category : #styling }
 SpAbstractPharoJsAdapter >> style [
 
-	^ SpMorphStyle 
+	^ SpPharoJsStyle 
 		fromStylesheet: self styleSheet 
 		adapter: self
 ]
@@ -581,6 +604,24 @@ SpAbstractPharoJsAdapter >> styleName [
 SpAbstractPharoJsAdapter >> styleSheet [
 
 	^ self application styleSheet
+]
+
+{ #category : #'as yet unclassified' }
+SpAbstractPharoJsAdapter >> subcribeTo: anAspect [
+
+	self model
+		property: anAspect
+		whenChangedDo: [ self perform: (anAspect , 'Changed') asSymbol ]
+]
+
+{ #category : #'as yet unclassified' }
+SpAbstractPharoJsAdapter >> subcribeToAll: aspects [
+
+	aspects do: [ :each | self subcribeTo: each ]
+]
+
+{ #category : #initialization }
+SpAbstractPharoJsAdapter >> subcribeToModel [
 ]
 
 { #category : #protocol }

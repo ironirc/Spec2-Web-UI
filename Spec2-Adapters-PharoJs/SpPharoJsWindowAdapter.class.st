@@ -54,21 +54,26 @@ SpPharoJsWindowAdapter >> beep [
 { #category : #factory }
 SpPharoJsWindowAdapter >> buildWidget [
 
-	"^ SpWindow new
+	"^ SpWindow new  <- MORPHIC stuff !!!
 		model: model;
 		isResizeable: self isResizable;
 		in: [ :this | self subscribeToAnnouncements: this ];
 		yourself"
-	| ctx msg start |
-	ctx := self application context. "is kind of req context (temp hack)"  
-	"NEED TO MAKE THE ASYNC CALL SYNCHRONOUS?"
-	self halt.
-	
-msg := SpStcmAddDivTest new.
-	start := Time millisecondClockValue.
-	(1 to: 1000) do: [ :i | 
-		msg message: (Time millisecondClockValue - start) printString.
-		ctx sendResponseMessage: msg ]
+
+	"| ctx msg |
+	ctx := self application context."
+
+	"is kind of req context (temp hack)"
+
+	^ SpjWindow new
+		  creatorMethod: thisContext method printString;
+		  oldMorphClass: SpWindow name;
+		 " ownerAdapter: self;"
+		  "self halt.
+
+	msg := SpS2cUpdateWidget new.
+	msg message: 'Dummy message'.""ctx sendResponseMessage: msg.""NEED TO MAKE THE ASYNC CALL SYNCHRONOUS?""Need to give back an object that represents the remote 'window'.""^SpjRemoteElement new"
+			  yourself
 ]
 
 { #category : #'widget API' }
@@ -102,7 +107,7 @@ SpPharoJsWindowAdapter >> centeredRelativeTo: aWindowPresenter [
 { #category : #protocol }
 SpPharoJsWindowAdapter >> close [
 
-	self widget ifNotNil: [ :w | w close ]
+	"self widget ifNotNil: [ :w | w close ]"
 ]
 
 { #category : #'widget API' }
@@ -204,11 +209,11 @@ SpPharoJsWindowAdapter >> openWithDeferredAction: aBlock [
 	self flag: #TODO. "This and its children are more or less the same, it needs to be 
 	revisited looking oportunities to improve the code reuse :("
 	self widget openInWorld.
-	self presenter initialPosition 
+"	self presenter initialPosition 
 		ifNotNil: [ :aPosition | self widget position: aPosition ].
 	self presenter isCentered 
 		ifTrue: [ self centered ].
-	self presenter presenter takeKeyboardFocus.
+	self presenter presenter takeKeyboardFocus."
 	self windowIsOpened.
 	aBlock value
 ]

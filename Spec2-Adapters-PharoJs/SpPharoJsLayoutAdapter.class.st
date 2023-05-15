@@ -145,19 +145,27 @@ SpPharoJsLayoutAdapter >> newPanel [
 ]
 
 { #category : #factory }
-SpPharoJsLayoutAdapter >> newPanelWith: aLayout [ 
+SpPharoJsLayoutAdapter >> newPanelWith: aLayout [
 
-	^ Morph new
+	"^ Morph new
 	  layoutPolicy: aLayout;
 	  hResizing: #spaceFill;
 	  vResizing: #spaceFill;
 	  color: Color transparent;
 	  borderColor: Color transparent;
 	  clipSubmorphs: true;
-	  "stop being grabbed"beSticky;
+	  ""stop being grabbed""beSticky;
 	  borderWidth: 0;
 	  extent: 0 @ 0;
-	  yourself
+	  yourself"
+
+	^ SpjRemoteElement new
+		  creatorMethod: thisContext method printString;
+		  oldMorphClass: Morph name;
+		  description: 'lots of properties skipped!!!';
+		  "ownerAdapter: self;"
+		  extent: 0 @ 0;
+		  yourself
 ]
 
 { #category : #initialization }

@@ -13,7 +13,7 @@ SpPharoJsButtonAdapter >> action [
 
 	self showSubMenuIfPresent.
 
-	self widget ifNotNil: [:m | m takeKeyboardFocus ].
+"	self widget ifNotNil: [:m | m takeKeyboardFocus ]."
 	self model performAction.
 ]
 
@@ -44,10 +44,9 @@ SpPharoJsButtonAdapter >> buildLabel: text withIcon: icon [
 
 { #category : #factory }
 SpPharoJsButtonAdapter >> buildWidget [
-	| button | 
 
-	button := self newButton.	
-	button 
+	| msg id |
+	"button 
 		getEnabledSelector: #enabled ;
 		getFontSelector: #font ;
 		hResizing: #spaceFill ;
@@ -60,14 +59,20 @@ SpPharoJsButtonAdapter >> buildWidget [
 			on: #keyStroke 
 			send: #keyStroke:fromMorph: 
 			to: self).
-	
-	self color ifNotNil: [ self setWidgetColor: button ].
-	
 	button 
 		bindKeyCombination: Character space 
-		toAction: [ self action ].
-
-	^ button
+		toAction: [ self action ]."
+		self widget ifNotNil: [ ^self ].
+	id := SpjRemoteElement nextIdString.
+	msg := SpS2cUpdateElement2 new.
+	msg elementId: id.
+	msg tag: 'button'.
+	msg textContent: self label.
+	msg events: #( click ).
+	msg styles: { ('background-color' -> ('#' , self color asHexString)) }.
+	self sendUpdateMessageToClient: msg.
+	
+	^ id
 ]
 
 { #category : #emulating }
@@ -86,6 +91,18 @@ SpPharoJsButtonAdapter >> clicked [
 		widget 
 			mouseDown: evt;
 			mouseUp: evt ]
+]
+
+{ #category : #updating }
+SpPharoJsButtonAdapter >> colorChanged [
+
+	| msg |
+	msg := SpS2cUpdateElement2 new.
+	msg elementId: widget.
+	msg tag: 'button'.
+	msg styles:
+		{ ('background-color' -> ('#' , self color asHexString)) }.
+	self sendUpdateMessageToClient: msg
 ]
 
 { #category : #'menus support' }
@@ -145,6 +162,17 @@ SpPharoJsButtonAdapter >> label [
 		withIcon: self presenter icon
 ]
 
+{ #category : #updating }
+SpPharoJsButtonAdapter >> labelChanged [
+
+	| msg |
+	msg := SpS2cUpdateElement2 new.
+	msg elementId: widget.
+	msg tag: 'button'.
+	msg textContent: self label.
+	self sendUpdateMessageToClient: msg
+]
+
 { #category : #'widget API' }
 SpPharoJsButtonAdapter >> menu: aMenu [
 
@@ -159,12 +187,19 @@ SpPharoJsButtonAdapter >> menu: aMenu [
 { #category : #factory }
 SpPharoJsButtonAdapter >> newButton [
 
-	^ PluggableButtonMorph
-		  on: self
+	"Ivo Do we really need SpjButton? Isn't adapter enough?"
+
+	^ SpjButton new
+		  creatorMethod: thisContext method printString;
+		  oldMorphClass: PluggableButtonMorph name;
+		  description: 'properties skipped!!!';
+		  label: self label
+	" ownerAdapter: self;"
+	"	on: self
 		  getState: #state
 		  action: #action
 		  label: #label
-		  menu: #menu:
+		  menu: #menu:"
 ]
 
 { #category : #factory }
@@ -227,6 +262,12 @@ SpPharoJsButtonAdapter >> styleName [
 SpPharoJsButtonAdapter >> styleName: aString [ 
 
 	styleName := aString
+]
+
+{ #category : #updating }
+SpPharoJsButtonAdapter >> subcribeToModel [
+	"how else to hook up to all possible change events of the presenter?"
+	self subcribeToAll:  #(color label)
 ]
 
 { #category : #accessing }

@@ -27,7 +27,7 @@ SpAbstractPharoJsWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 	| containerMorph |
 	
 	containerMorph := self newContainerMorph.
-	containerMorph layoutFrame: aMorph layoutFrame.
+	"containerMorph layoutFrame: aMorph layoutFrame."
 
 	"add all decorations (menu, toolbar and statusbar)"
 	self model hasMenu ifTrue: [ self addMenuTo: containerMorph ].
@@ -37,13 +37,14 @@ SpAbstractPharoJsWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 	"Register for changes in the toolbar"
 	self model whenToolbarChangedDo: [ self setToolbarTo: containerMorph ].
 
-	containerMorph addMorphBack: aMorph.
-	aMorph
+	"containerMorph addMorphBack: aMorph." containerMorph children add: aMorph.
+"	aMorph
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
-	self model hasStatusBar ifTrue: [ self addStatusBarTo: containerMorph ].
+	self model hasStatusBar ifTrue: [ self addStatusBarTo: containerMorph ]."
 	
-	self add: containerMorph toWindow: aSpecWindow
+	"self add: containerMorph toWindow: aSpecWindow"
+	aSpecWindow children add: containerMorph
 ]
 
 { #category : #private }
@@ -70,13 +71,20 @@ SpAbstractPharoJsWindowAdapter >> addStatusBarTo: aMorph [
 { #category : #private }
 SpAbstractPharoJsWindowAdapter >> newContainerMorph [
 
-	^ Morph new
+"	^ Morph new
 		color: Color transparent;
 		layoutPolicy: TableLayout new;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		listDirection: #topToBottom;
-		yourself
+		yourself"
+		
+	^ SpjRemoteElement new
+		  creatorMethod: thisContext method printString;
+		  oldMorphClass: Morph name;
+		  description: 'lots of properties skipped!!!';
+		  "ownerAdapter: self;"
+		  yourself
 ]
 
 { #category : #private }

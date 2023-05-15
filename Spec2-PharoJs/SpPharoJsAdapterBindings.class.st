@@ -1,7 +1,7 @@
 Class {
 	#name : #SpPharoJsAdapterBindings,
 	#superclass : #SpAdapterBindings,
-	#category : #'Spec2-Adapters-PharoJs-Support'
+	#category : #'Spec2-PharoJs'
 }
 
 { #category : #initialize }

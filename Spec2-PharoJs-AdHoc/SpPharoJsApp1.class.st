@@ -10,6 +10,12 @@ Class {
 	#category : #'Spec2-PharoJs-AdHoc'
 }
 
+{ #category : #constants }
+SpPharoJsApp1 class >> applicationName [
+
+	^ self name asString
+]
+
 { #category : #'instance creation' }
 SpPharoJsApp1 class >> current [
 
@@ -28,6 +34,13 @@ SpPharoJsApp1 class >> open [
 
 	<script>
 	self new run
+]
+
+{ #category : #'instance creation' }
+SpPharoJsApp1 class >> reset [
+
+	<script>
+	self current reset
 ]
 
 { #category : #accessing }

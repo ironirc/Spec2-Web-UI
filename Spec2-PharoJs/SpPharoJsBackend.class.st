@@ -1,7 +1,7 @@
 Class {
 	#name : #SpPharoJsBackend,
 	#superclass : #SpApplicationBackend,
-	#category : #'Spec2-Adapters-PharoJs-Backend'
+	#category : #'Spec2-PharoJs'
 }
 
 { #category : #accessing }

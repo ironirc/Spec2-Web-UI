@@ -1,11 +1,11 @@
 Class {
-	#name : #PhxSpecCtsmStartApp,
-	#superclass : #PhxSpecClientToServerMessage,
+	#name : #SpC2sStartApp,
+	#superclass : #SpC2sMessage,
 	#category : #'Spec2-PharoJs'
 }
 
 { #category : #private }
-PhxSpecCtsmStartApp >> respondForRequestContext: rc [
+SpC2sStartApp >> respondForRequestContext: rc [
 
 	<pharoJsSkip>
 	| app |

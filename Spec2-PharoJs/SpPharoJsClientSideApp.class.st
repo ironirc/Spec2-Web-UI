@@ -106,8 +106,12 @@ select {
 
 { #category : #pharojs }
 SpPharoJsClientSideApp class >> appClasses [
+
 	<pharoJsSkip>
-	^ {SpStcmAddDivTest}
+	^ { 
+		  PhxSpaResponse.
+		  SpS2cUpdateElement.
+		  SpS2cUpdateElement2 } , SpjRemoteElement allSubclasses
 ]
 
 { #category : #pharojs }
@@ -132,7 +136,8 @@ SpPharoJsClientSideApp class >> boot [
 	window addEventListener: #load block: [ 
 		self showSplashScreen.
 		self promiseAllExternalResourcesLoaded then: [ 
-			self body innerHTML: 'Loaded! '. self new messenger setupConnectionWithServer ] ]
+			self body innerHTML: ''.
+			self new messenger setupConnectionWithServer ] ]
 ]
 
 { #category : #accessing }
@@ -253,6 +258,7 @@ SpPharoJsClientSideApp class >> newWebSocketHandler [
 	| wsh |
 	wsh := PhxWebSocketMessageHandler new.
 	wsh applicationClass: self.
+	wsh context: SpPharoJsSessionRegistry.
 	^ wsh
 ]
 
@@ -340,7 +346,7 @@ SpPharoJsClientSideApp >> messenger [
 SpPharoJsClientSideApp >> onWebSocketOpen: ev [
 
 	| msg |
-	msg := PhxSpecCtsmStartApp new. 
+	msg := SpC2sStartApp new. 
  
 	self messenger sendMessageToServer: msg.
 ]

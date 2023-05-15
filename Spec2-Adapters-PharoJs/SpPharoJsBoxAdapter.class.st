@@ -48,9 +48,9 @@ SpPharoJsBoxAdapter >> addConstraints: constraints toChild: childMorph [
 					addMorphBack: theMorph;
 					yourself ]. 
 			"Set to fill"
-			theMorph 
+			"theMorph 
 				hResizing: #spaceFill;
-				vResizing: #spaceFill ]
+				vResizing: #spaceFill" ]
 		ifFalse: [
 			"Set morph to stay rigid"
 			layout direction setRigidityOfNonExpandedMorph: theMorph.
@@ -150,9 +150,10 @@ SpPharoJsBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel 
 	self applyAlignmentToChild: childMorph.
 	self verifyBoxExtentOf: aPanel withChild: childMorph.
 
-	constraints isPlacedAtStart
+"	constraints isPlacedAtStart
 		ifTrue: [ startPanel addMorphBack: childMorph ]
-		ifFalse: [ endPanel addMorphBack: childMorph ].
+		ifFalse: [ endPanel addMorphBack: childMorph ]."
+	widget children add: childMorph.
 
 	^ childMorph
 ]
@@ -181,8 +182,9 @@ SpPharoJsBoxAdapter >> layout: aLayout [
 		aLayout hasAlignment 
 			ifTrue: [ widget := self applyAlignmentTo: widget ].
 		"the spacing needs to be applied to the inner sub-panels"
-		{ startPanel. endPanel } 
-			do: [ :each | each cellInset: aLayout spacing ]
+		self flag: 'Ivo skipping panels'.
+	"	{ startPanel. endPanel } 
+			do: [ :each | each cellInset: aLayout spacing ]"
 		"widget homogeneous: aLayout isHomogeneous" ].
 
 	aLayout whenChildrenAddedDo: [ :ann |
@@ -199,7 +201,7 @@ SpPharoJsBoxAdapter >> layout: aLayout [
 { #category : #factory }
 SpPharoJsBoxAdapter >> newHorizontal [
 
-	^ (self newPanelWith: self newPanelLayout)
+	"^ (self newPanelWith: self newPanelLayout)
 		listDirection: #leftToRight;
 		addMorphBack: ((startPanel := (self newPanelWith: SpMorphicBoxChildLayout new))
 			listDirection: #leftToRight;
@@ -209,15 +211,23 @@ SpPharoJsBoxAdapter >> newHorizontal [
 			hResizing: #shrinkWrap;
 			width: 0;
 			yourself);
-	  yourself
+	  yourself"
+	self halt.
 ]
 
 { #category : #factory }
 SpPharoJsBoxAdapter >> newPanelLayout [
 
-	^ SpMorphicBoxLayout new
+	"^ SpMorphicBoxLayout new
 		specLayout: layout;
-		yourself
+		yourself"
+
+	^ SpjRemoteElement new
+		 " ownerAdapter: self;"
+		  oldMorphClass: SpMorphicBoxLayout name;
+		  creatorMethod: thisContext method printString;
+		description: 'Is probably not a remote element!!! create SpPharoJsBoxLayout instead'
+		  yourself
 ]
 
 { #category : #factory }
@@ -225,24 +235,25 @@ SpPharoJsBoxAdapter >> newVertical [
 
 	^ (self newPanelWith: self newPanelLayout)
 		listDirection: #topToBottom;
-		addMorphBack: ((startPanel := self newPanel)
+	"	addMorphBack: ((startPanel := self newPanel)
 			listDirection: #topToBottom;
 			yourself);
 		addMorphBack: ((endPanel := self newPanel)
 			listDirection: #topToBottom;
 			vResizing: #shrinkWrap;
 			height: 0;
-			yourself);
+			yourself);"
 		yourself
 ]
 
 { #category : #factory }
 SpPharoJsBoxAdapter >> newWrapMorph [
 
-	^ Morph new
+	"^ Morph new
 		  layoutPolicy: ProportionalLayout new;
 		  color: Color transparent;
-		  borderColor: Color transparent yourself
+		  borderColor: Color transparent yourself"
+		self halt.
 ]
 
 { #category : #accessing }
@@ -319,7 +330,7 @@ SpPharoJsBoxAdapter >> verifyBoxExtent [
 
 { #category : #private }
 SpPharoJsBoxAdapter >> verifyBoxExtentOf: aPanel withChild: childMorph [
-	| width height |
+	"| width height |
 
 	width := childMorph width + (widget borderWidth * 2).
 	height := childMorph height + (widget borderWidth * 2).
@@ -328,5 +339,5 @@ SpPharoJsBoxAdapter >> verifyBoxExtentOf: aPanel withChild: childMorph [
 		ifTrue: [ height := height + aPanel height + aPanel cellInset ]
 		ifFalse: [ width := width + aPanel width + aPanel cellInset ].
 		 
-	aPanel extent: (aPanel width max: width)@(aPanel height max: height)
+	aPanel extent: (aPanel width max: width)@(aPanel height max: height)"
 ]
