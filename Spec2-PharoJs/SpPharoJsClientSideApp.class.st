@@ -110,8 +110,7 @@ SpPharoJsClientSideApp class >> appClasses [
 	<pharoJsSkip>
 	^ { 
 		  PhxSpaResponse.
-		  SpS2cUpdateElement.
-		  SpS2cUpdateElement2 } , SpjRemoteElement allSubclasses
+		  SpS2cUpdateElement } , SpC2sEvent allSubclasses
 ]
 
 { #category : #pharojs }
@@ -134,6 +133,7 @@ SpPharoJsClientSideApp class >> applicationName [
 SpPharoJsClientSideApp class >> boot [
 
 	window addEventListener: #load block: [ 
+		self addCssReset.
 		self showSplashScreen.
 		self promiseAllExternalResourcesLoaded then: [ 
 			self body innerHTML: ''.
@@ -225,7 +225,7 @@ SpPharoJsClientSideApp class >> htmlPageWithJsScript: aScript [
     />
 	<script type="text/javascript" src="' << self applicationName << '.js"></script>
   </head>
-  <body>
+  <body id="body">
     
   </body>
 </html>' ]

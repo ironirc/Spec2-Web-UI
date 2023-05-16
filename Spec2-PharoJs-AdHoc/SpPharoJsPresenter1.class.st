@@ -3,7 +3,8 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'button',
-		'button2'
+		'button2',
+		'input'
 	],
 	#category : #'Spec2-PharoJs-AdHoc'
 }
@@ -13,6 +14,7 @@ SpPharoJsPresenter1 class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #button;
+		  add: #input;
 		  add: #button2;
 		  yourself
 ]
@@ -28,7 +30,9 @@ SpPharoJsPresenter1 >> initializePresenters [
 		Color random ifNotNil: [ :clr | 
 			button color: clr.
 			button label: clr asHexString ] ].
-	
+	input := self newTextInput.
+	input placeholder: 'Type something here...'.
+	"	input text: 'Hello world'."
 	button2 := self newButton.
 	button2
 		label: 'Click me2';
@@ -36,5 +40,6 @@ SpPharoJsPresenter1 >> initializePresenters [
 	button2 action: [ 
 		Color random ifNotNil: [ :clr | 
 			button2 color: clr.
-			button2 label: clr asHexString ] ]
+			button2 label: clr asHexString.
+			input text: clr asHexString ] ]
 ]

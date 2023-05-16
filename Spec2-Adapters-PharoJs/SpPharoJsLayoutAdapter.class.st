@@ -131,8 +131,8 @@ SpPharoJsLayoutAdapter >> layout: aLayout [
 
 	"Basic apply visibility to the widget.
 	This call is here because layouts and widgets work differently"
-	"self widget presenter: self presenter.
-	self applyVisibility.
+"	self widget presenter: self presenter."
+	"self applyVisibility.
 	self applyStyle.
 	self addKeyBindingsTo: self widget.
 	self addEventsTo: self widget."
@@ -160,13 +160,18 @@ SpPharoJsLayoutAdapter >> newPanelWith: aLayout [
 	  yourself"
 
 	| id msg |
-	id := SpjRemoteElement nextIdString.
-	msg := SpS2cUpdateElement2 new.
+	id := self class nextIdString.
+	msg := SpS2cUpdateElement new.
 	msg elementId: id.
 	msg tag: 'div'.
-	msg styles: { ('background-color' -> '#800') }.
+	msg styles: { 
+			('background-color' -> '#800').
+			('display' -> 'flex').
+			('flex-direction' -> 'column').
+			('height' -> '100%') }.
+	msg attributes: { ('method' -> thisContext method printString) }.
 	self sendUpdateMessageToClient: msg.
-	^id
+	^ id
 ]
 
 { #category : #initialization }

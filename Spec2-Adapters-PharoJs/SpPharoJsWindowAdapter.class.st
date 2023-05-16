@@ -22,7 +22,7 @@ SpPharoJsWindowAdapter >> addFocusRotationKeyBindings [
 SpPharoJsWindowAdapter >> addPresenterIn: aWindow withSpecLayout: aSpec [
 
 	| contentWidget |
-	self presenter initialPosition ifNotNil: [ :position | 
+"	self presenter initialPosition ifNotNil: [ :position | 
 		aWindow position: position ].
 	self presenter initialExtent ifNotNil: [ :extent | 
 		aWindow extent: extent ].
@@ -32,7 +32,7 @@ SpPharoJsWindowAdapter >> addPresenterIn: aWindow withSpecLayout: aSpec [
 			ifTrue: [ aWindow initializeLabelArea ]
 			ifFalse: [ aWindow removeLabelArea ] ].
 	self presenter whenResizableChangedDo: [ :aBoolean | 
-		aWindow isResizeable: aBoolean ].
+		aWindow isResizeable: aBoolean ]."
 
 	contentWidget := self presenter presenter buildWithLayout: aSpec.
 	self presenter presenter adapter applyStyle.
@@ -60,20 +60,17 @@ SpPharoJsWindowAdapter >> buildWidget [
 		in: [ :this | self subscribeToAnnouncements: this ];
 		yourself"
 
-	"| ctx msg |
-	ctx := self application context."
-
-	"is kind of req context (temp hack)"
-
-	^ SpjWindow new
-		  creatorMethod: thisContext method printString;
-		  oldMorphClass: SpWindow name;
-		 " ownerAdapter: self;"
-		  "self halt.
-
-	msg := SpS2cUpdateWidget new.
-	msg message: 'Dummy message'.""ctx sendResponseMessage: msg.""NEED TO MAKE THE ASYNC CALL SYNCHRONOUS?""Need to give back an object that represents the remote 'window'.""^SpjRemoteElement new"
-			  yourself
+	| id msg |
+	id := 'body'. "SpjRemoteElement nextIdString"
+	msg := SpS2cUpdateElement new.
+	msg elementId: id.
+	msg tag: 'div'.
+	msg styles: { 
+			('background-color' -> '#00C').
+			"('height' -> '100vh')" }.
+	msg attributes: { ('method' -> thisContext method printString) }.
+	self sendUpdateMessageToClient: msg.
+	^ id
 ]
 
 { #category : #'widget API' }
@@ -208,7 +205,7 @@ SpPharoJsWindowAdapter >> openWithDeferredAction: aBlock [
 
 	self flag: #TODO. "This and its children are more or less the same, it needs to be 
 	revisited looking oportunities to improve the code reuse :("
-	self widget openInWorld.
+	"self widget openInWorld."
 "	self presenter initialPosition 
 		ifNotNil: [ :aPosition | self widget position: aPosition ].
 	self presenter isCentered 

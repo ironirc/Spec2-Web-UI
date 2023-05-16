@@ -154,7 +154,7 @@ SpPharoJsBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel 
 		ifTrue: [ startPanel addMorphBack: childMorph ]
 		ifFalse: [ endPanel addMorphBack: childMorph ]."
 	"	widget children add: childMorph."
-	msg := SpS2cUpdateElement2 new.
+	msg := SpS2cUpdateElement new.
 	msg elementId: childMorph.
 	msg parentId: aPanel.
 	self sendUpdateMessageToClient: msg.
@@ -235,20 +235,13 @@ SpPharoJsBoxAdapter >> newPanelLayout [
 		description: 'Is probably not a remote element!!! create SpPharoJsBoxLayout instead'
 		  yourself"
 
-	| id msg |
-	id := SpjRemoteElement nextIdString.
-	msg := SpS2cUpdateElement2 new.
-	msg elementId: id.
-	msg tag: 'div'.
-	msg styles: { ('background-color' -> '#800') }.
-	self sendUpdateMessageToClient: msg.
-	^ id
+	
 ]
 
 { #category : #factory }
 SpPharoJsBoxAdapter >> newVertical [
 
-	^ (self newPanelWith: self newPanelLayout)
+	^ (self newPanelWith: "self newPanelLayout" nil)
 	"	listDirection: #topToBottom;"
 	"	addMorphBack: ((startPanel := self newPanel)
 			listDirection: #topToBottom;

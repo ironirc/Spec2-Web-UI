@@ -62,16 +62,19 @@ SpPharoJsButtonAdapter >> buildWidget [
 	button 
 		bindKeyCombination: Character space 
 		toAction: [ self action ]."
-		self widget ifNotNil: [ ^self ].
-	id := SpjRemoteElement nextIdString.
-	msg := SpS2cUpdateElement2 new.
+	self widget ifNotNil: [ ^ self ].
+	id := self class nextIdString.
+	msg := SpS2cUpdateElement new.
 	msg elementId: id.
 	msg tag: 'button'.
 	msg textContent: self label.
 	msg events: #( click ).
-	msg styles: { ('background-color' -> ('#' , self color asHexString)) }.
+	msg styles: { 
+			('background-color' -> ('#' , self color asHexString)).
+			('flex-grow' -> 1) }.
+	msg attributes: { ('method' -> thisContext method printString) }.
 	self sendUpdateMessageToClient: msg.
-	
+
 	^ id
 ]
 
@@ -97,7 +100,7 @@ SpPharoJsButtonAdapter >> clicked [
 SpPharoJsButtonAdapter >> colorChanged [
 
 	| msg |
-	msg := SpS2cUpdateElement2 new.
+	msg := SpS2cUpdateElement new.
 	msg elementId: widget.
 	msg tag: 'button'.
 	msg styles:
@@ -134,6 +137,13 @@ SpPharoJsButtonAdapter >> getLabelText [
 	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
+{ #category : #events }
+SpPharoJsButtonAdapter >> handleClick: e [
+
+
+	self model action value
+]
+
 { #category : #accessing }
 SpPharoJsButtonAdapter >> helpText [
 
@@ -166,7 +176,7 @@ SpPharoJsButtonAdapter >> label [
 SpPharoJsButtonAdapter >> labelChanged [
 
 	| msg |
-	msg := SpS2cUpdateElement2 new.
+	msg := SpS2cUpdateElement new.
 	msg elementId: widget.
 	msg tag: 'button'.
 	msg textContent: self label.
@@ -189,12 +199,8 @@ SpPharoJsButtonAdapter >> newButton [
 
 	"Ivo Do we really need SpjButton? Isn't adapter enough?"
 
-	^ SpjButton new
-		  creatorMethod: thisContext method printString;
-		  oldMorphClass: PluggableButtonMorph name;
-		  description: 'properties skipped!!!';
-		  label: self label
-	" ownerAdapter: self;"
+self halt.
+	
 	"	on: self
 		  getState: #state
 		  action: #action

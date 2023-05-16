@@ -58,5 +58,8 @@ SpPharoJsApp1 >> context: anObject [
 { #category : #accessing }
 SpPharoJsApp1 >> start [
 
-	^ (self new: SpPharoJsPresenter1) open
+	self windows do: [ :win | 
+		win open.
+		^ self ].
+	(self new: SpPharoJsPresenter1) open
 ]

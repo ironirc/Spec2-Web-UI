@@ -17,14 +17,20 @@ SpAbstractPharoJsWindowAdapter class >> isAbstract [
 { #category : #private }
 SpAbstractPharoJsWindowAdapter >> add: containerMorph toWindow: aSpecWindow [
 
-	aSpecWindow 
+	"aSpecWindow 
 		addMorph: containerMorph 
-		fullFrame: LayoutFrame identity
+		fullFrame: LayoutFrame identity"
+		
+		| msg |
+	msg := SpS2cUpdateElement new.
+	msg elementId: containerMorph.
+	msg parentId: aSpecWindow.
+	self sendUpdateMessageToClient: msg.
 ]
 
 { #category : #private }
 SpAbstractPharoJsWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
-	| containerMorph |
+	| containerMorph msg |
 	
 	containerMorph := self newContainerMorph.
 	"containerMorph layoutFrame: aMorph layoutFrame."
@@ -37,14 +43,19 @@ SpAbstractPharoJsWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 	"Register for changes in the toolbar"
 	self model whenToolbarChangedDo: [ self setToolbarTo: containerMorph ].
 
-	"containerMorph addMorphBack: aMorph." containerMorph children add: aMorph.
+	msg := SpS2cUpdateElement new.
+	msg elementId: aMorph.
+	msg parentId: containerMorph.
+	self sendUpdateMessageToClient: msg.
+
+	"containerMorph addMorphBack: aMorph." "containerMorph children add: aMorph."
 "	aMorph
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	self model hasStatusBar ifTrue: [ self addStatusBarTo: containerMorph ]."
 	
-	"self add: containerMorph toWindow: aSpecWindow"
-	aSpecWindow children add: containerMorph
+	self add: containerMorph toWindow: aSpecWindow
+	"aSpecWindow children add: containerMorph"
 ]
 
 { #category : #private }
@@ -79,12 +90,22 @@ SpAbstractPharoJsWindowAdapter >> newContainerMorph [
 		listDirection: #topToBottom;
 		yourself"
 		
-	^ SpjRemoteElement new
+	"^ SpjRemoteElement new
 		  creatorMethod: thisContext method printString;
 		  oldMorphClass: Morph name;
 		  description: 'lots of properties skipped!!!';
-		  "ownerAdapter: self;"
-		  yourself
+		  ""ownerAdapter: self;""
+		  yourself"
+		
+	| id msg |
+	id := self class nextIdString.
+	msg := SpS2cUpdateElement new.
+	msg elementId: id.
+	msg tag: 'div'.
+	msg styles: { ('background-color' -> '#0A0'). 'height' -> '100vh' }.
+	msg attributes: { ('method' -> thisContext method printString) }.
+	self sendUpdateMessageToClient: msg.
+	^id
 ]
 
 { #category : #private }

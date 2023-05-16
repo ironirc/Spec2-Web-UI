@@ -1,6 +1,9 @@
 Class {
 	#name : #SpAbstractPharoJsAdapter,
 	#superclass : #SpAbstractAdapter,
+	#classVars : [
+		'idCount'
+	],
 	#category : #'Spec2-Adapters-PharoJs-Base'
 }
 
@@ -17,6 +20,36 @@ SpAbstractPharoJsAdapter class >> adaptingName [
 SpAbstractPharoJsAdapter class >> allAdapters [
 
 	^ self allSubclasses
+]
+
+{ #category : #services }
+SpAbstractPharoJsAdapter class >> currentIdCount [
+
+	^ idCount
+]
+
+{ #category : #services }
+SpAbstractPharoJsAdapter class >> incrementIdCount [
+
+	idCount := idCount + 1
+]
+
+{ #category : #accessing }
+SpAbstractPharoJsAdapter class >> initialize [
+	idCount := 1.
+]
+
+{ #category : #services }
+SpAbstractPharoJsAdapter class >> nextIdNumber [
+
+	self incrementIdCount.
+	^ self currentIdCount
+]
+
+{ #category : #services }
+SpAbstractPharoJsAdapter class >> nextIdString [
+
+	^ 'el-' , self nextIdNumber printString
 ]
 
 { #category : #'drag and drop' }
