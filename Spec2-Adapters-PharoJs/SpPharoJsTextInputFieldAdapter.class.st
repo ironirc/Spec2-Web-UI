@@ -61,12 +61,17 @@ SpPharoJsTextInputFieldAdapter >> buildWidget [
 	id := self class nextIdString.
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: id.
-	msg events: #( 'keydown' 'change' 'blur').
+	msg events: #( 'keydown' 'change' 'blur' ).
 	msg styles: { ('flex-grow' -> 1) }.
 	msg attributes: { 
 			('method' -> thisContext method printString).
 			('placeholder' -> self model placeholder).
+			('type' -> self htmlInputType).
+			('maxLength' -> self htmlMaxLength).
 			 }.
+
+	msg readOnly: self model isEditable not.
+	msg disabled: self model isEnabled.
 	msg value: self model text.
 	self sendUpdateMessageToClient: msg.
 	^ id
@@ -76,6 +81,26 @@ SpPharoJsTextInputFieldAdapter >> buildWidget [
 SpPharoJsTextInputFieldAdapter >> cursorPositionIndex: index [ 
 
 	self widgetDo: [ :w | ^ w textArea editor selectAt: index ]
+]
+
+{ #category : #'presenter events' }
+SpPharoJsTextInputFieldAdapter >> editableChanged [
+
+	| msg |
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget.	
+	msg readOnly: self model isEditable not.
+	self sendUpdateMessageToClient: msg
+]
+
+{ #category : #'presenter events' }
+SpPharoJsTextInputFieldAdapter >> enabledChanged [
+
+	| msg |
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget.
+	msg disabled: self model isEnabled not.
+	self sendUpdateMessageToClient: msg
 ]
 
 { #category : #'widget API' }
@@ -131,16 +156,59 @@ SpPharoJsTextInputFieldAdapter >> handleKeydown: e [
 
 ]
 
+{ #category : #factory }
+SpPharoJsTextInputFieldAdapter >> htmlInputType [
+	self model isPassword ifTrue: [ ^'password' ].
+	^'text'
+]
+
+{ #category : #factory }
+SpPharoJsTextInputFieldAdapter >> htmlMaxLength [
+
+	^ String streamContents: [ :ws | 
+		  self model maxLength ifNotNil: [ :maxLen | 
+			  (maxLen > 0) ifTrue: [ ws << maxLen asString ] ] ]
+]
+
 { #category : #testing }
 SpPharoJsTextInputFieldAdapter >> isPassword [
 	
 	^ self widget font isKindOf: FixedFaceFont
 ]
 
+{ #category : #'presenter events' }
+SpPharoJsTextInputFieldAdapter >> isPasswordChanged [
+
+	| msg |
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget.	
+	msg type: self htmlInputType.
+	self sendUpdateMessageToClient: msg
+]
+
+{ #category : #'presenter events' }
+SpPharoJsTextInputFieldAdapter >> maxLengthChanged [
+
+	| msg |
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget.
+	msg addAttribute: 'maxLength' value: self htmlMaxLength.
+	self sendUpdateMessageToClient: msg
+]
+
 { #category : #private }
 SpPharoJsTextInputFieldAdapter >> setEditable: aBoolean to: aWidget [
 
 	aWidget textArea readOnly: aBoolean not
+]
+
+{ #category : #'model-widget-bindings' }
+SpPharoJsTextInputFieldAdapter >> subcribeToModel [
+
+	"how else to hook up to all possible change events of the presenter?"
+
+	super subcribeToModel.
+	self subcribeToAll: #(enabled editable isPassword maxLength )
 ]
 
 { #category : #accessing }

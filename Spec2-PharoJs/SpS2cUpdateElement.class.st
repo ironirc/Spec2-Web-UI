@@ -13,6 +13,14 @@ Class {
 }
 
 { #category : #accessing }
+SpS2cUpdateElement >> addAttribute: attributeName value: aValue [
+
+	self attributes:
+		((self attributes ifNil: [ #(  ) ]) copyWith:
+			 attributeName -> aValue)
+]
+
+{ #category : #accessing }
 SpS2cUpdateElement >> attributes [
 
 	^ attributes
@@ -22,6 +30,21 @@ SpS2cUpdateElement >> attributes [
 SpS2cUpdateElement >> attributes: anObject [
 
 	attributes := anObject
+]
+
+{ #category : #private }
+SpS2cUpdateElement >> createElement [
+
+	| el |
+	el := self document createElement: self tag.
+	el setAttribute: 'id' value: elementId.
+	^ el
+]
+
+{ #category : #private }
+SpS2cUpdateElement >> element [
+
+	^ self document getElementById: elementId
 ]
 
 { #category : #accessing }
@@ -39,14 +62,13 @@ SpS2cUpdateElement >> elementId: anObject [
 { #category : #private }
 SpS2cUpdateElement >> ensuredElementIn: rc [
 
-	^ (self document getElementById: elementId) ifNil: [ 
+	^ self element ifNil: [ 
 		  | el |
-		  el := self document createElement: self tag.
-		  el setAttribute: 'id' value: elementId.
+		  el := self createElement.
 		  events do: [ :eventName | 
 			  | cls |
 			  cls := SpC2sEvent forEventName: eventName.
-			  el addEventListener: eventName block: [:nativeEvent |
+			  el addEventListener: eventName block: [ :nativeEvent | 
 				  | msg |
 				  msg := cls newForNativeEvent: nativeEvent.
 				  msg sourceId: elementId.

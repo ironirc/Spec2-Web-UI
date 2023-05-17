@@ -11,7 +11,7 @@ Class {
 SpS2cAddElementToParent >> executeInResponseContext: rc [
 
 	| el x |
-	el := self document getElementById: elementId.
+	el := self element.
 	(self document getElementById: parentId) appendChild: el
 ]
 

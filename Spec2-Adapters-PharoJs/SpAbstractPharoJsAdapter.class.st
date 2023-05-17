@@ -283,7 +283,7 @@ SpAbstractPharoJsAdapter >> enabled [
 { #category : #protocol }
 SpAbstractPharoJsAdapter >> enabled: aBoolean [
 
-	self widget ifNotNil: [ :w | w enabled: aBoolean ]
+	"self widget ifNotNil: [ :w | w enabled: aBoolean ]"
 ]
 
 { #category : #protocol }
@@ -655,6 +655,8 @@ SpAbstractPharoJsAdapter >> subcribeToAll: aspects [
 
 { #category : #initialization }
 SpAbstractPharoJsAdapter >> subcribeToModel [
+
+
 ]
 
 { #category : #protocol }

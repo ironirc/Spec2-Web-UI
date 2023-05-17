@@ -218,7 +218,13 @@ SpPharoJsBaseTextAdapter >> scrollValueChanged: aValue [
 { #category : #'spec protocol' }
 SpPharoJsBaseTextAdapter >> selectAll [
 
-	self widgetDo: [ :w | w selectAll ]
+	"self widgetDo: [ :w | w selectAll ]"
+
+	| msg |
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget.
+	msg selectAll: true.
+	self sendUpdateMessageToClient: msg
 ]
 
 { #category : #'spec protocol' }
@@ -314,7 +320,7 @@ SpPharoJsBaseTextAdapter >> subcribeToModel [
 	"how else to hook up to all possible change events of the presenter?"
 
 	super subcribeToModel.
-	self subcribeToAll: #( text placeholder editable )
+	self subcribeToAll: #( text placeholder  )
 ]
 
 { #category : #'presenter events' }
