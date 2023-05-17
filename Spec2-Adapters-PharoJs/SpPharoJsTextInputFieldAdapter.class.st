@@ -72,6 +72,7 @@ SpPharoJsTextInputFieldAdapter >> buildWidget [
 
 	msg readOnly: self model isEditable not.
 	msg disabled: self model isEnabled.
+	msg visible: self model isVisible.
 	msg value: self model text.
 	self sendUpdateMessageToClient: msg.
 	^ id
@@ -208,7 +209,7 @@ SpPharoJsTextInputFieldAdapter >> subcribeToModel [
 	"how else to hook up to all possible change events of the presenter?"
 
 	super subcribeToModel.
-	self subcribeToAll: #(enabled editable isPassword maxLength )
+	self subcribeToAll: #(enabled editable isPassword maxLength visible )
 ]
 
 { #category : #accessing }
@@ -217,6 +218,16 @@ SpPharoJsTextInputFieldAdapter >> text: aString [
 	widget
 		setText: aString;
 		acceptTextInModel
+]
+
+{ #category : #'presenter events' }
+SpPharoJsTextInputFieldAdapter >> visibleChanged [
+
+	| msg |
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget.
+	msg visible: self model isVisible.
+	self sendUpdateMessageToClient: msg
 ]
 
 { #category : #emulating }

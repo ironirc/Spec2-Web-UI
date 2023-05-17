@@ -5,7 +5,8 @@ Class {
 		'readOnly',
 		'selectAll',
 		'type',
-		'disabled'
+		'disabled',
+		'visible'
 	],
 	#category : #'Spec2-PharoJs'
 }
@@ -69,6 +70,22 @@ SpS2cUpdateInputElement >> updateOn: x [
 	super updateOn: x.
 	readOnly ifNotNil: [ x currentElement readOnly: readOnly ].
 	disabled ifNotNil: [ x currentElement disabled: disabled ].
+	visible ifNotNil: [ 
+		x currentElement style visibility: (visible
+				 ifTrue: [ '' ]
+				 ifFalse: [ 'hidden' ]) ].
 	type ifNotNil: [ x currentElement type: type ].
 	selectAll == true ifTrue: [ x currentElement select ]
+]
+
+{ #category : #accessing }
+SpS2cUpdateInputElement >> visible [
+
+	^ visible
+]
+
+{ #category : #accessing }
+SpS2cUpdateInputElement >> visible: anObject [
+
+	visible := anObject
 ]

@@ -41,5 +41,6 @@ SpPharoJsPresenter1 >> initializePresenters [
 		Color random ifNotNil: [ :clr | 
 			button2 color: clr.
 			button2 label: clr asHexString.
-			input text: clr asHexString ] ]
+			input text: clr asHexString ].
+		input enabled: input isEnabled not ]
 ]
