@@ -197,7 +197,7 @@ SpPharoJsBaseTextAdapter >> placeholder: aText [
 SpPharoJsBaseTextAdapter >> placeholderChanged [
 
 	| msg |
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.
 	msg attributes: { 'placeholder' -> self placeholder }.
 	self sendUpdateMessageToClient: msg
@@ -314,14 +314,14 @@ SpPharoJsBaseTextAdapter >> subcribeToModel [
 	"how else to hook up to all possible change events of the presenter?"
 
 	super subcribeToModel.
-	self subcribeToAll: #( text placeholder )
+	self subcribeToAll: #( text placeholder editable )
 ]
 
 { #category : #'presenter events' }
 SpPharoJsBaseTextAdapter >> textChanged [
 
 	| msg |
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.
 	msg value: self model text.
 	self sendUpdateMessageToClient: msg

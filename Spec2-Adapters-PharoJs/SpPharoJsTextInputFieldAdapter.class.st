@@ -59,14 +59,14 @@ SpPharoJsTextInputFieldAdapter >> buildWidget [
 
 	| id msg |
 	id := self class nextIdString.
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateInputElement new.
 	msg elementId: id.
-	msg tag: 'input'.
 	msg events: #( 'keydown' 'change' 'blur').
 	msg styles: { ('flex-grow' -> 1) }.
 	msg attributes: { 
 			('method' -> thisContext method printString).
-			('placeholder' -> self model placeholder) }.
+			('placeholder' -> self model placeholder).
+			 }.
 	msg value: self model text.
 	self sendUpdateMessageToClient: msg.
 	^ id

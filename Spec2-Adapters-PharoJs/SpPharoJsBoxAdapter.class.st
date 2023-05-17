@@ -154,7 +154,7 @@ SpPharoJsBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel 
 		ifTrue: [ startPanel addMorphBack: childMorph ]
 		ifFalse: [ endPanel addMorphBack: childMorph ]."
 	"	widget children add: childMorph."
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cAddElementToParent new.
 	msg elementId: childMorph.
 	msg parentId: aPanel.
 	self sendUpdateMessageToClient: msg.

@@ -3,12 +3,10 @@ Class {
 	#superclass : #SpS2cMessage,
 	#instVars : [
 		'elementId',
-		'tag',
 		'attributes',
 		'events',
 		'styles',
 		'textContent',
-		'parentId',
 		'value'
 	],
 	#category : #'Spec2-PharoJs'
@@ -43,7 +41,7 @@ SpS2cUpdateElement >> ensuredElementIn: rc [
 
 	^ (self document getElementById: elementId) ifNil: [ 
 		  | el |
-		  el := self document createElement: tag.
+		  el := self document createElement: self tag.
 		  el setAttribute: 'id' value: elementId.
 		  events do: [ :eventName | 
 			  | cls |
@@ -76,20 +74,7 @@ SpS2cUpdateElement >> executeInResponseContext: rc [
 	x := PjDomBuilder newOnElement: el.
 	self updateOn: x.
 	(document contains: el) ifFalse: [ document body appendChild: el ].
-	parentId ifNotNil: [ 
-		(self document getElementById: parentId) appendChild: el ]
-]
 
-{ #category : #accessing }
-SpS2cUpdateElement >> parentId [
-
-	^ parentId
-]
-
-{ #category : #accessing }
-SpS2cUpdateElement >> parentId: anObject [
-
-	parentId := anObject
 ]
 
 { #category : #accessing }
@@ -102,18 +87,6 @@ SpS2cUpdateElement >> styles [
 SpS2cUpdateElement >> styles: anObject [
 
 	styles := anObject
-]
-
-{ #category : #accessing }
-SpS2cUpdateElement >> tag [
-
-	^ tag
-]
-
-{ #category : #accessing }
-SpS2cUpdateElement >> tag: anObject [
-
-	tag := anObject
 ]
 
 { #category : #accessing }

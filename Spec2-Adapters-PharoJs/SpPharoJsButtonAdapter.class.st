@@ -64,7 +64,7 @@ SpPharoJsButtonAdapter >> buildWidget [
 		toAction: [ self action ]."
 	self widget ifNotNil: [ ^ self ].
 	id := self class nextIdString.
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: id.
 	msg tag: 'button'.
 	msg textContent: self label.
@@ -100,7 +100,7 @@ SpPharoJsButtonAdapter >> clicked [
 SpPharoJsButtonAdapter >> colorChanged [
 
 	| msg |
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: widget.
 	msg tag: 'button'.
 	msg styles:
@@ -176,7 +176,7 @@ SpPharoJsButtonAdapter >> label [
 SpPharoJsButtonAdapter >> labelChanged [
 
 	| msg |
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: widget.
 	msg tag: 'button'.
 	msg textContent: self label.

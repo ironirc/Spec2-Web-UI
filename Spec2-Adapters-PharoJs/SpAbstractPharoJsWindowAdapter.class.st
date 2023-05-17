@@ -22,7 +22,7 @@ SpAbstractPharoJsWindowAdapter >> add: containerMorph toWindow: aSpecWindow [
 		fullFrame: LayoutFrame identity"
 		
 		| msg |
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cAddElementToParent new.
 	msg elementId: containerMorph.
 	msg parentId: aSpecWindow.
 	self sendUpdateMessageToClient: msg.
@@ -43,7 +43,7 @@ SpAbstractPharoJsWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 	"Register for changes in the toolbar"
 	self model whenToolbarChangedDo: [ self setToolbarTo: containerMorph ].
 
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cAddElementToParent new.
 	msg elementId: aMorph.
 	msg parentId: containerMorph.
 	self sendUpdateMessageToClient: msg.
@@ -99,7 +99,7 @@ SpAbstractPharoJsWindowAdapter >> newContainerMorph [
 		
 	| id msg |
 	id := self class nextIdString.
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: id.
 	msg tag: 'div'.
 	msg styles: { ('background-color' -> '#0A0'). 'height' -> '100vh' }.

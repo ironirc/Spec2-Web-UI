@@ -72,7 +72,7 @@ SpPharoJsTextAdapter >> buildWidget [
 	^ newWidget"
 		| id msg |
 	id := self class nextIdString.
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateInputElement new.
 	msg elementId: id.
 	msg tag: 'input'.
 	msg textContent: self label.

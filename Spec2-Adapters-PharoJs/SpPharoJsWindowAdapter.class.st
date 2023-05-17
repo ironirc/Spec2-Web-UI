@@ -62,7 +62,7 @@ SpPharoJsWindowAdapter >> buildWidget [
 
 	| id msg |
 	id := 'body'. "SpjRemoteElement nextIdString"
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: id.
 	msg tag: 'div'.
 	msg styles: { 

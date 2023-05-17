@@ -108,9 +108,8 @@ select {
 SpPharoJsClientSideApp class >> appClasses [
 
 	<pharoJsSkip>
-	^ { 
-		  PhxSpaResponse.
-		  SpS2cUpdateElement } , SpC2sEvent allSubclasses
+	^ "{ PhxSpaResponse } , "SpS2cMessage withAllSubclasses
+	  , SpC2sEvent withAllSubclasses
 ]
 
 { #category : #pharojs }

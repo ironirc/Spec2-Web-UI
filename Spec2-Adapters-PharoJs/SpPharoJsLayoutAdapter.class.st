@@ -161,7 +161,7 @@ SpPharoJsLayoutAdapter >> newPanelWith: aLayout [
 
 	| id msg |
 	id := self class nextIdString.
-	msg := SpS2cUpdateElement new.
+	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: id.
 	msg tag: 'div'.
 	msg styles: { 
