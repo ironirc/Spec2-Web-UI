@@ -21,6 +21,13 @@ SpS2cUpdateElement >> addAttribute: attributeName value: aValue [
 ]
 
 { #category : #accessing }
+SpS2cUpdateElement >> addStyle: styleName value: aValue [
+
+	self styles:
+		((self styles ifNil: [ #(  ) ]) copyWith: styleName -> aValue)
+]
+
+{ #category : #accessing }
 SpS2cUpdateElement >> attributes [
 
 	^ attributes

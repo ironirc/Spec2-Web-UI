@@ -82,30 +82,33 @@ SpAbstractPharoJsWindowAdapter >> addStatusBarTo: aMorph [
 { #category : #private }
 SpAbstractPharoJsWindowAdapter >> newContainerMorph [
 
-"	^ Morph new
+	"	^ Morph new
 		color: Color transparent;
 		layoutPolicy: TableLayout new;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		listDirection: #topToBottom;
 		yourself"
-		
+
 	"^ SpjRemoteElement new
 		  creatorMethod: thisContext method printString;
 		  oldMorphClass: Morph name;
 		  description: 'lots of properties skipped!!!';
 		  ""ownerAdapter: self;""
 		  yourself"
-		
+
 	| id msg |
 	id := self class nextIdString.
 	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: id.
 	msg tag: 'div'.
-	msg styles: { ('background-color' -> '#0A0'). 'height' -> '100vh' }.
+	msg styles: { 
+			('background-color' -> '#0A0').
+			('height' -> '100vh').
+			('display' -> 'flex') }.
 	msg attributes: { ('method' -> thisContext method printString) }.
 	self sendUpdateMessageToClient: msg.
-	^id
+	^ id
 ]
 
 { #category : #private }

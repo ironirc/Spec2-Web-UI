@@ -71,7 +71,8 @@ SpPharoJsButtonAdapter >> buildWidget [
 	msg events: #( click ).
 	msg styles: { 
 			('background-color' -> ('#' , self color asHexString)).
-			('flex-grow' -> 1) }.
+			('flex-grow' -> 1).
+			('flex' -> 1) }.
 	msg attributes: { ('method' -> thisContext method printString) }.
 	self sendUpdateMessageToClient: msg.
 

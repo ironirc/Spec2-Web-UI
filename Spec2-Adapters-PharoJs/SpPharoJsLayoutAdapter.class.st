@@ -145,7 +145,7 @@ SpPharoJsLayoutAdapter >> newPanel [
 ]
 
 { #category : #factory }
-SpPharoJsLayoutAdapter >> newPanelWith: aLayout [
+SpPharoJsLayoutAdapter >> newPanelWith: aBlock [
 
 	"^ Morph new
 	  layoutPolicy: aLayout;
@@ -167,9 +167,9 @@ SpPharoJsLayoutAdapter >> newPanelWith: aLayout [
 	msg styles: { 
 			('background-color' -> '#800').
 			('display' -> 'flex').
-			('flex-direction' -> 'column').
-			('height' -> '100%') }.
+			('flex-grow' -> 1) }.
 	msg attributes: { ('method' -> thisContext method printString) }.
+	aBlock value: msg.
 	self sendUpdateMessageToClient: msg.
 	^ id
 ]

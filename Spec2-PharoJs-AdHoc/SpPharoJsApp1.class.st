@@ -26,14 +26,14 @@ SpPharoJsApp1 class >> current [
 { #category : #'instance creation' }
 SpPharoJsApp1 class >> defaultBackendName [
 
-	^ #PharoJs "#Morphic"
+	^ "#PharoJs" #Morphic
 ]
 
 { #category : #'instance creation' }
 SpPharoJsApp1 class >> open [
 
 	<script>
-	self new run
+	self new inspect; run
 ]
 
 { #category : #'instance creation' }

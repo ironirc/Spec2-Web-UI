@@ -61,17 +61,18 @@ SpPharoJsTextInputFieldAdapter >> buildWidget [
 	id := self class nextIdString.
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: id.
-	msg events: #( 'keydown' 'change' 'blur' ).
-	msg styles: { ('flex-grow' -> 1) }.
+	msg events: #(  'input'  ).
+	msg styles: { 
+			('flex-grow' -> 1).
+			('flex' -> 1) }.
 	msg attributes: { 
 			('method' -> thisContext method printString).
 			('placeholder' -> self model placeholder).
 			('type' -> self htmlInputType).
-			('maxLength' -> self htmlMaxLength).
-			 }.
+			('maxLength' -> self htmlMaxLength) }.
 
 	msg readOnly: self model isEditable not.
-	msg disabled: self model isEnabled.
+	msg disabled: self model isEnabled not.
 	msg visible: self model isVisible.
 	msg value: self model text.
 	self sendUpdateMessageToClient: msg.
@@ -139,11 +140,17 @@ SpPharoJsTextInputFieldAdapter >> getPlaceholderText [
 { #category : #'widget events' }
 SpPharoJsTextInputFieldAdapter >> handleBlur: e [
 
-	"('typed ' , e key asString ) crTrace"
+	
 ]
 
 { #category : #'widget events' }
 SpPharoJsTextInputFieldAdapter >> handleChange: e [
+
+
+]
+
+{ #category : #'widget events' }
+SpPharoJsTextInputFieldAdapter >> handleInput: e [
 
 	"('typed ' , e key asString ) crTrace"
 	self accept: e newValue notifying: nil

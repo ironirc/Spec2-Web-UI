@@ -207,18 +207,8 @@ SpPharoJsBoxAdapter >> layout: aLayout [
 { #category : #factory }
 SpPharoJsBoxAdapter >> newHorizontal [
 
-	"^ (self newPanelWith: self newPanelLayout)
-		listDirection: #leftToRight;
-		addMorphBack: ((startPanel := (self newPanelWith: SpMorphicBoxChildLayout new))
-			listDirection: #leftToRight;
-			yourself);
-		addMorphBack: ((endPanel := (self newPanelWith: SpMorphicBoxChildLayout new))
-			listDirection: #leftToRight;
-			hResizing: #shrinkWrap;
-			width: 0;
-			yourself);
-	  yourself"
-	self halt.
+	^ self newPanelWith: [ :msg | "self newPanelLayout" 
+		  msg addStyle: 'flex-direction' value: 'row' ]
 ]
 
 { #category : #factory }
@@ -241,7 +231,8 @@ SpPharoJsBoxAdapter >> newPanelLayout [
 { #category : #factory }
 SpPharoJsBoxAdapter >> newVertical [
 
-	^ (self newPanelWith: "self newPanelLayout" nil)
+	^ self newPanelWith: "self newPanelLayout"  [ :msg | 
+		  msg addStyle: 'flex-direction' value: 'column' ]
 	"	listDirection: #topToBottom;"
 	"	addMorphBack: ((startPanel := self newPanel)
 			listDirection: #topToBottom;
@@ -251,7 +242,6 @@ SpPharoJsBoxAdapter >> newVertical [
 			vResizing: #shrinkWrap;
 			height: 0;
 			yourself);"
-		yourself
 ]
 
 { #category : #factory }
