@@ -1,6 +1,6 @@
 Class {
 	#name : #SpC2sEventClick,
-	#superclass : #SpC2sEvent,
+	#superclass : #SpC2sWidgetEvent,
 	#category : #'Spec2-PharoJs'
 }
 

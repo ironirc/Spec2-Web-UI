@@ -1,6 +1,6 @@
 Class {
 	#name : #SpC2sEventChange,
-	#superclass : #SpC2sEvent,
+	#superclass : #SpC2sWidgetEvent,
 	#instVars : [
 		'newValue'
 	],

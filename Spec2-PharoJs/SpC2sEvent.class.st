@@ -40,10 +40,8 @@ SpC2sEvent >> initializeWithNativeEvent: e [
 { #category : #private }
 SpC2sEvent >> respondForRequestContext: rc [
 
-	
-
 	<pharoJsSkip>
-	SpPharoJsApp1 current windows do: [ :wind | 
+	(rc webSocketInfo propertyAt: 'app') windows do: [ :wind | 
 		wind
 			traversePresentersDo: [ :p | 
 				p adapter widget = sourceId ifTrue: [ 

@@ -1,6 +1,6 @@
 Class {
 	#name : #SpC2sEventKeyDown,
-	#superclass : #SpC2sEvent,
+	#superclass : #SpC2sWidgetEvent,
 	#instVars : [
 		'key',
 		'code',

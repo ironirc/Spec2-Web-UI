@@ -85,6 +85,12 @@ SpPharoJsTextInputFieldAdapter >> cursorPositionIndex: index [
 	self widgetDo: [ :w | ^ w textArea editor selectAt: index ]
 ]
 
+{ #category : #private }
+SpPharoJsTextInputFieldAdapter >> deliverResponse: msg [ 
+
+	self halt. 
+]
+
 { #category : #'presenter events' }
 SpPharoJsTextInputFieldAdapter >> editableChanged [
 

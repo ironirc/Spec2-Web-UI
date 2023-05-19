@@ -302,7 +302,7 @@ SpPharoJsClientSideApp class >> setupCode [
 SpPharoJsClientSideApp class >> showSplashScreen [
 
 	| x |
-	x := PjDomBuilderReactive "PhxC23Builder" newOnElement: self body.
+	x := PjDomBuilder "PhxC23Builder" newOnElement: self body.
 	x div: self applicationName , ' is loading...'
 ]
 

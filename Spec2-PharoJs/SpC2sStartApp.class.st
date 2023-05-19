@@ -8,10 +8,15 @@ Class {
 SpC2sStartApp >> respondForRequestContext: rc [
 
 	<pharoJsSkip>
-	| app |
-	"ensure instantiated application (session) for senderId""start drawing that application client side"
-	
-	app := SpPharoJsApp1 current. "for now work with current... later lookup"
-	app context: rc.  "should create a kind of a application session instead. For now we use rc as session :-( "
+	| clientId sessionRegistry app |
+	clientId := rc incomingEnvelope senderId.
+	sessionRegistry := rc handler context.
+	app := sessionRegistry appAtClientId: clientId ifAbsentPut: [ 
+		       | newApp |
+		       newApp := SpPharoJsApp1 new.
+		       newApp useBackend: #PharoJs.
+		       newApp ].
+	app context: rc webSocketInfo.
+	rc webSocketInfo propertyAt: 'app' put: app.
 	app start
 ]

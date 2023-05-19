@@ -74,7 +74,7 @@ SpS2cUpdateElement >> ensuredElementIn: rc [
 		  el := self createElement.
 		  events do: [ :eventName | 
 			  | cls |
-			  cls := SpC2sEvent forEventName: eventName.
+			  cls := SpC2sWidgetEvent forEventName: eventName.
 			  el addEventListener: eventName block: [ :nativeEvent | 
 				  | msg |
 				  msg := cls newForNativeEvent: nativeEvent.

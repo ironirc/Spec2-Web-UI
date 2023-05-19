@@ -582,10 +582,10 @@ SpAbstractPharoJsAdapter >> sendRightClickEvent [
 		widget mouseUp: evt ]
 ]
 
-{ #category : #factory }
+{ #category : #websocket }
 SpAbstractPharoJsAdapter >> sendUpdateMessageToClient: msg [
 
-	self application context sendMessage: msg
+	self application context sendEnvelope: msg wrapInEnvelope
 ]
 
 { #category : #protocol }
