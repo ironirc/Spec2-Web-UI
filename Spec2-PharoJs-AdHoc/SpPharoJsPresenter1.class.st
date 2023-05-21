@@ -25,20 +25,30 @@ SpPharoJsPresenter1 class >> defaultLayout [
 ]
 
 { #category : #initialization }
+SpPharoJsPresenter1 >> button2Clicked [
+
+	"Color random ifNotNil: [ :clr |" "input enabled: input isEnabled not"
+	"	button2 color: clr.
+		button2 label: clr asHexString."
+		"input text: 'Button changed to color #' , clr asHexString."
+
+		button2 label: "input adapter selectionInterval displayString."
+			input selectedText.
+
+]
+
+{ #category : #initialization }
+SpPharoJsPresenter1 >> buttonClicked [
+
+	self inspect.
+	input adapter inspect
+]
+
+{ #category : #initialization }
 SpPharoJsPresenter1 >> connectPresenters [
 
-	button action: [" 
-		Color random ifNotNil: [ :clr | 
-			button color: clr.
-			button label: 'color #' , clr asHexString ] " self inspect].
-
-
-	button2 action: [ 
-		Color random ifNotNil: [ :clr | 
-			button2 color: clr.
-			button2 label: clr asHexString.
-			input text: 'Button changed to color #' , clr asHexString ].
-		"input enabled: input isEnabled not" ]
+	button action: [ self buttonClicked ].
+	button2 action: [ self button2Clicked ]
 ]
 
 { #category : #initialization }

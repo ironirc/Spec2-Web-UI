@@ -249,16 +249,14 @@ SpPharoJsBaseTextAdapter >> selection [
 { #category : #'spec protocol' }
 SpPharoJsBaseTextAdapter >> selectionInterval [
 
-	"^ self widget selectionInterval"
-
-	| msg response |
+	| msg envelope start end |
 	msg := SpS2cQuerySomeStuff new.
 	msg elementId: widget.
-	msg selectors: #(selectionStart selectionEnd).
-		"send query message to browser, and wait (timeout?) for answer"
-	response := self sendUpdateMessageToClient: msg.   "change ...updateMessage... naming"
-	self halt.
-
+	msg selectors: #( selectionStart selectionEnd ).
+	envelope := self sendUpdateMessageToClient: msg.
+	start := envelope msg results first value.
+	end := envelope msg results last value.
+	^ (start + 1) to: end
 ]
 
 { #category : #private }

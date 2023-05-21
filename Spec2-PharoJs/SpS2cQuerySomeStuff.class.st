@@ -35,7 +35,7 @@ SpS2cQuerySomeStuff >> executeInResponseContext: rc [
 	el := self element.
 	msg results:
 		(self selectors collect: [ :sel | sel -> (el perform: sel) ]).
-	rc clientOps sendMessageToServer: msg
+	rc sendResponseMessage: msg
 ]
 
 { #category : #testing }

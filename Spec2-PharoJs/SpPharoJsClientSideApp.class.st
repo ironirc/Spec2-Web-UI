@@ -251,11 +251,11 @@ SpPharoJsClientSideApp class >> newAppContext [
 ]
 
 { #category : #server }
-SpPharoJsClientSideApp class >> newWebSocketHandler [
+SpPharoJsClientSideApp class >> newServerWebSocketHandler [
 
 	<pharoJsSkip>
 	| wsh |
-	wsh := PhxWebSocketMessageHandler new.
+	wsh := PhxServerWebSocketHandler new.
 	wsh applicationClass: self.
 	wsh context: SpPharoJsSessionRegistry.
 	^ wsh
@@ -328,7 +328,7 @@ SpPharoJsClientSideApp >> initialize [
 SpPharoJsClientSideApp >> messenger [
 
 	messenger ifNil: [ 
-		messenger := PhxSpaWebSocketMessenger new.
+		messenger := PhxClientWebSocketHandler new.
 		messenger webSocketUrl: self webSocketUrl.
 		messenger tokenProvider: nil.
 		messenger client: self.

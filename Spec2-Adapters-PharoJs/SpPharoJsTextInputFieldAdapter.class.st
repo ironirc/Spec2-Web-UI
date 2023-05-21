@@ -61,7 +61,7 @@ SpPharoJsTextInputFieldAdapter >> buildWidget [
 	id := self class nextIdString.
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: id.
-	msg events: #(  'input'  ).
+	msg events: #(  'input' 'select'  ).
 	msg styles: { 
 			('flex-grow' -> 1).
 			('flex' -> 1) }.
@@ -168,6 +168,12 @@ SpPharoJsTextInputFieldAdapter >> handleKeydown: e [
 
 	"('typed ' , e key asString ) crTrace"
 
+]
+
+{ #category : #'widget events' }
+SpPharoJsTextInputFieldAdapter >> handleSelect: e [
+
+	self setSelection: (e start + 1 to: e end).
 ]
 
 { #category : #factory }

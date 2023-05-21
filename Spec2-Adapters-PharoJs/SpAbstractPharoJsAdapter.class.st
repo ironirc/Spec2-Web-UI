@@ -585,7 +585,7 @@ SpAbstractPharoJsAdapter >> sendRightClickEvent [
 { #category : #websocket }
 SpAbstractPharoJsAdapter >> sendUpdateMessageToClient: msg [
 
-	self application context sendEnvelope: msg wrapInEnvelope
+	^self application context sendEnvelope: msg wrapInEnvelope
 ]
 
 { #category : #protocol }

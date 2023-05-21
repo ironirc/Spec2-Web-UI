@@ -79,7 +79,7 @@ SpS2cUpdateElement >> ensuredElementIn: rc [
 				  | msg |
 				  msg := cls newForNativeEvent: nativeEvent.
 				  msg sourceId: elementId.
-				  rc clientOps sendMessageToServer: msg ] ].
+				  rc wsHandler sendMessageToServer: msg ] ].
 		  el ]
 ]
 
