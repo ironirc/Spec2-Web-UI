@@ -172,7 +172,6 @@ SpPharoJsTextInputFieldAdapter >> handleKeydown: e [
 
 { #category : #'widget events' }
 SpPharoJsTextInputFieldAdapter >> handleSelect: e [
-
 	self setSelection: (e start + 1 to: e end).
 ]
 

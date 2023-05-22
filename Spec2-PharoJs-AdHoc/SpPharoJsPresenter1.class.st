@@ -2,9 +2,10 @@ Class {
 	#name : #SpPharoJsPresenter1,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'button',
 		'button2',
-		'input'
+		'input1',
+		'button1',
+		'input2'
 	],
 	#category : #'Spec2-PharoJs-AdHoc'
 }
@@ -16,10 +17,11 @@ SpPharoJsPresenter1 class >> defaultLayout [
 	main := SpBoxLayout newTopToBottom.
 	row := SpBoxLayout newLeftToRight.
 	row
-		add: #input;
+		add: #input2;
 		add: #button2.
 	main
-		add: #button;
+		add: #button1;
+		add: #input1;
 		add: row.
 	^ main
 ]
@@ -33,7 +35,7 @@ SpPharoJsPresenter1 >> button2Clicked [
 		"input text: 'Button changed to color #' , clr asHexString."
 
 		button2 label: "input adapter selectionInterval displayString."
-			input selectedText.
+			'Selected: ' , input1 selectedText.
 
 ]
 
@@ -41,25 +43,30 @@ SpPharoJsPresenter1 >> button2Clicked [
 SpPharoJsPresenter1 >> buttonClicked [
 
 	self inspect.
-	input adapter inspect
+	"input adapter inspect"
 ]
 
 { #category : #initialization }
 SpPharoJsPresenter1 >> connectPresenters [
 
-	button action: [ self buttonClicked ].
-	button2 action: [ self button2Clicked ]
+	button1 action: [ self buttonClicked ].
+	button2 action: [ self button2Clicked ].
+	input1 whenTextChangedDo: [ :t | input2 text: t ].
+	input1 whenSelectionChangedDo: [ :t | 
+		button2 label: input1 selectedText ]
 ]
 
 { #category : #initialization }
 SpPharoJsPresenter1 >> initializePresenters [
 
-	button := self newButton.
-	button
+	button1 := self newButton.
+	button1
 		label: 'Inspect presenter';
 		color: Color yellow.
-	input := self newTextInput.
-	input placeholder: 'Type something here...'.
+	input1 := self newTextInput.
+	input1 placeholder: 'input1 ... '.
+	input2 := self newTextInput.
+	input2 placeholder: 'input2 ...'.
 	button2 := self newButton.
 	button2
 		label: 'Click me2';

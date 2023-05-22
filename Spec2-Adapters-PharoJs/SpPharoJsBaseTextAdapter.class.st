@@ -302,13 +302,14 @@ SpPharoJsBaseTextAdapter >> setScrollValue: aValue [
 { #category : #'widget API' }
 SpPharoJsBaseTextAdapter >> setSelection: interval [
 
-	selection := interval
+	selection := interval.
+	(self model selection = interval) ifFalse: [ self model selectionInterval: interval ]
 ]
 
 { #category : #'spec protocol' }
 SpPharoJsBaseTextAdapter >> setSelectionFromModel: aSelection [
-
-	self widget ifNotNil: [ :w | w setSelection: aSelection ]
+	self flag: 'TODO ... beware for infinite loops'.
+	"self widget ifNotNil: [ :w | w setSelection: aSelection ]"
 ]
 
 { #category : #initialization }

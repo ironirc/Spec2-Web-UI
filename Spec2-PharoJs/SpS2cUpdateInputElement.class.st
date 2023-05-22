@@ -49,7 +49,7 @@ SpS2cUpdateInputElement >> selectAll: anObject [
 
 { #category : #accessing }
 SpS2cUpdateInputElement >> tag [
-	^'input'
+	^'sp-input'
 ]
 
 { #category : #accessing }
