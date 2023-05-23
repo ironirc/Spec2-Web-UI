@@ -1,30 +1,11 @@
 Class {
 	#name : #SpS2cQuerySomeStuff,
-	#superclass : #SpS2cMessage,
+	#superclass : #SpS2cMessageWithElementId,
 	#instVars : [
-		'elementId',
 		'selectors'
 	],
 	#category : #'Spec2-PharoJs'
 }
-
-{ #category : #accessing }
-SpS2cQuerySomeStuff >> element [
-
-	^ self document getElementById: elementId
-]
-
-{ #category : #accessing }
-SpS2cQuerySomeStuff >> elementId [
-
-	^ elementId
-]
-
-{ #category : #accessing }
-SpS2cQuerySomeStuff >> elementId: anObject [
-
-	elementId := anObject
-]
 
 { #category : #testing }
 SpS2cQuerySomeStuff >> executeInResponseContext: rc [

@@ -1,6 +1,9 @@
 Class {
 	#name : #SpAbstractPharoJsAdapter,
 	#superclass : #SpAbstractAdapter,
+	#instVars : [
+		'mutedModelSubscriptions'
+	],
 	#classVars : [
 		'idCount'
 	],
@@ -344,6 +347,12 @@ SpAbstractPharoJsAdapter >> helpText [
 	^ self widget balloonText 
 ]
 
+{ #category : #initialization }
+SpAbstractPharoJsAdapter >> initialize [ 
+	super initialize.
+	mutedModelSubscriptions := Set new
+]
+
 { #category : #'event installing' }
 SpAbstractPharoJsAdapter >> installEvent: anEvent [
 	"Used when installing events into presenters already built"
@@ -516,6 +525,13 @@ SpAbstractPharoJsAdapter >> layout: aLayout [
 	self widgetDo: [ :w | w layoutFrame: layout ].
 ]
 
+{ #category : #'model subscriptions' }
+SpAbstractPharoJsAdapter >> muteModelAspect: aspect while: aBlock [
+
+	mutedModelSubscriptions add: aspect.
+	aBlock ensure: [ mutedModelSubscriptions remove: aspect ]
+]
+
 { #category : #styling }
 SpAbstractPharoJsAdapter >> presenterStyles [
 	"The presenters in the style"
@@ -639,21 +655,21 @@ SpAbstractPharoJsAdapter >> styleSheet [
 	^ self application styleSheet
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'model subscriptions' }
 SpAbstractPharoJsAdapter >> subcribeTo: anAspect [
 
-	self model
-		property: anAspect
-		whenChangedDo: [ self perform: (anAspect , 'Changed') asSymbol ]
+	self model property: anAspect whenChangedDo: [ 
+		(mutedModelSubscriptions includes: anAspect) ifFalse: [ 
+			self perform: (anAspect , 'Changed') asSymbol ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'model subscriptions' }
 SpAbstractPharoJsAdapter >> subcribeToAll: aspects [
 
 	aspects do: [ :each | self subcribeTo: each ]
 ]
 
-{ #category : #initialization }
+{ #category : #'model subscriptions' }
 SpAbstractPharoJsAdapter >> subcribeToModel [
 
 
@@ -661,8 +677,11 @@ SpAbstractPharoJsAdapter >> subcribeToModel [
 
 { #category : #protocol }
 SpAbstractPharoJsAdapter >> takeKeyboardFocus [
-	
-	self widgetDo: [ :w | w takeKeyboardFocus ]
+
+	| msg |
+	msg := SpS2cElementTakeFocus new.
+	msg elementId: widget.
+	self sendUpdateMessageToClient: msg
 ]
 
 { #category : #'drag and drop' }

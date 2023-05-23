@@ -159,8 +159,10 @@ SpPharoJsTextInputFieldAdapter >> handleChange: e [
 SpPharoJsTextInputFieldAdapter >> handleInput: e [
 
 	"('typed ' , e key asString ) crTrace"
-	self accept: e newValue notifying: nil
 
+	self
+		muteModelAspect: #text
+		while: [ self accept: e newValue notifying: nil ]
 ]
 
 { #category : #'widget events' }
@@ -172,7 +174,10 @@ SpPharoJsTextInputFieldAdapter >> handleKeydown: e [
 
 { #category : #'widget events' }
 SpPharoJsTextInputFieldAdapter >> handleSelect: e [
-	self setSelection: (e start + 1 to: e end).
+
+	self
+		muteModelAspect: #selection
+		while: [ self setSelection: (e start + 1 to: e end) ]
 ]
 
 { #category : #factory }

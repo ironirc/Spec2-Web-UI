@@ -6,7 +6,8 @@ Class {
 		'countElement',
 		'input',
 		'selectionStart',
-		'selectionEnd'
+		'selectionEnd',
+		'mouseDown'
 	],
 	#category : #'Spec2-Adapters-PharoJs'
 }
@@ -24,9 +25,23 @@ PhxWcSpecInputField >> disabled: aValue [
 ]
 
 { #category : #initialization }
+PhxWcSpecInputField >> focus [ 
+
+	input focus.
+	console log: 'YEAH'
+]
+
+{ #category : #initialization }
 PhxWcSpecInputField >> initialize [
 
 	count := 0
+]
+
+{ #category : #initialization }
+PhxWcSpecInputField >> isASelectionFrom: s and: e [.
+	s ifNil: [ ^false ].
+	e ifNil: [ ^false ].
+	^e - s >= 1 
 ]
 
 { #category : #initialization }
@@ -41,12 +56,17 @@ PhxWcSpecInputField >> renderOn: x [
 	x input: [ :el | 
 		x _style: { 
 				('height' -> '100%').
-				('width' -> '100%') }.
+				('width' -> '100%').
+				('box-sizing' -> 'border-box') }.
 		input := el.
 		x onSelect: [ :e | self updateSelection ].
 		x onMouseMove: [ :e | self updateSelection ].
 		x onMouseUp: [ :e | self updateSelection ].
-		x onKeyUp: [ :e | self updateSelection ] ]
+		x onKeyUp: [ :e | self updateSelection ].
+		x onMouseDown: [ :e | mouseDown := true ].
+		x onMouseUp: [ :e | 
+			mouseDown := false.
+			window setTimeout: [ self updateSelection ] ms: 0 ] ]
 ]
 
 { #category : #initialization }
@@ -62,12 +82,36 @@ PhxWcSpecInputField >> selectionStart [
 ]
 
 { #category : #initialization }
-PhxWcSpecInputField >> updateSelection [
+PhxWcSpecInputField >> setSelectionStart: newS end: newE [
 
-	| s e newEvnt |
+	"FW"
+
+	| s e |
+	mouseDown == true ifTrue: [ ^ self ].
+	s := input selectionStart.
+	e := input selectionEnd.
+	(s = newS and: [ e = newE ]) ifTrue: [ "console log: 'nothing new'. " 
+		^ self ].
+	"console
+		log: 'old'
+		with: s
+		with: e
+		with: 'new'
+		with: newS
+		with: newE."
+	input setSelectionRange: newS end: newE
+]
+
+{ #category : #initialization }
+PhxWcSpecInputField >> updateSelection [
+	"BW"
+	| s e newEvnt somethingWasSelected somethingToBeSelected |
 	s := input selectionStart.
 	e := input selectionEnd.
 	(selectionStart = s) & (selectionEnd = e) ifTrue: [ ^ self ].
+	somethingWasSelected := self isASelectionFrom: selectionStart and: selectionEnd.
+	somethingToBeSelected := self isASelectionFrom: s and: e.
+	somethingWasSelected not  & somethingToBeSelected not ifTrue: [^self  ].
 	selectionStart := s.
 	selectionEnd := e.
 	newEvnt := global CustomEvent new: 'select'.

@@ -224,6 +224,13 @@ SpPharoJsClientSideApp class >> htmlPageWithJsScript: aScript [
       content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes"
     />
 	<script type="text/javascript" src="' << self applicationName << '.js"></script>
+	<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+</style>
   </head>
   <body id="body">
     

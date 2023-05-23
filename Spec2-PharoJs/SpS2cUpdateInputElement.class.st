@@ -6,7 +6,9 @@ Class {
 		'selectAll',
 		'type',
 		'disabled',
-		'visible'
+		'visible',
+		'selectionStart',
+		'selectionEnd'
 	],
 	#category : #'Spec2-PharoJs'
 }
@@ -48,6 +50,30 @@ SpS2cUpdateInputElement >> selectAll: anObject [
 ]
 
 { #category : #accessing }
+SpS2cUpdateInputElement >> selectionEnd [
+
+	^ selectionEnd
+]
+
+{ #category : #accessing }
+SpS2cUpdateInputElement >> selectionEnd: anObject [
+
+	selectionEnd := anObject
+]
+
+{ #category : #accessing }
+SpS2cUpdateInputElement >> selectionStart [
+
+	^ selectionStart
+]
+
+{ #category : #accessing }
+SpS2cUpdateInputElement >> selectionStart: anObject [
+
+	selectionStart := anObject
+]
+
+{ #category : #accessing }
 SpS2cUpdateInputElement >> tag [
 	^'sp-input'
 ]
@@ -75,7 +101,12 @@ SpS2cUpdateInputElement >> updateOn: x [
 				 ifTrue: [ '' ]
 				 ifFalse: [ 'hidden' ]) ].
 	type ifNotNil: [ x currentElement type: type ].
-	selectAll == true ifTrue: [ x currentElement select ]
+	selectAll == true ifTrue: [ x currentElement select ].
+	selectionStart ifNotNil: [ 
+		selectionEnd ifNotNil: [ 
+			x currentElement
+				setSelectionStart: selectionStart
+				end: selectionEnd ] ]
 ]
 
 { #category : #accessing }

@@ -1,8 +1,7 @@
 Class {
 	#name : #SpS2cUpdateElement,
-	#superclass : #SpS2cMessage,
+	#superclass : #SpS2cMessageWithElementId,
 	#instVars : [
-		'elementId',
 		'attributes',
 		'events',
 		'styles',
@@ -46,24 +45,6 @@ SpS2cUpdateElement >> createElement [
 	el := self document createElement: self tag.
 	el setAttribute: 'id' value: elementId.
 	^ el
-]
-
-{ #category : #private }
-SpS2cUpdateElement >> element [
-
-	^ self document getElementById: elementId
-]
-
-{ #category : #accessing }
-SpS2cUpdateElement >> elementId [
-
-	^ elementId
-]
-
-{ #category : #accessing }
-SpS2cUpdateElement >> elementId: anObject [
-
-	elementId := anObject
 ]
 
 { #category : #private }

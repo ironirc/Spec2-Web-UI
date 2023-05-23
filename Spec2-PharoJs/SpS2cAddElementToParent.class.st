@@ -1,6 +1,6 @@
 Class {
 	#name : #SpS2cAddElementToParent,
-	#superclass : #SpS2cUpdateElement,
+	#superclass : #SpS2cMessageWithElementId,
 	#instVars : [
 		'parentId'
 	],
@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 SpS2cAddElementToParent >> executeInResponseContext: rc [
 
-	| el x |
+	| el  |
 	el := self element.
 	(self document getElementById: parentId) appendChild: el
 ]

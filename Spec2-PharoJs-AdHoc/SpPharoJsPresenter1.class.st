@@ -27,6 +27,13 @@ SpPharoJsPresenter1 class >> defaultLayout [
 ]
 
 { #category : #initialization }
+SpPharoJsPresenter1 >> button1Clicked [
+
+	self inspect.
+	"input adapter inspect"
+]
+
+{ #category : #initialization }
 SpPharoJsPresenter1 >> button2Clicked [
 
 	"Color random ifNotNil: [ :clr |" "input enabled: input isEnabled not"
@@ -34,26 +41,18 @@ SpPharoJsPresenter1 >> button2Clicked [
 		button2 label: clr asHexString."
 		"input text: 'Button changed to color #' , clr asHexString."
 
-		button2 label: "input adapter selectionInterval displayString."
-			'Selected: ' , input1 selectedText.
+	"	button2 label:" "input adapter selectionInterval displayString."
+		"	'Selected: ' , input1 selectedText."
 
-]
-
-{ #category : #initialization }
-SpPharoJsPresenter1 >> buttonClicked [
-
-	self inspect.
-	"input adapter inspect"
 ]
 
 { #category : #initialization }
 SpPharoJsPresenter1 >> connectPresenters [
 
-	button1 action: [ self buttonClicked ].
+	button1 action: [ self button1Clicked ].
 	button2 action: [ self button2Clicked ].
-	input1 whenTextChangedDo: [ :t | input2 text: t ].
-	input1 whenSelectionChangedDo: [ :t | 
-		button2 label: input1 selectedText ]
+	input1 whenTextChangedDo: [ :t | self input1TextChangedTo: t ].
+	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ]
 ]
 
 { #category : #initialization }
@@ -71,4 +70,18 @@ SpPharoJsPresenter1 >> initializePresenters [
 	button2
 		label: 'Click me2';
 		color: Color random
+]
+
+{ #category : #initialization }
+SpPharoJsPresenter1 >> input1SelectionChanged [
+
+	button2 label: input1 selectedText.
+
+]
+
+{ #category : #initialization }
+SpPharoJsPresenter1 >> input1TextChangedTo: t [
+
+	input2 text: t.
+	"input2 takeKeyboardFocus "
 ]

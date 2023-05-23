@@ -246,6 +246,17 @@ SpPharoJsBaseTextAdapter >> selection [
 	^ selection
 ]
 
+{ #category : #'presenter events' }
+SpPharoJsBaseTextAdapter >> selectionChanged [
+
+	| msg |
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget.
+	msg selectionStart: model selection first - 1.
+	msg selectionEnd: model selection last.
+	self sendUpdateMessageToClient: msg
+]
+
 { #category : #'spec protocol' }
 SpPharoJsBaseTextAdapter >> selectionInterval [
 
@@ -308,8 +319,17 @@ SpPharoJsBaseTextAdapter >> setSelection: interval [
 
 { #category : #'spec protocol' }
 SpPharoJsBaseTextAdapter >> setSelectionFromModel: aSelection [
+	| msg |
 	self flag: 'TODO ... beware for infinite loops'.
 	"self widget ifNotNil: [ :w | w setSelection: aSelection ]"
+	
+"instead see SpPharoJsBaseTextAdapter>>#selectionChanged 
+
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget.
+	msg selectionStart: aSelection first - 1.
+	msg selectionEnd: aSelection last.
+	self sendUpdateMessageToClient: msg"
 ]
 
 { #category : #initialization }
@@ -328,7 +348,7 @@ SpPharoJsBaseTextAdapter >> subcribeToModel [
 	"how else to hook up to all possible change events of the presenter?"
 
 	super subcribeToModel.
-	self subcribeToAll: #( text placeholder  )
+	self subcribeToAll: #( text placeholder selection  )
 ]
 
 { #category : #'presenter events' }
