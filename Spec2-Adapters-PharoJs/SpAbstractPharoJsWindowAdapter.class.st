@@ -25,7 +25,7 @@ SpAbstractPharoJsWindowAdapter >> add: containerMorph toWindow: aSpecWindow [
 	msg := SpS2cAddElementToParent new.
 	msg elementId: containerMorph.
 	msg parentId: aSpecWindow.
-	self sendUpdateMessageToClient: msg.
+	self sendMessageToClient: msg.
 ]
 
 { #category : #private }
@@ -46,7 +46,7 @@ SpAbstractPharoJsWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 	msg := SpS2cAddElementToParent new.
 	msg elementId: aMorph.
 	msg parentId: containerMorph.
-	self sendUpdateMessageToClient: msg.
+	self sendMessageToClient: msg.
 
 	"containerMorph addMorphBack: aMorph." "containerMorph children add: aMorph."
 "	aMorph
@@ -107,7 +107,7 @@ SpAbstractPharoJsWindowAdapter >> newContainerMorph [
 			('height' -> '100vh').
 			('display' -> 'flex') }.
 	msg attributes: { ('method' -> thisContext method printString) }.
-	self sendUpdateMessageToClient: msg.
+	self sendMessageToClient: msg.
 	^ id
 ]
 

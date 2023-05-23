@@ -74,7 +74,7 @@ SpPharoJsButtonAdapter >> buildWidget [
 			('flex-grow' -> 1).
 			('flex' -> 1) }.
 	msg attributes: { ('method' -> thisContext method printString) }.
-	self sendUpdateMessageToClient: msg.
+	self sendMessageToClient: msg.
 
 	^ id
 ]
@@ -106,7 +106,7 @@ SpPharoJsButtonAdapter >> colorChanged [
 	msg tag: 'button'.
 	msg styles:
 		{ ('background-color' -> ('#' , self color asHexString)) }.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #'menus support' }
@@ -181,7 +181,7 @@ SpPharoJsButtonAdapter >> labelChanged [
 	msg elementId: widget.
 	msg tag: 'button'.
 	msg textContent: self label.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #'widget API' }

@@ -3,7 +3,6 @@ Class {
 	#superclass : #SpS2cMessageWithElementId,
 	#instVars : [
 		'attributes',
-		'events',
 		'styles',
 		'textContent',
 		'value'
@@ -36,44 +35,6 @@ SpS2cUpdateElement >> attributes [
 SpS2cUpdateElement >> attributes: anObject [
 
 	attributes := anObject
-]
-
-{ #category : #private }
-SpS2cUpdateElement >> createElement [
-
-	| el |
-	el := self document createElement: self tag.
-	el setAttribute: 'id' value: elementId.
-	^ el
-]
-
-{ #category : #private }
-SpS2cUpdateElement >> ensuredElementIn: rc [
-
-	^ self element ifNil: [ 
-		  | el |
-		  el := self createElement.
-		  events do: [ :eventName | 
-			  | cls |
-			  cls := SpC2sWidgetEvent forEventName: eventName.
-			  el addEventListener: eventName block: [ :nativeEvent | 
-				  | msg |
-				  msg := cls newForNativeEvent: nativeEvent.
-				  msg sourceId: elementId.
-				  rc wsHandler sendMessageToServer: msg ] ].
-		  el ]
-]
-
-{ #category : #accessing }
-SpS2cUpdateElement >> events [
-
-	^ events
-]
-
-{ #category : #accessing }
-SpS2cUpdateElement >> events: anObject [
-
-	events := anObject
 ]
 
 { #category : #private }

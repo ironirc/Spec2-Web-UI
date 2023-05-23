@@ -581,6 +581,12 @@ SpAbstractPharoJsAdapter >> sendClickEvent [
 		widget handleMouseUp: evt ]
 ]
 
+{ #category : #websocket }
+SpAbstractPharoJsAdapter >> sendMessageToClient: msg [
+
+	^self application context sendEnvelope: msg wrapInEnvelope
+]
+
 { #category : #emulating }
 SpAbstractPharoJsAdapter >> sendRightClickEvent [
 	| evt |
@@ -596,12 +602,6 @@ SpAbstractPharoJsAdapter >> sendRightClickEvent [
 	(widget handlesMouseDown: evt) ifTrue: [
 		widget mouseDown: evt.
 		widget mouseUp: evt ]
-]
-
-{ #category : #websocket }
-SpAbstractPharoJsAdapter >> sendUpdateMessageToClient: msg [
-
-	^self application context sendEnvelope: msg wrapInEnvelope
 ]
 
 { #category : #protocol }
@@ -681,7 +681,7 @@ SpAbstractPharoJsAdapter >> takeKeyboardFocus [
 	| msg |
 	msg := SpS2cElementTakeFocus new.
 	msg elementId: widget.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #'drag and drop' }

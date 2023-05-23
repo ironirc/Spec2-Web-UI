@@ -157,7 +157,7 @@ SpPharoJsBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel 
 	msg := SpS2cAddElementToParent new.
 	msg elementId: childMorph.
 	msg parentId: aPanel.
-	self sendUpdateMessageToClient: msg.
+	self sendMessageToClient: msg.
 
 
 

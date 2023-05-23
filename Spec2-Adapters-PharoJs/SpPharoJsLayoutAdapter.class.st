@@ -170,7 +170,7 @@ SpPharoJsLayoutAdapter >> newPanelWith: aBlock [
 			('flex-grow' -> 1) }.
 	msg attributes: { ('method' -> thisContext method printString) }.
 	aBlock value: msg.
-	self sendUpdateMessageToClient: msg.
+	self sendMessageToClient: msg.
 	^ id
 ]
 

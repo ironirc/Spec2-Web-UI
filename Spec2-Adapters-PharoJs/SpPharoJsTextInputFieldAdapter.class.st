@@ -75,7 +75,7 @@ SpPharoJsTextInputFieldAdapter >> buildWidget [
 	msg disabled: self model isEnabled not.
 	msg visible: self model isVisible.
 	msg value: self model text.
-	self sendUpdateMessageToClient: msg.
+	self sendMessageToClient: msg.
 	^ id
 ]
 
@@ -98,7 +98,7 @@ SpPharoJsTextInputFieldAdapter >> editableChanged [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.	
 	msg readOnly: self model isEditable not.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #'presenter events' }
@@ -108,12 +108,7 @@ SpPharoJsTextInputFieldAdapter >> enabledChanged [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.
 	msg disabled: self model isEnabled not.
-	self sendUpdateMessageToClient: msg
-]
-
-{ #category : #'widget API' }
-SpPharoJsTextInputFieldAdapter >> encrypted [
-	^ self model isPassword
+	self sendMessageToClient: msg
 ]
 
 { #category : #'spec protocol' }
@@ -122,12 +117,6 @@ SpPharoJsTextInputFieldAdapter >> encrypted: aBoolean [
 	self widgetDo: [ :w | 
 		w encrypted: aBoolean.
 		w changed ]
-]
-
-{ #category : #'widget API' }
-SpPharoJsTextInputFieldAdapter >> entryCompletion [
-
-	^ self model entryCompletion
 ]
 
 { #category : #private }
@@ -207,7 +196,7 @@ SpPharoJsTextInputFieldAdapter >> isPasswordChanged [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.	
 	msg type: self htmlInputType.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #'presenter events' }
@@ -217,7 +206,7 @@ SpPharoJsTextInputFieldAdapter >> maxLengthChanged [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.
 	msg addAttribute: 'maxLength' value: self htmlMaxLength.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #private }
@@ -250,7 +239,7 @@ SpPharoJsTextInputFieldAdapter >> visibleChanged [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.
 	msg visible: self model isVisible.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #emulating }

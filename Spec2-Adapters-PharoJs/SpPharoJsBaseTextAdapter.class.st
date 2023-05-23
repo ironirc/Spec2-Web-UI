@@ -17,7 +17,7 @@ SpPharoJsBaseTextAdapter class >> isAbstract [
 ]
 
 { #category : #'widget API' }
-SpPharoJsBaseTextAdapter >> accept: aString notifying: aNotifyier [
+SpPharoJsBaseTextAdapter >> accept: aString notifying: notUsed [
 
 	updating := true.
 	[
@@ -200,7 +200,7 @@ SpPharoJsBaseTextAdapter >> placeholderChanged [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.
 	msg attributes: { 'placeholder' -> self placeholder }.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #'widget API' }
@@ -224,7 +224,7 @@ SpPharoJsBaseTextAdapter >> selectAll [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.
 	msg selectAll: true.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #'spec protocol' }
@@ -254,7 +254,7 @@ SpPharoJsBaseTextAdapter >> selectionChanged [
 	msg elementId: widget.
 	msg selectionStart: model selection first - 1.
 	msg selectionEnd: model selection last.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #'spec protocol' }
@@ -264,7 +264,7 @@ SpPharoJsBaseTextAdapter >> selectionInterval [
 	msg := SpS2cQuerySomeStuff new.
 	msg elementId: widget.
 	msg selectors: #( selectionStart selectionEnd ).
-	envelope := self sendUpdateMessageToClient: msg.
+	envelope := self sendMessageToClient: msg.
 	start := envelope msg results first value.
 	end := envelope msg results last value.
 	^ (start + 1) to: end
@@ -358,7 +358,7 @@ SpPharoJsBaseTextAdapter >> textChanged [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: widget.
 	msg value: self model text.
-	self sendUpdateMessageToClient: msg
+	self sendMessageToClient: msg
 ]
 
 { #category : #emulating }

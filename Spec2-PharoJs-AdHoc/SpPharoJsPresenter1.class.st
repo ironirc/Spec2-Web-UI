@@ -5,7 +5,8 @@ Class {
 		'button2',
 		'input1',
 		'button1',
-		'input2'
+		'input2',
+		'table'
 	],
 	#category : #'Spec2-PharoJs-AdHoc'
 }
@@ -22,7 +23,8 @@ SpPharoJsPresenter1 class >> defaultLayout [
 	main
 		add: #button1;
 		add: #input1;
-		add: row.
+		add: row;
+		add: #table.
 	^ main
 ]
 
@@ -43,6 +45,8 @@ SpPharoJsPresenter1 >> button2Clicked [
 
 	"	button2 label:" "input adapter selectionInterval displayString."
 		"	'Selected: ' , input1 selectedText."
+			
+input2 text: DateAndTime now asString
 
 ]
 
@@ -52,7 +56,9 @@ SpPharoJsPresenter1 >> connectPresenters [
 	button1 action: [ self button1Clicked ].
 	button2 action: [ self button2Clicked ].
 	input1 whenTextChangedDo: [ :t | self input1TextChangedTo: t ].
-	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ]
+	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ].
+	input2 whenTextChangedDo: [ :t | self input2TextChangedTo: t ].
+"	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ]	"
 ]
 
 { #category : #initialization }
@@ -69,7 +75,17 @@ SpPharoJsPresenter1 >> initializePresenters [
 	button2 := self newButton.
 	button2
 		label: 'Click me2';
-		color: Color random
+		color: Color random.
+	table := self newTable.
+	table
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: #name);
+		items: { 
+				{ 
+					('id' -> 1).
+					('name' -> 'Ivo Roefs') }.
+				{ 
+					('id' -> 2).
+					('name' -> 'Wendy Neefs') } } asJsObject
 ]
 
 { #category : #initialization }
@@ -84,4 +100,11 @@ SpPharoJsPresenter1 >> input1TextChangedTo: t [
 
 	input2 text: t.
 	"input2 takeKeyboardFocus "
+]
+
+{ #category : #initialization }
+SpPharoJsPresenter1 >> input2TextChangedTo: t [
+
+	input1 text: t.
+
 ]
