@@ -85,8 +85,8 @@ SpPharoJsTableAdapter >> buildWidget [
 			"('height' -> '500px')".
 			"('flex' -> 1)" }.
 	msg elementId: id.
-"	msg data: model items.
-	msg columns: self tabulatorColumns."
+"	msg data: model items."
+	msg columns: self tabulatorColumns.
 	self sendMessageToClient: msg.
 	^ id
 ]
@@ -217,9 +217,9 @@ SpPharoJsTableAdapter >> refreshWidgetSelection [
 { #category : #selection }
 SpPharoJsTableAdapter >> selectIndex: anInteger [ 
 
-	(anInteger = 0 and: [ widget selectedIndexes isEmpty ]) ifTrue: [ ^ self ].	
+"	(anInteger = 0 and: [ widget selectedIndexes isEmpty ]) ifTrue: [ ^ self ].	
 	(widget selectedIndexes includes: anInteger) ifTrue: [^self].
-	widget selectIndex: anInteger
+	widget selectIndex: anInteger"
 ]
 
 { #category : #testing }
@@ -272,12 +272,12 @@ SpPharoJsTableAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 
 { #category : #factory }
 SpPharoJsTableAdapter >> tabulatorColumns [
-
-	^ self columns collect: [ :specCol | 
+	"Sp2F  (stands for spec to front) experimenting with coding fragments to designate intentions "
+	^ model columns collect: [ :specCol | 
 		  { 
 			  ('title' -> specCol title).
 			  ('field' -> specCol evaluation).
-			  ('editor' -> 'input') } ]
+			  ('editor' -> 'input') } asJsObject ]
 ]
 
 { #category : #'drag and drop' }

@@ -234,9 +234,12 @@ SpPharoJsClientSideApp class >> htmlPageWithJsScript: aScript [
 	<script type="text/javascript" src="' << self applicationName << '.js"></script>
 <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+ <style>*, *:before, *:after {
+    box-sizing: border-box;
+	}</style>
   </head>
   <body id="body">
-    
+   
   </body>
 </html>' ]
 ]

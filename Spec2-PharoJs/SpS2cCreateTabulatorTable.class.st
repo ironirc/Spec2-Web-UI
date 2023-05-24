@@ -33,18 +33,15 @@ SpS2cCreateTabulatorTable >> data: anObject [
 ]
 
 { #category : #private }
-SpS2cCreateTabulatorTable >> executeInResponseContext2: rc [
-
-	| el x |
-	el := self ensuredElementIn: rc.
-	el app: rc wsHandler client.
-	x := PjDomBuilder newOnElement: el.
-	self updateOn: x.
-
-
+SpS2cCreateTabulatorTable >> tag [
+	^'sp-table'
 ]
 
 { #category : #private }
-SpS2cCreateTabulatorTable >> tag [
-	^'sp-table'
+SpS2cCreateTabulatorTable >> updateOn: x [
+
+	| webComp |
+	super updateOn: x.
+	webComp := x currentElement.
+	webComp tableBuiltPromise then: [ webComp setColumns: self columns ]
 ]

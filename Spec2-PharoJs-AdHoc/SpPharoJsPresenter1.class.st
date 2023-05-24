@@ -6,7 +6,8 @@ Class {
 		'input1',
 		'button1',
 		'input2',
-		'table'
+		'table',
+		'tableButton1'
 	],
 	#category : #'Spec2-PharoJs-AdHoc'
 }
@@ -14,9 +15,15 @@ Class {
 { #category : #layout }
 SpPharoJsPresenter1 class >> defaultLayout [
 
-	| main row |
+	| main row bottomRow tableControls |
 	main := SpBoxLayout newTopToBottom.
 	row := SpBoxLayout newLeftToRight.
+	tableControls := SpBoxLayout newTopToBottom.
+	tableControls add: #tableButton1.
+	bottomRow := SpBoxLayout newLeftToRight.
+	bottomRow
+		add: #table;
+		add: tableControls.
 	row
 		add: #input2;
 		add: #button2.
@@ -24,7 +31,7 @@ SpPharoJsPresenter1 class >> defaultLayout [
 		add: #button1;
 		add: #input1;
 		add: row;
-		add: #table.
+		add: bottomRow.
 	^ main
 ]
 
@@ -59,6 +66,8 @@ SpPharoJsPresenter1 >> connectPresenters [
 	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ].
 	input2 whenTextChangedDo: [ :t | self input2TextChangedTo: t ].
 "	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ]	"
+		
+tableButton1 action: [ self tableButton1Clicked ].
 ]
 
 { #category : #initialization }
@@ -75,12 +84,16 @@ SpPharoJsPresenter1 >> initializePresenters [
 	button2 := self newButton.
 	button2
 		label: 'Click me2';
-		color: Color random.
+		color: Color green lighter.
 	table := self newTable.
 	table
 		addColumn: (SpStringTableColumn title: 'Seq' evaluated: #id);
 		addColumn: (SpStringTableColumn title: 'Full name' evaluated: #name);
-		items: self tableData
+		items: self tableData.
+	tableButton1 := self newButton.
+	tableButton1
+		label: 'Do something with table';
+		color: Color yellow
 ]
 
 { #category : #initialization }
@@ -105,9 +118,14 @@ SpPharoJsPresenter1 >> input2TextChangedTo: t [
 ]
 
 { #category : #initialization }
+SpPharoJsPresenter1 >> tableButton1Clicked [
+	table selectIndex: 5
+]
+
+{ #category : #initialization }
 SpPharoJsPresenter1 >> tableData [
 
-	^ ((1 to: 1000) asArray collect: [ :e | 
+	^ ((1 to: 100) asArray collect: [ :e | 
 		  { 
 			  ('id' -> e).
 			  ('name' -> ('item ' , e printString)) } asJsObject  ]) 

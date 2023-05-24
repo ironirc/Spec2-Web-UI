@@ -6,7 +6,8 @@ Class {
 	#instVars : [
 		'div',
 		'tabulator',
-		'app'
+		'tableBuiltPromise',
+		'resolveTableBuiltPromise'
 	],
 	#category : #'Spec2-Adapters-PharoJs'
 }
@@ -25,32 +26,6 @@ PhxWcSpecTabulator >> addTabulatorCssTo: x [
 /*# sourceMappingURL=tabulator.min.css.map */'
 ]
 
-{ #category : #accessing }
-PhxWcSpecTabulator >> app [
-
-	^ app
-]
-
-{ #category : #accessing }
-PhxWcSpecTabulator >> app: anObject [
-
-	app := anObject
-]
-
-{ #category : #initialization }
-PhxWcSpecTabulator >> columns [
-
-	^ { 
-		  { 
-			  ('title' -> 'ID').
-			  ('field' -> 'id').
-			  ('editor' -> 'input') }.
-		  { 
-			  ('title' -> 'NAME').
-			  ('field' -> 'name').
-			  ('editor' -> 'input') } }
-]
-
 { #category : #initialization }
 PhxWcSpecTabulator >> focus [ 
 
@@ -61,7 +36,7 @@ PhxWcSpecTabulator >> focus [
 { #category : #initialization }
 PhxWcSpecTabulator >> initialize [
 
-	
+	self tableBuiltPromise. "setup the promise before anything else"
 ]
 
 { #category : #initialization }
@@ -85,19 +60,38 @@ PhxWcSpecTabulator >> promiseDataFor: params [
 PhxWcSpecTabulator >> renderOn: x [
 
 	self addTabulatorCssTo: x.
+	x style: '*, *:before, *:after {
+    box-sizing: border-box;'.
 	x div: [ :el | div := el ].
 	tabulator := global Tabulator new: div with: { 
 			             ('height' -> '100%').
-			             " ('data' -> self data)."
-			             ('columns' -> self columns).
 			             ('selectable' -> true).
-			             ('progressiveLoad' -> 'scroll').
-			             ('ajaxURL' -> 'brol').
-			             ('paginationSize' -> 30).
-			             ('ajaxRequestFunc' -> [ :url :config :params | 
-			              console log: url _: config _: params.
-			              self promiseDataFor: params ]) } asJsObject.
+			             ('progressiveLoad' -> 'load').
+			             ('ajaxURL' -> '*').
+			             ('paginationSize' -> 100).
+			             ('ajaxRequestFunc'
+			              -> [ :url :config :params | "console log: url _: config _: params." 
+				              self promiseDataFor: params ]) } asJsObject.
 	tabulator
 		on: 'rowSelected'
-		do: [ :r | console log: 'selected row' ]
+		do: [ :r | console log: 'selected row' ].
+	tabulator
+		on: 'tableBuilt'
+		do: [ :r | resolveTableBuiltPromise value: true ]
+]
+
+{ #category : #initialization }
+PhxWcSpecTabulator >> setColumns: columns [
+
+	console log: columns.
+	tabulator setColumns: columns
+]
+
+{ #category : #initialization }
+PhxWcSpecTabulator >> tableBuiltPromise [
+
+	tableBuiltPromise ifNil: [ 
+		tableBuiltPromise := self promise: [ :resolve :reject | 
+			                     resolveTableBuiltPromise := resolve ] ].
+	^ tableBuiltPromise
 ]

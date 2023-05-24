@@ -214,7 +214,9 @@ SpPharoJsBoxAdapter >> newHorizontal [
 					   | pct |
 					   pct := 100 / layout children size.
 					   layout children do: [ :e | 
-						   ws << ' ' << pct displayString << '%' ] ]) ]
+						   ws << ' ' << pct displayString << '%' ] ]).
+		  msg addStyle: 'grid-template-rows' value: '100%'.
+		  msg addStyle: 'height' value: '100%' ]
 ]
 
 { #category : #factory }

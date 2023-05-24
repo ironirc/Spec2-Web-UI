@@ -18,6 +18,14 @@ PhxWcSpecInputField class >> tagName [
 	^ 'sp-input'
 ]
 
+{ #category : #'web component callbacks' }
+PhxWcSpecInputField >> connected [
+
+	super connected.
+	self getAttributeNames do: [ :name | 
+		input setAttribute: name to: (self getAttribute: name) ]
+]
+
 { #category : #initialization }
 PhxWcSpecInputField >> disabled: aValue [
 
