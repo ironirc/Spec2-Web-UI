@@ -26,6 +26,19 @@ PhxWcSpecTabulator >> addTabulatorCssTo: x [
 /*# sourceMappingURL=tabulator.min.css.map */'
 ]
 
+{ #category : #'api - selection' }
+PhxWcSpecTabulator >> deselectAll [
+	"https://tabulator.info/docs/5.5/select#manage"
+	^ tabulator deselectRow
+]
+
+{ #category : #'api - selection' }
+PhxWcSpecTabulator >> deselectIndexes: indexesOrNil [
+	"https://tabulator.info/docs/5.5/select#manage"
+	"nil means all"
+	^ tabulator deselectRow: indexesOrNil
+]
+
 { #category : #initialization }
 PhxWcSpecTabulator >> focus [ 
 
@@ -78,6 +91,20 @@ PhxWcSpecTabulator >> renderOn: x [
 	tabulator
 		on: 'tableBuilt'
 		do: [ :r | resolveTableBuiltPromise value: true ]
+]
+
+{ #category : #'api - selection' }
+PhxWcSpecTabulator >> selectIndexes: indexesOrNil [
+	"https://tabulator.info/docs/5.5/select#manage"
+	"nil means all"
+	^ tabulator selectRow: indexesOrNil
+
+]
+
+{ #category : #'api - selection' }
+PhxWcSpecTabulator >> selectedIndexes [
+
+	^ (tabulator getSelectedRows collect: [ :e | e getPosition ])
 ]
 
 { #category : #initialization }

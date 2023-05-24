@@ -89,7 +89,8 @@ SpPharoJsPresenter1 >> initializePresenters [
 	table
 		addColumn: (SpStringTableColumn title: 'Seq' evaluated: #id);
 		addColumn: (SpStringTableColumn title: 'Full name' evaluated: #name);
-		items: self tableData.
+		items: self tableData;
+		beMultipleSelection.
 	tableButton1 := self newButton.
 	tableButton1
 		label: 'Do something with table';
@@ -119,7 +120,8 @@ SpPharoJsPresenter1 >> input2TextChangedTo: t [
 
 { #category : #initialization }
 SpPharoJsPresenter1 >> tableButton1Clicked [
-	table selectIndex: 5
+
+	table selectIndexes: ((1 to: 10) collect: [ :e | 16 atRandom ])
 ]
 
 { #category : #initialization }

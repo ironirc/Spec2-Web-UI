@@ -204,14 +204,14 @@ SpPharoJsTableAdapter >> refreshShowColumnHeaders [
 
 { #category : #refreshing }
 SpPharoJsTableAdapter >> refreshWidgetSelection [
-	| rowIndexes |
+
+	| rowIndexes msg |
 	rowIndexes := self presenter selection selectedIndexes.
-	rowIndexes = self widget selectedIndexes
-		ifTrue: [ ^ self ].
-	rowIndexes isEmpty
-		ifTrue: [ self widget basicSelectIndexes: #() ]
-		ifFalse: [ self widget basicSelectIndexes: rowIndexes ].
-	^ self refreshList
+	rowIndexes = self selectedIndexes ifTrue: [ ^ self ].
+	msg := SpS2cUpdateTabulatorTable new.
+	msg elementId: widget.
+	msg selections: rowIndexes.
+	self sendMessageToClient: msg
 ]
 
 { #category : #selection }
@@ -220,12 +220,18 @@ SpPharoJsTableAdapter >> selectIndex: anInteger [
 "	(anInteger = 0 and: [ widget selectedIndexes isEmpty ]) ifTrue: [ ^ self ].	
 	(widget selectedIndexes includes: anInteger) ifTrue: [^self].
 	widget selectIndex: anInteger"
+
 ]
 
 { #category : #testing }
 SpPharoJsTableAdapter >> selectedIndexes [
-	
-	^ widget selectedIndexes 
+
+	| msg envelope |
+	msg := SpS2cQuerySomeStuff new.
+	msg elementId: widget.
+	msg selectors: #( selectedIndexes ).
+	envelope := self sendMessageToClient: msg.
+	^ envelope msg results first value
 ]
 
 { #category : #factory }
