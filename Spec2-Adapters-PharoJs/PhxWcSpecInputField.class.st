@@ -28,7 +28,6 @@ PhxWcSpecInputField >> disabled: aValue [
 PhxWcSpecInputField >> focus [ 
 
 	input focus.
-	console log: 'YEAH'
 ]
 
 { #category : #initialization }

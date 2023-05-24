@@ -78,14 +78,9 @@ SpPharoJsPresenter1 >> initializePresenters [
 		color: Color random.
 	table := self newTable.
 	table
-		addColumn: (SpStringTableColumn title: 'Name' evaluated: #name);
-		items: { 
-				{ 
-					('id' -> 1).
-					('name' -> 'Ivo Roefs') }.
-				{ 
-					('id' -> 2).
-					('name' -> 'Wendy Neefs') } } asJsObject
+		addColumn: (SpStringTableColumn title: 'Seq' evaluated: #id);
+		addColumn: (SpStringTableColumn title: 'Full name' evaluated: #name);
+		items: self tableData
 ]
 
 { #category : #initialization }
@@ -107,4 +102,13 @@ SpPharoJsPresenter1 >> input2TextChangedTo: t [
 
 	input1 text: t.
 
+]
+
+{ #category : #initialization }
+SpPharoJsPresenter1 >> tableData [
+
+	^ ((1 to: 1000) asArray collect: [ :e | 
+		  { 
+			  ('id' -> e).
+			  ('name' -> ('item ' , e printString)) } asJsObject  ]) 
 ]

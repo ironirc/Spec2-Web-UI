@@ -7,7 +7,8 @@ Class {
 		'messenger'
 	],
 	#classInstVars : [
-		'incrementalExporter'
+		'incrementalExporter',
+		'current'
 	],
 	#category : #'Spec2-PharoJs'
 }
@@ -110,7 +111,8 @@ SpPharoJsClientSideApp class >> appClasses [
 	<pharoJsSkip>
 	^ SpS2cMessage withAllSubclasses , SpC2sEvent withAllSubclasses , { 
 		  PhxSpaResponse.
-		  PhxWcSpecInputField }
+		  PhxWcSpecInputField.
+		  PhxWcSpecTabulator }
 ]
 
 { #category : #pharojs }
@@ -137,7 +139,7 @@ SpPharoJsClientSideApp class >> boot [
 		self showSplashScreen.
 		self promiseAllExternalResourcesLoaded then: [ 
 			self body innerHTML: ''.
-			self new messenger setupConnectionWithServer ] ]
+			self current messenger setupConnectionWithServer ] ]
 ]
 
 { #category : #accessing }
@@ -147,6 +149,12 @@ SpPharoJsClientSideApp class >> clientId [
 			setItem: 'clientId'
 			value: PhxSpaUtils randomStringSize10 ].
 	^ localStorage getItem: 'clientId'
+]
+
+{ #category : #'instance creation' }
+SpPharoJsClientSideApp class >> current [
+	current ifNil: [ current := self new ].
+	^current
 ]
 
 { #category : #server }

@@ -207,8 +207,14 @@ SpPharoJsBoxAdapter >> layout: aLayout [
 { #category : #factory }
 SpPharoJsBoxAdapter >> newHorizontal [
 
-	^ self newPanelWith: [ :msg | "self newPanelLayout" 
-		  msg addStyle: 'flex-direction' value: 'row' ]
+	^ self newPanelWith: [ :msg | 
+		  msg
+			  addStyle: 'grid-template-columns'
+			  value: (String streamContents: [ :ws | 
+					   | pct |
+					   pct := 100 / layout children size.
+					   layout children do: [ :e | 
+						   ws << ' ' << pct displayString << '%' ] ]) ]
 ]
 
 { #category : #factory }
@@ -231,17 +237,15 @@ SpPharoJsBoxAdapter >> newPanelLayout [
 { #category : #factory }
 SpPharoJsBoxAdapter >> newVertical [
 
-	^ self newPanelWith: "self newPanelLayout"  [ :msg | 
-		  msg addStyle: 'flex-direction' value: 'column' ]
-	"	listDirection: #topToBottom;"
-	"	addMorphBack: ((startPanel := self newPanel)
-			listDirection: #topToBottom;
-			yourself);
-		addMorphBack: ((endPanel := self newPanel)
-			listDirection: #topToBottom;
-			vResizing: #shrinkWrap;
-			height: 0;
-			yourself);"
+	^ self newPanelWith: [ :msg | 
+		  msg
+			  addStyle: 'grid-template-rows'
+			  value: (String streamContents: [ :ws | 
+					   | pct |
+					   pct := 100 / layout children size.
+					   layout children do: [ :e | 
+						   ws << ' ' << pct displayString << '%' ] ]).
+		  msg addStyle: 'height' value: '100%' ]
 ]
 
 { #category : #factory }

@@ -82,10 +82,11 @@ SpPharoJsTableAdapter >> buildWidget [
 	id := self class nextIdString.
 	msg := SpS2cCreateTabulatorTable new.
 	msg styles: { 
-			('flex-grow' -> 1).
-			('flex' -> 1) }.
+			"('height' -> '500px')".
+			"('flex' -> 1)" }.
 	msg elementId: id.
-	msg data: model items.
+"	msg data: model items.
+	msg columns: self tabulatorColumns."
 	self sendMessageToClient: msg.
 	^ id
 ]
@@ -267,6 +268,16 @@ SpPharoJsTableAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 
 	self presenter activatesOnDoubleClick ifFalse: [ ^ self ].	
 	self presenter doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex
+]
+
+{ #category : #factory }
+SpPharoJsTableAdapter >> tabulatorColumns [
+
+	^ self columns collect: [ :specCol | 
+		  { 
+			  ('title' -> specCol title).
+			  ('field' -> specCol evaluation).
+			  ('editor' -> 'input') } ]
 ]
 
 { #category : #'drag and drop' }

@@ -23,7 +23,7 @@ SpC2sEvent class >> newForNativeEvent: e [
 ]
 
 { #category : #private }
-SpC2sEvent >> dispatchToSpecAdaptor: ad [
+SpC2sEvent >> dispatchToSpecAdaptor: ad requestContext: rc [
 
 	ad
 		perform:
@@ -45,7 +45,7 @@ SpC2sEvent >> respondForRequestContext: rc [
 		wind
 			traversePresentersDo: [ :p | 
 				p adapter widget = sourceId ifTrue: [ 
-					self dispatchToSpecAdaptor: p adapter ] ]
+					self dispatchToSpecAdaptor: p adapter requestContext: rc ] ]
 			excluding: Set new ]
 ]
 

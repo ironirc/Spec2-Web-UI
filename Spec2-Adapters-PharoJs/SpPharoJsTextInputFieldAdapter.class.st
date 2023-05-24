@@ -62,9 +62,9 @@ SpPharoJsTextInputFieldAdapter >> buildWidget [
 	msg := SpS2cUpdateInputElement new.
 	msg elementId: id.
 	msg events: #(  'input' 'select'  ).
-	msg styles: { 
+	"msg styles: { 
 			('flex-grow' -> 1).
-			('flex' -> 1) }.
+			('flex' -> 1) }."
 	msg attributes: { 
 			('method' -> thisContext method printString).
 			('placeholder' -> self model placeholder).

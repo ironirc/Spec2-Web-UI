@@ -2,10 +2,23 @@ Class {
 	#name : #SpS2cCreateTabulatorTable,
 	#superclass : #SpS2cUpdateElement,
 	#instVars : [
-		'data'
+		'data',
+		'columns'
 	],
 	#category : #'Spec2-PharoJs'
 }
+
+{ #category : #accessing }
+SpS2cCreateTabulatorTable >> columns [
+
+	^ columns
+]
+
+{ #category : #accessing }
+SpS2cCreateTabulatorTable >> columns: anObject [
+
+	columns := anObject
+]
 
 { #category : #accessing }
 SpS2cCreateTabulatorTable >> data [
@@ -20,21 +33,18 @@ SpS2cCreateTabulatorTable >> data: anObject [
 ]
 
 { #category : #private }
-SpS2cCreateTabulatorTable >> executeInResponseContext: rc [
+SpS2cCreateTabulatorTable >> executeInResponseContext2: rc [
 
-	| el tableData x |
+	| el x |
 	el := self ensuredElementIn: rc.
-	document body appendChild: el.
+	el app: rc wsHandler client.
 	x := PjDomBuilder newOnElement: el.
 	self updateOn: x.
 
-	global Tabulator new: '#' , elementId with: { 
-			('height' -> '100%').
-			('autoColumns' -> true).
-			('data' -> data) } asJsObject
+
 ]
 
 { #category : #private }
 SpS2cCreateTabulatorTable >> tag [
-	^'div'
+	^'sp-table'
 ]
