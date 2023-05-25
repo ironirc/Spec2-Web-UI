@@ -29,13 +29,17 @@ PhxWcSpecTabulator >> addTabulatorCssTo: x [
 { #category : #initialization }
 PhxWcSpecTabulator >> convertColumn: col columnIndex: idx [
 
-	^ { 
-		  ('title' -> col title).
-		  ('field' -> col title).
-		  " ('editor' -> 'input')."
-		  ('mutator' -> [ :value :data :type :params :component | 
-		   console log: (data at: idx + 1).
-		   data at: idx + 1 ]) } asJsObject
+	| convCol |
+	convCol := { 
+		           ('title' -> col title).
+		           ('field' -> col field).
+		           " ('editor' -> 'input')."
+		           ('mutator'
+		            -> [ :value :data :type :params :component | 
+		            data at: idx ]) } asJsObject.
+
+	col width == 0 ifTrue: [ convCol at: 'visible' put: false ].
+	^ convCol
 ]
 
 { #category : #'api - selection' }
@@ -122,18 +126,11 @@ PhxWcSpecTabulator >> selectedIndexes [
 { #category : #initialization }
 PhxWcSpecTabulator >> setColumns: columns [
 
+	"I am a web component containing a Tabulator"
+
 	| convertedCols |
 	convertedCols := OrderedCollection new.
-
-	convertedCols add: { 
-			('title' -> 'id').
-			('field' -> 'id').
-			" ('editor' -> 'input')."
-			('mutator'
-			 -> [ :value :data :type :params :component | data at: 1 ]) }
-			asJsObject.
-
-	columns withIndexDo: [ :col :idx | 
+	"{ { ('title' -> 'id') } asJsObject } ," columns withIndexDo: [ :col :idx | 
 		convertedCols add: (self convertColumn: col columnIndex: idx) ].
 	console log: 'Setting cols'.
 	console log: convertedCols.

@@ -112,7 +112,8 @@ SpPharoJsClientSideApp class >> appClasses [
 	^ SpS2cMessage withAllSubclasses , SpC2sEvent withAllSubclasses , { 
 		  PhxSpaResponse.
 		  PhxWcSpecInputField.
-		  PhxWcSpecTabulator }
+		  PhxWcSpecTabulator.
+		  SpTabulatorColumn }
 ]
 
 { #category : #pharojs }

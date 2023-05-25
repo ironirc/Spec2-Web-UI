@@ -11,15 +11,15 @@ Class {
 { #category : #private }
 SpC2sFetchTableData >> dispatchToSpecAdaptor: ad requestContext: rc [
 
-	| msg startIdx endIdx |
+	| msg startIdx endIdx pageObjects |
 	startIdx := 1 + (page - 1 * pageSize).
 	endIdx := startIdx + pageSize - 1.
 	msg := SpS2cFetchTableDataResponse new.
-	msg data: ((ad model items
-			  copyFrom: startIdx
-			  to: (endIdx min: ad model items size)) withIndexCollect: [ 
-			 :object 
-			 :idx | ad convertObjectToArrayForTabulator: object id: startIdx - 1 + idx ]).
+	pageObjects := ad model items
+		               copyFrom: startIdx
+		               to: (endIdx min: ad model items size).
+	msg data: (pageObjects withIndexCollect: [ :object :idx | 
+			 ad convertObjectToArrayForTabulator: object id: startIdx - 1 + idx ]).
 	msg lastPage: (ad model items size / pageSize) ceiling.
 	rc sendResponseMessage: msg
 ]

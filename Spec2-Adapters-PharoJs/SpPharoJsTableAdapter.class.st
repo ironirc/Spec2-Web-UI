@@ -104,9 +104,8 @@ SpPharoJsTableAdapter >> columns [
 { #category : #private }
 SpPharoJsTableAdapter >> convertObjectToArrayForTabulator: anObject id: id [
 
-	^ { id }
-	  ,
-	  (model columns collect: [ :col | col evaluation value: anObject ])
+	^ model columns collect: [ :col | 
+		  col getValueFor: anObject id: id tableAdaptor: self ]
 ]
 
 { #category : #factory }
@@ -289,12 +288,14 @@ SpPharoJsTableAdapter >> tabulatorColumns [
 
 	"Sp2F  (stands for spec to front) experimenting with coding fragments to designate intentions "
 
-	^ model columns withIndexCollect:  [ :specCol :i  | 
-		  { 
-			  ('title' -> specCol title).
-			  ('field' -> i).
+	^ model columns withIndexCollect: [ :specCol :i | 
+		specCol asTabulatorColumnWithIndex: i. 
+		
+
+		  "  ('title' -> specCol title).
+			  ('field' -> specCol evaluation asString).
 			  ('editor' -> 'input').
-			  ('formatter' -> 'html') } asJsObject ]
+			  ('formatter' -> 'html') } asJsObject" ]
 ]
 
 { #category : #'drag and drop' }

@@ -92,6 +92,7 @@ SpPharoJsPresenter1 >> initializePresenters [
 		color: Color green lighter.
 	table := self newTable.
 	table
+		addColumn: (SpIndexTableColumn  title: 'ID' evaluated: #id);
 		addColumn: (SpStringTableColumn title: 'Class' evaluated: #name);
 		addColumn:
 			(SpStringTableColumn title: 'Methods' evaluated: #numberOfMethods);
