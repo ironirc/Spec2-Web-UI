@@ -26,6 +26,18 @@ PhxWcSpecTabulator >> addTabulatorCssTo: x [
 /*# sourceMappingURL=tabulator.min.css.map */'
 ]
 
+{ #category : #initialization }
+PhxWcSpecTabulator >> convertColumn: col columnIndex: idx [
+
+	^ { 
+		  ('title' -> col title).
+		  ('field' -> col title).
+		  " ('editor' -> 'input')."
+		  ('mutator' -> [ :value :data :type :params :component | 
+		   console log: (data at: idx + 1).
+		   data at: idx + 1 ]) } asJsObject
+]
+
 { #category : #'api - selection' }
 PhxWcSpecTabulator >> deselectAll [
 	"https://tabulator.info/docs/5.5/select#manage"
@@ -110,8 +122,22 @@ PhxWcSpecTabulator >> selectedIndexes [
 { #category : #initialization }
 PhxWcSpecTabulator >> setColumns: columns [
 
-	console log: columns.
-	tabulator setColumns: columns
+	| convertedCols |
+	convertedCols := OrderedCollection new.
+
+	convertedCols add: { 
+			('title' -> 'id').
+			('field' -> 'id').
+			" ('editor' -> 'input')."
+			('mutator'
+			 -> [ :value :data :type :params :component | data at: 1 ]) }
+			asJsObject.
+
+	columns withIndexDo: [ :col :idx | 
+		convertedCols add: (self convertColumn: col columnIndex: idx) ].
+	console log: 'Setting cols'.
+	console log: convertedCols.
+	tabulator setColumns: convertedCols
 ]
 
 { #category : #initialization }

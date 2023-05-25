@@ -101,6 +101,14 @@ SpPharoJsTableAdapter >> columns [
 	^ widget columns
 ]
 
+{ #category : #private }
+SpPharoJsTableAdapter >> convertObjectToArrayForTabulator: anObject id: id [
+
+	^ { id }
+	  ,
+	  (model columns collect: [ :col | col evaluation value: anObject ])
+]
+
 { #category : #factory }
 SpPharoJsTableAdapter >> defaultColumn [
 
@@ -278,12 +286,15 @@ SpPharoJsTableAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 
 { #category : #factory }
 SpPharoJsTableAdapter >> tabulatorColumns [
+
 	"Sp2F  (stands for spec to front) experimenting with coding fragments to designate intentions "
-	^ model columns collect: [ :specCol | 
+
+	^ model columns withIndexCollect:  [ :specCol :i  | 
 		  { 
 			  ('title' -> specCol title).
-			  ('field' -> specCol evaluation).
-			  ('editor' -> 'input') } asJsObject ]
+			  ('field' -> i).
+			  ('editor' -> 'input').
+			  ('formatter' -> 'html') } asJsObject ]
 ]
 
 { #category : #'drag and drop' }

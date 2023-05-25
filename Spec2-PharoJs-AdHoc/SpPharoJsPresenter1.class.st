@@ -45,16 +45,23 @@ SpPharoJsPresenter1 >> button1Clicked [
 { #category : #initialization }
 SpPharoJsPresenter1 >> button2Clicked [
 
-	"Color random ifNotNil: [ :clr |" "input enabled: input isEnabled not"
+	"Color random ifNotNil: [ :clr |"
+
+	"input enabled: input isEnabled not"
+
 	"	button2 color: clr.
 		button2 label: clr asHexString."
-		"input text: 'Button changed to color #' , clr asHexString."
 
-	"	button2 label:" "input adapter selectionInterval displayString."
-		"	'Selected: ' , input1 selectedText."
-			
-input2 text: DateAndTime now asString
+	"input text: 'Button changed to color #' , clr asHexString."
 
+	"	button2 label:"
+
+	"input adapter selectionInterval displayString."
+
+	"	'Selected: ' , input1 selectedText."
+
+	input2 text: DateAndTime now asString.
+	button2 color: Color random muchLighter 
 ]
 
 { #category : #initialization }
@@ -65,9 +72,7 @@ SpPharoJsPresenter1 >> connectPresenters [
 	input1 whenTextChangedDo: [ :t | self input1TextChangedTo: t ].
 	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ].
 	input2 whenTextChangedDo: [ :t | self input2TextChangedTo: t ].
-"	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ]	"
-		
-tableButton1 action: [ self tableButton1Clicked ].
+	tableButton1 action: [ self tableButton1Clicked ]
 ]
 
 { #category : #initialization }
@@ -87,14 +92,18 @@ SpPharoJsPresenter1 >> initializePresenters [
 		color: Color green lighter.
 	table := self newTable.
 	table
-		addColumn: (SpStringTableColumn title: 'Seq' evaluated: #id);
-		addColumn: (SpStringTableColumn title: 'Full name' evaluated: #name);
+		addColumn: (SpStringTableColumn title: 'Class' evaluated: #name);
+		addColumn:
+			(SpStringTableColumn title: 'Methods' evaluated: #numberOfMethods);
+		addColumn: (SpStringTableColumn
+				 title: 'Instvars'
+				 evaluated: [ :e | e instVarNames size ]);
 		items: self tableData;
 		beMultipleSelection.
 	tableButton1 := self newButton.
 	tableButton1
-		label: 'Do something with table';
-		color: Color yellow
+		label: 'select 3 random items';
+		color: Color orange lighter
 ]
 
 { #category : #initialization }
@@ -121,14 +130,11 @@ SpPharoJsPresenter1 >> input2TextChangedTo: t [
 { #category : #initialization }
 SpPharoJsPresenter1 >> tableButton1Clicked [
 
-	table selectIndexes: ((1 to: 10) collect: [ :e | 16 atRandom ])
+	table selectIndexes: ((1 to: 3) collect: [ :e | 10 atRandom ])
 ]
 
 { #category : #initialization }
 SpPharoJsPresenter1 >> tableData [
 
-	^ ((1 to: 100) asArray collect: [ :e | 
-		  { 
-			  ('id' -> e).
-			  ('name' -> ('item ' , e printString)) } asJsObject  ]) 
+	^ Collection withAllSubclasses
 ]
