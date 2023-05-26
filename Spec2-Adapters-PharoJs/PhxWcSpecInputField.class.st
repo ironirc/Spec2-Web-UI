@@ -9,7 +9,7 @@ Class {
 		'selectionEnd',
 		'mouseDown'
 	],
-	#category : #'Spec2-Adapters-PharoJs'
+	#category : #'Spec2-Adapters-PharoJs-WebComponents'
 }
 
 { #category : #'as yet unclassified' }
