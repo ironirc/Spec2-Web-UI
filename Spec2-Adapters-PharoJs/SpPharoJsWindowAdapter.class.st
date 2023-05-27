@@ -1,6 +1,9 @@
 Class {
 	#name : #SpPharoJsWindowAdapter,
 	#superclass : #SpAbstractPharoJsWindowAdapter,
+	#instVars : [
+		'windowId'
+	],
 	#category : #'Spec2-Adapters-PharoJs-Base'
 }
 
@@ -256,9 +259,9 @@ SpPharoJsWindowAdapter >> title [
 { #category : #'widget API' }
 SpPharoJsWindowAdapter >> title: aString [
 
-	self widgetDo: [ :w | 
+	"self widgetDo: [ :w | 
 		w setLabel: (aString ifNotNil: [ :theString | 
-				 theString localizedForPresenter: self presenter ]) ]
+				 theString localizedForPresenter: self presenter ]) ]"
 ]
 
 { #category : #updating }
@@ -266,6 +269,18 @@ SpPharoJsWindowAdapter >> windowClosed [
 
 	self windowIsClosing.
 	self presenter windowClosed
+]
+
+{ #category : #accessing }
+SpPharoJsWindowAdapter >> windowId [
+
+	^ windowId
+]
+
+{ #category : #accessing }
+SpPharoJsWindowAdapter >> windowId: anObject [
+
+	windowId := anObject
 ]
 
 { #category : #updating }

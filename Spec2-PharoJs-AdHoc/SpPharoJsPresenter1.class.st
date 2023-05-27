@@ -99,11 +99,14 @@ SpPharoJsPresenter1 >> initializePresenters [
 		addColumn: (SpStringTableColumn
 				 title: 'Instvars'
 				 evaluated: [ :e | e instVarNames size ]);
+	addColumn: (SpCheckBoxTableColumn
+				 title: 'No instvars'
+				 evaluated: [ :e | e instVarNames size = 0 ]);
 		items: self tableData;
 		beMultipleSelection.
 	tableButton1 := self newButton.
 	tableButton1
-		label: 'select 3 random items';
+		label: 'select some random items';
 		color: Color orange lighter
 ]
 
@@ -131,7 +134,7 @@ SpPharoJsPresenter1 >> input2TextChangedTo: t [
 { #category : #initialization }
 SpPharoJsPresenter1 >> tableButton1Clicked [
 
-	table selectIndexes: ((1 to: 3) collect: [ :e | 10 atRandom ])
+	table selectIndexes: ((1 to: 50) collect: [ :e | self tableData size atRandom ])
 ]
 
 { #category : #initialization }

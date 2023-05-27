@@ -11,9 +11,23 @@ Class {
 }
 
 { #category : #accessing }
-SpPharoJsSessionRegistry class >> appAtClientId: id ifAbsentPut: aBlock [
+SpPharoJsSessionRegistry class >> appForClientId: clientId sessionId: sessionId [
 
-	^ self sessions at: id ifAbsentPut: aBlock
+	^ sessions at: clientId , sessionId
+]
+
+{ #category : #accessing }
+SpPharoJsSessionRegistry class >> ensureValidExistingOrNewSessionForClientId: clientId sessionId: sessionId [
+
+	| newApp newSessionId |
+	sessions
+		at: clientId , sessionId
+		ifPresent: [ :app | "check if app instance is still ok" ^ sessionId ].
+	newSessionId := PhxRandom uuid asString.
+	newApp := SpPharoJsApp1 new.
+	newApp useBackend: #PharoJs.
+	sessions at: clientId , newSessionId put: newApp.
+	^ newSessionId
 ]
 
 { #category : #accessing }

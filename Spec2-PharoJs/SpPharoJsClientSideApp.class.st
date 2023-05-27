@@ -145,11 +145,8 @@ SpPharoJsClientSideApp class >> boot [
 
 { #category : #accessing }
 SpPharoJsClientSideApp class >> clientId [
-	(localStorage getItem: 'clientId') ifNil: [ 
-		localStorage
-			setItem: 'clientId'
-			value: PhxSpaUtils randomStringSize10 ].
-	^ localStorage getItem: 'clientId'
+
+	^ PhxBrowserPersistentClientId value
 ]
 
 { #category : #'instance creation' }
@@ -359,10 +356,38 @@ SpPharoJsClientSideApp >> messenger [
 { #category : #components }
 SpPharoJsClientSideApp >> onWebSocketOpen: ev [
 
-	| msg |
-	msg := SpC2sStartApp new. 
- 
-	self messenger sendMessageToServer: msg.
+	self promiseAppSession then: [ :uuid | 
+		| msg |
+		msg := SpC2sStartOrResumeApp new.
+		msg clientId: PhxBrowserPersistentClientId value.
+		msg sessionId: PhxBrowserExpiringSessionId value.
+		msg windowId: PhxBrowserWindowId value.
+		self messenger sendMessageToServer: msg ]
+]
+
+{ #category : #components }
+SpPharoJsClientSideApp >> promiseAppSession [
+
+	^ self promise: [ :resolve :reject | 
+		  | msg |
+		  self logAll: { 'sending start app session to server' }.
+		  msg := SpC2sStartAppSession new.
+		  msg clientId: PhxBrowserPersistentClientId value.
+		  msg sessionId: PhxBrowserExpiringSessionId value.
+"		  msg windowId: PhxBrowserWindowId value."
+		  self messenger
+			  sendMessageToServer: msg
+			  onResponseDo: [ :env | 
+				  | sessionId |
+				  self logAll: { 
+						  'receiving session envelope:'.
+						  env }.
+				  sessionId := env msg payload.
+				  PhxBrowserExpiringSessionId
+					  value: sessionId
+					  expireInSeconds: 3600.
+				  resolve value: sessionId ]
+			  isResponseToIncomingEnvelope: nil ]
 ]
 
 { #category : #'server messaging' }

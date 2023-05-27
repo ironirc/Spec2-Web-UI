@@ -63,3 +63,14 @@ SpPharoJsApp1 >> start [
 		^ self ].
 	(self new: SpPharoJsPresenter1) open
 ]
+
+{ #category : #accessing }
+SpPharoJsApp1 >> startWindowId: windowId [
+
+	| windowPresenter |
+	self windows do: [ :win | 
+		win adapter windowId = windowId ifTrue: [ ^ self ] ].
+	windowPresenter := (self new: SpPharoJsPresenter1) asWindow.
+	windowPresenter open.
+	windowPresenter adapter windowId: windowId
+]

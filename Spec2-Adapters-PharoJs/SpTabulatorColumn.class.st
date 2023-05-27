@@ -5,7 +5,8 @@ Class {
 		'field',
 		'index',
 		'title',
-		'width'
+		'width',
+		'type'
 	],
 	#category : #'Spec2-Adapters-PharoJs-Table'
 }
@@ -44,6 +45,18 @@ SpTabulatorColumn >> title [
 SpTabulatorColumn >> title: anObject [
 
 	title := anObject
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> type [
+
+	^ type
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> type: anObject [
+
+	type := anObject
 ]
 
 { #category : #accessing }

@@ -29,17 +29,20 @@ PhxWcSpecTabulator >> addTabulatorCssTo: x [
 { #category : #initialization }
 PhxWcSpecTabulator >> convertColumn: col columnIndex: idx [
 
-	| convCol |
-	convCol := { 
-		           ('title' -> col title).
-		           ('field' -> col field).
-		           " ('editor' -> 'input')."
-		           ('mutator'
-		            -> [ :value :data :type :params :component | 
-		            data at: idx ]) } asJsObject.
+	| tabulatorColumn |
+	tabulatorColumn := { 
+		                   ('title' -> col title).
+		                   ('field' -> col field).
+		                   " ('editor' -> 'input')."
+		                   ('mutator'
+		                    -> [ :value :data :type :params :component | 
+		                    data at: idx ]) } asJsObject.
 
-	col width == 0 ifTrue: [ convCol at: 'visible' put: false ].
-	^ convCol
+	col width == 0 ifTrue: [ tabulatorColumn at: 'visible' put: false ].
+	col type == #checkBox ifTrue: [ 
+		"tabulatorColumn at: 'editor' put: 'tickCross'."
+		tabulatorColumn at: 'formatter' put: 'tickCross' ].
+	^ tabulatorColumn
 ]
 
 { #category : #'api - selection' }
@@ -98,6 +101,7 @@ PhxWcSpecTabulator >> renderOn: x [
 			             ('progressiveLoad' -> 'load').
 			             ('ajaxURL' -> '*').
 			             ('paginationSize' -> 100).
+			             ('movableColumns' -> true).
 			             ('ajaxRequestFunc'
 			              -> [ :url :config :params | "console log: url _: config _: params." 
 				              self promiseDataFor: params ]) } asJsObject.
