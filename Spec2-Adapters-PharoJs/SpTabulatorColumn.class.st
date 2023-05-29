@@ -6,7 +6,8 @@ Class {
 		'index',
 		'title',
 		'width',
-		'type'
+		'type',
+		'horizontalAlignment'
 	],
 	#category : #'Spec2-Adapters-PharoJs-Table'
 }
@@ -21,6 +22,18 @@ SpTabulatorColumn >> field [
 SpTabulatorColumn >> field: anObject [
 
 	field := anObject
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> horizontalAlignment [
+
+	^ horizontalAlignment
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> horizontalAlignment: anObject [
+
+	horizontalAlignment := anObject
 ]
 
 { #category : #accessing }

@@ -8,7 +8,9 @@ SpStringTableColumn >> asTabulatorColumnWithIndex: i [
 	col title: self title.
 	col field: 'col' , i printString.
 	col index: i.
-	^col
+	self displayAlignment ifNotNil: [ :da |
+		col horizontalAlignment: (da value: nil) asTabulatorAlignment ].
+	^ col
 ]
 
 { #category : #'*Spec2-Adapters-PharoJs' }

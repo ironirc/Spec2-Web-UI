@@ -30,18 +30,19 @@ PhxWcSpecTabulator >> addTabulatorCssTo: x [
 PhxWcSpecTabulator >> convertColumn: col columnIndex: idx [
 
 	| tabulatorColumn |
-	tabulatorColumn := { 
+	tabulatorColumn := {
 		                   ('title' -> col title).
 		                   ('field' -> col field).
 		                   " ('editor' -> 'input')."
 		                   ('mutator'
-		                    -> [ :value :data :type :params :component | 
+		                    -> [ :value :data :type :params :component |
 		                    data at: idx ]) } asJsObject.
 
 	col width == 0 ifTrue: [ tabulatorColumn at: 'visible' put: false ].
-	col type == #checkBox ifTrue: [ 
-		"tabulatorColumn at: 'editor' put: 'tickCross'."
+	col type == #checkBox ifTrue: [ "tabulatorColumn at: 'editor' put: 'tickCross'."
 		tabulatorColumn at: 'formatter' put: 'tickCross' ].
+	col horizontalAlignment ifNotNil: [ :a |
+		tabulatorColumn at: 'hozAlign' put: a ].
 	^ tabulatorColumn
 ]
 

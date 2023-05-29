@@ -103,10 +103,10 @@ SpAbstractPharoJsWindowAdapter >> newContainerMorph [
 	msg elementId: id.
 	msg tag: 'div'.
 	msg styles: { 
-			('background-color' -> '#0A0').
+			('background-color' -> '#EEE').
 			('height' -> '100vh').
 			"('display' -> 'flex')" }.
-	msg attributes: { ('method' -> thisContext method printString) }.
+	msg attributes: { ('ph-src' -> thisContext method printString) }.
 	self sendMessageToClient: msg.
 	^ id
 ]

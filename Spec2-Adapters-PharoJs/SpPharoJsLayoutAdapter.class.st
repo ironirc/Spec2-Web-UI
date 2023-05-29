@@ -165,10 +165,10 @@ SpPharoJsLayoutAdapter >> newPanelWith: aBlock [
 	msg elementId: id.
 	msg tag: 'div'.
 	msg styles: { 
-			('background-color' -> '#800').
+			('background-color' -> '#EEE').
 			('display' -> 'grid').
 			"('flex-grow' -> 1) "}.
-	msg attributes: { ('method' -> thisContext method printString) }.
+	msg attributes: { ('ph-src' -> thisContext method printString) }.
 	aBlock value: msg.
 	self sendMessageToClient: msg.
 	^ id

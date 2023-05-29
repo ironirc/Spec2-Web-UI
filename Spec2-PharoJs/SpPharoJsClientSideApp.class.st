@@ -118,7 +118,10 @@ SpPharoJsClientSideApp class >> appClasses [
 
 { #category : #pharojs }
 SpPharoJsClientSideApp class >> appLaunchBlock [
-	^[]
+
+	| appClass |
+	appClass := self.
+	^ [ appClass yourself ] asClosedBlock
 ]
 
 { #category : #pharojs }

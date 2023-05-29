@@ -69,9 +69,9 @@ SpPharoJsWindowAdapter >> buildWidget [
 	msg elementId: id.
 	msg tag: 'div'.
 	msg styles: { 
-			('background-color' -> '#00C').
+			('background-color' -> '#EEE').
 			"('height' -> '100vh')" }.
-	msg attributes: { ('method' -> thisContext method printString) }.
+	msg attributes: { ('ph-src' -> thisContext method printString) }.
 	self sendMessageToClient: msg.
 	^ id
 ]

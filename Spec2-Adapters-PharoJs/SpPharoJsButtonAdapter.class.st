@@ -73,7 +73,7 @@ SpPharoJsButtonAdapter >> buildWidget [
 			('background-color' -> ('#' , self color asHexString)).
 		"	('flex-grow' -> 1).
 			('flex' -> 1)" }.
-	msg attributes: { ('method' -> thisContext method printString) }.
+	msg attributes: { ('ph-src' -> thisContext method printString) }.
 	self sendMessageToClient: msg.
 
 	^ id

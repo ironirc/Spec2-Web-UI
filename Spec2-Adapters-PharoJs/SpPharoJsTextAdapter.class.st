@@ -80,7 +80,7 @@ SpPharoJsTextAdapter >> buildWidget [
 	msg styles: { 
 			('background-color' -> ('#' , self color asHexString)).
 			('flex-grow' -> 1) }.
-	msg attributes: { ('method' -> thisContext method printString) }.
+	msg attributes: { ('ph-src' -> thisContext method printString) }.
 	self sendMessageToClient: msg.
 
 	^ id

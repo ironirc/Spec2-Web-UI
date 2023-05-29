@@ -7,7 +7,8 @@ Class {
 		'button1',
 		'input2',
 		'table',
-		'tableButton1'
+		'tableButton1',
+		'label1'
 	],
 	#category : #'Spec2-PharoJs-AdHoc'
 }
@@ -29,6 +30,7 @@ SpPharoJsPresenter1 class >> defaultLayout [
 		add: #button2.
 	main
 		add: #button1;
+		add: #label1;
 		add: #input1;
 		add: row;
 		add: bottomRow.
@@ -61,7 +63,7 @@ SpPharoJsPresenter1 >> button2Clicked [
 	"	'Selected: ' , input1 selectedText."
 
 	input2 text: DateAndTime now asString.
-	button2 color: Color random muchLighter 
+	input2 color: Color random muchLighter 
 ]
 
 { #category : #initialization }
@@ -82,6 +84,8 @@ SpPharoJsPresenter1 >> initializePresenters [
 	button1
 		label: 'Inspect presenter';
 		color: Color yellow.
+	label1 := self newLabel.
+	label1 label: 'label1'.
 	input1 := self newTextInput.
 	input1 placeholder: 'input1 ... '.
 	input2 := self newTextInput.
@@ -92,16 +96,22 @@ SpPharoJsPresenter1 >> initializePresenters [
 		color: Color green lighter.
 	table := self newTable.
 	table
-		addColumn: (SpIndexTableColumn  title: 'ID' evaluated: #id);
+		addColumn: (SpIndexTableColumn title: 'ID' evaluated: #id);
 		addColumn: (SpStringTableColumn title: 'Class' evaluated: #name);
 		addColumn:
-			(SpStringTableColumn title: 'Methods' evaluated: #numberOfMethods);
-		addColumn: (SpStringTableColumn
-				 title: 'Instvars'
-				 evaluated: [ :e | e instVarNames size ]);
-	addColumn: (SpCheckBoxTableColumn
-				 title: 'No instvars'
-				 evaluated: [ :e | e instVarNames size = 0 ]);
+			((SpStringTableColumn title: 'Methods' evaluated: #numberOfMethods)
+				 displayAlignment: [ :each | SpColumnAlignment right ];
+				 yourself);
+		addColumn: ((SpStringTableColumn
+				  title: 'Instvars'
+				  evaluated: [ :e | e instVarNames size ])
+				 displayAlignment: [ :each | SpColumnAlignment right ];
+				 yourself);
+		addColumn: ((SpCheckBoxTableColumn
+				  title: 'has vars'
+				  evaluated: [ :e | e instVarNames size > 0 ])
+				 displayAlignment: [ :each | SpColumnAlignment center ];
+				 yourself);
 		items: self tableData;
 		beMultipleSelection.
 	tableButton1 := self newButton.

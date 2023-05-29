@@ -87,6 +87,7 @@ SpPharoJsTableAdapter >> buildWidget [
 	msg elementId: id.
 "	msg data: model items."
 	msg columns: self tabulatorColumns.
+	msg attributes: { ('ph-src' -> thisContext method printString) }.
 	self sendMessageToClient: msg.
 	^ id
 ]
