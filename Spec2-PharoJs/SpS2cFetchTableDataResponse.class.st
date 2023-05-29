@@ -9,6 +9,18 @@ Class {
 }
 
 { #category : #accessing }
+SpS2cFetchTableDataResponse >> currentPage [
+
+	^ currentPage
+]
+
+{ #category : #accessing }
+SpS2cFetchTableDataResponse >> currentPage: anObject [
+
+	currentPage := anObject
+]
+
+{ #category : #accessing }
 SpS2cFetchTableDataResponse >> data [
 
 	^ data
@@ -23,11 +35,11 @@ SpS2cFetchTableDataResponse >> data: anObject [
 { #category : #accessing }
 SpS2cFetchTableDataResponse >> lastPage [
 
-	^ last_page
+	^ lastPage
 ]
 
 { #category : #accessing }
 SpS2cFetchTableDataResponse >> lastPage: anObject [
 
-	last_page := anObject
+	lastPage := anObject
 ]

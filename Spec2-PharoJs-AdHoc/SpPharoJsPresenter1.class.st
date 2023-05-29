@@ -97,14 +97,21 @@ SpPharoJsPresenter1 >> initializePresenters [
 	table := self newTable.
 	table
 		addColumn: (SpIndexTableColumn title: 'ID' evaluated: #id);
+		"	addColumn: ((SpImageTableColumn
+				  title: 'Icon'
+				  evaluated: [ :aClass | self iconNamed: aClass systemIconName ])
+				 width: 50;
+				 displayAlignment: [ :each | SpColumnAlignment center ];
+				 yourself);"
 		addColumn: (SpStringTableColumn title: 'Class' evaluated: #name);
-		addColumn:
-			((SpStringTableColumn title: 'Methods' evaluated: #numberOfMethods)
+		addColumn: ((SpStringTableColumn
+				  title: 'Methods'
+				  evaluated: [ :e | e numberOfMethods displayString ])
 				 displayAlignment: [ :each | SpColumnAlignment right ];
 				 yourself);
 		addColumn: ((SpStringTableColumn
 				  title: 'Instvars'
-				  evaluated: [ :e | e instVarNames size ])
+				  evaluated: [ :e | e instVarNames size displayString ])
 				 displayAlignment: [ :each | SpColumnAlignment right ];
 				 yourself);
 		addColumn: ((SpCheckBoxTableColumn
@@ -150,5 +157,5 @@ SpPharoJsPresenter1 >> tableButton1Clicked [
 { #category : #initialization }
 SpPharoJsPresenter1 >> tableData [
 
-	^ Collection withAllSubclasses
+	^ Object withAllSubclasses "first: 10"
 ]

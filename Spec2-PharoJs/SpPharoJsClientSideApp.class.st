@@ -109,11 +109,12 @@ select {
 SpPharoJsClientSideApp class >> appClasses [
 
 	<pharoJsSkip>
-	^ SpS2cMessage withAllSubclasses , SpC2sEvent withAllSubclasses , { 
+	^ SpS2cMessage withAllSubclasses , SpC2sEvent withAllSubclasses , {
 		  PhxSpaResponse.
 		  PhxWcSpecInputField.
 		  PhxWcSpecTabulator.
-		  SpTabulatorColumn }
+		  SpTabulatorColumn.
+		  SpPharoJsImage }
 ]
 
 { #category : #pharojs }

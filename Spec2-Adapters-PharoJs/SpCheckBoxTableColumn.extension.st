@@ -8,7 +8,8 @@ SpCheckBoxTableColumn >> asTabulatorColumnWithIndex: i [
 	col title: self title.
 	col field: 'col' , i printString.
 	col index: i.
-	col type: #checkBox.
+	col type: #Boolean.
+	col formatter: #tickCross.
 	self displayAlignment ifNotNil: [ :da |
 		col horizontalAlignment: (da value: nil) asTabulatorAlignment ].
 	^ col

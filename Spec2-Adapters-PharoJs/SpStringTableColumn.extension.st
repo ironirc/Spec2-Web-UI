@@ -7,6 +7,7 @@ SpStringTableColumn >> asTabulatorColumnWithIndex: i [
 	col := SpTabulatorColumn new.
 	col title: self title.
 	col field: 'col' , i printString.
+	col type: #String.
 	col index: i.
 	self displayAlignment ifNotNil: [ :da |
 		col horizontalAlignment: (da value: nil) asTabulatorAlignment ].

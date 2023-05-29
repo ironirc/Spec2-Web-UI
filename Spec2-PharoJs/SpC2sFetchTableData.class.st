@@ -20,6 +20,7 @@ SpC2sFetchTableData >> dispatchToSpecAdaptor: ad requestContext: rc [
 		               to: (endIdx min: ad model items size).
 	msg data: (pageObjects withIndexCollect: [ :object :idx | 
 			 ad convertObjectToArrayForTabulator: object id: startIdx - 1 + idx ]).
+	msg currentPage: page.
 	msg lastPage: (ad model items size / pageSize) ceiling.
 	rc sendResponseMessage: msg
 ]

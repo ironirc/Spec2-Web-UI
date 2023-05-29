@@ -1,3 +1,6 @@
+"
+I am a web component containing a Tabulator
+"
 Class {
 	#name : #PhxWcSpecTabulator,
 	#superclass : #PjWebComponent,
@@ -7,7 +10,8 @@ Class {
 		'div',
 		'tabulator',
 		'tableBuiltPromise',
-		'resolveTableBuiltPromise'
+		'resolveTableBuiltPromise',
+		'columns'
 	],
 	#category : #'Spec2-Adapters-PharoJs-WebComponents'
 }
@@ -34,13 +38,13 @@ PhxWcSpecTabulator >> convertColumn: col columnIndex: idx [
 		                   ('title' -> col title).
 		                   ('field' -> col field).
 		                   " ('editor' -> 'input')."
-		                   ('mutator'
+		                  " ('mutator'
 		                    -> [ :value :data :type :params :component |
-		                    data at: idx ]) } asJsObject.
+		                    data at: idx ])" } asJsObject.
 
 	col width == 0 ifTrue: [ tabulatorColumn at: 'visible' put: false ].
-	col type == #checkBox ifTrue: [ "tabulatorColumn at: 'editor' put: 'tickCross'."
-		tabulatorColumn at: 'formatter' put: 'tickCross' ].
+	col getFormatter ifNotNil: [ :f |
+		tabulatorColumn at: 'formatter' put: f ].
 	col horizontalAlignment ifNotNil: [ :a |
 		tabulatorColumn at: 'hozAlign' put: a ].
 	^ tabulatorColumn
@@ -80,12 +84,16 @@ PhxWcSpecTabulator >> promiseDataFor: params [
 	msg sourceId: self id.
 	msg page: params page.
 	msg pageSize: (params at: #size).
-	^ self promise: [ :resolve :reject | 
+	^ self promise: [ :resolve :reject |
+		  console time: 'fetch page'.
 		  SpPharoJsClientSideApp current messenger
 			  sendMessageToServer: msg
 			  onResponseDo: [ :resp |
-				console log: resp msg. 
-				 resolve value: resp msg ]
+				  console log: resp msg.
+
+				  resp msg data: (self unpackTableData: resp msg data).
+				  resolve value: resp msg.
+				  console timeEnd: 'fetch page' ]
 			  isResponseToIncomingEnvelope: nil ]
 ]
 
@@ -96,22 +104,53 @@ PhxWcSpecTabulator >> renderOn: x [
 	x style: '*, *:before, *:after {
     box-sizing: border-box;'.
 	x div: [ :el | div := el ].
-	tabulator := global Tabulator new: div with: { 
+	tabulator := global Tabulator new: div with: {
 			             ('height' -> '100%').
-			             ('selectable' -> true).
+			             "			             ('renderVertical' -> 'virtual')."
+			             ('selectable' -> false).
 			             ('progressiveLoad' -> 'load').
+			             ('dataReceiveParams' -> {
+				              ('current_page' -> 'currentPage').
+				              ('last_page' -> 'lastPage').
+				              ('data' -> 'data') } asJsObject).
 			             ('ajaxURL' -> '*').
-			             ('paginationSize' -> 100).
+			             ('paginationSize' -> 1000).
 			             ('movableColumns' -> true).
 			             ('ajaxRequestFunc'
-			              -> [ :url :config :params | "console log: url _: config _: params." 
-				              self promiseDataFor: params ]) } asJsObject.
+			              -> [ :url :config :params | "console log: url _: config _: params."
+			
+				              self promiseDataFor: params ]).
+			            " ('ajaxResponse' -> [ :url :params :response | self unpackTableData: response  ])" }
+			             asJsObject.
 	tabulator
 		on: 'rowSelected'
 		do: [ :r | console log: 'selected row' ].
 	tabulator
 		on: 'tableBuilt'
-		do: [ :r | resolveTableBuiltPromise value: true ]
+		do: [ :r | resolveTableBuiltPromise value: true ].
+	tabulator
+		on: 'dataLoading'
+		do: [ :r | console time: 'dataLoad' ].
+	tabulator
+		on: 'dataLoaded'
+		do: [ :r | console timeEnd: 'dataLoad' ].
+	tabulator
+		on: 'dataProcessing'
+		do: [ :r | console time: 'dataProcessed' ].
+	tabulator
+		on: 'dataProcessed'
+		do: [ :r | console timeEnd: 'dataProcessed' ].
+tabulator
+		on: 'renderStarted'
+		do: [ :r | console time: 'rendering' ].
+	tabulator
+		on: 'renderComplete'
+		do: [ :r | console timeEnd: 'rendering' ].
+	tabulator
+		on: 'pageLoaded'
+		do: [ :r | console timeEnd: 'pageLoaded'. 	console time: 'pageLoaded'.   ].
+		
+	
 ]
 
 { #category : #'api - selection' }
@@ -129,13 +168,12 @@ PhxWcSpecTabulator >> selectedIndexes [
 ]
 
 { #category : #initialization }
-PhxWcSpecTabulator >> setColumns: columns [
-
-	"I am a web component containing a Tabulator"
+PhxWcSpecTabulator >> setColumns: aCollection [
 
 	| convertedCols |
+	columns := aCollection.
 	convertedCols := OrderedCollection new.
-	"{ { ('title' -> 'id') } asJsObject } ," columns withIndexDo: [ :col :idx | 
+	aCollection withIndexDo: [ :col :idx |
 		convertedCols add: (self convertColumn: col columnIndex: idx) ].
 	console log: 'Setting cols'.
 	console log: convertedCols.
@@ -149,4 +187,17 @@ PhxWcSpecTabulator >> tableBuiltPromise [
 		tableBuiltPromise := self promise: [ :resolve :reject | 
 			                     resolveTableBuiltPromise := resolve ] ].
 	^ tableBuiltPromise
+]
+
+{ #category : #initialization }
+PhxWcSpecTabulator >> unpackTableData: array [
+
+	^ array collect: [ :rowArray |
+		  | newRowObject |
+		  newRowObject := Object new.
+		  columns withIndexDo: [ :col :colIdx |
+			  newRowObject
+				  at: col field
+				  put: (col unpackTableColumnData: (rowArray at: colIdx)) ].
+		  newRowObject ]
 ]

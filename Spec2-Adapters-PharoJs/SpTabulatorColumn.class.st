@@ -1,13 +1,14 @@
 Class {
 	#name : #SpTabulatorColumn,
-	#superclass : #Object,
+	#superclass : #PjDomController,
 	#instVars : [
 		'field',
 		'index',
 		'title',
 		'width',
 		'type',
-		'horizontalAlignment'
+		'horizontalAlignment',
+		'formatter'
 	],
 	#category : #'Spec2-Adapters-PharoJs-Table'
 }
@@ -22,6 +23,26 @@ SpTabulatorColumn >> field [
 SpTabulatorColumn >> field: anObject [
 
 	field := anObject
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> formatter [
+
+	^ formatter
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> formatter: anObject [
+
+	formatter := anObject
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> getFormatter [
+
+	type = #Base64Jpg ifTrue: [
+		^ [ :cell :formatterParams :onRendered | cell getValue ] ].
+	^ formatter
 ]
 
 { #category : #accessing }
@@ -70,6 +91,21 @@ SpTabulatorColumn >> type [
 SpTabulatorColumn >> type: anObject [
 
 	type := anObject
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> unpackBase64Jpg: anObject [
+
+	^ global Image new
+		  src: 'data:image/jpeg;base64,' , anObject b64Array;
+		  yourself
+]
+
+{ #category : #accessing }
+SpTabulatorColumn >> unpackTableColumnData: anObject [
+
+	type = #Base64Jpg ifTrue: [ ^self unpackBase64Jpg: anObject ].
+	^ anObject
 ]
 
 { #category : #accessing }
