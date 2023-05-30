@@ -10,8 +10,8 @@ SpImageTableColumn >> asTabulatorColumnWithIndex: i [
 	col index: i.
 	col type: #Base64Jpg.
 	col formatter: 'image'.
-"	self displayAlignment ifNotNil: [ :da |
-		col horizontalAlignment: (da value: nil) asTabulatorAlignment ]."
+	self displayAlignment ifNotNil: [ :da |
+		col horizontalAlignment: (da value: nil) asTabulatorAlignment ].
 	^ col
 "	
 

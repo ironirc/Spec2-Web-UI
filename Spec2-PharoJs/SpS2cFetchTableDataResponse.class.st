@@ -3,7 +3,8 @@ Class {
 	#superclass : #SpS2cMessage,
 	#instVars : [
 		'data',
-		'last_page'
+		'currentPage',
+		'lastPage'
 	],
 	#category : #'Spec2-PharoJs'
 }
