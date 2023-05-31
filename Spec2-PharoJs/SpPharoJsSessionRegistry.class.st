@@ -24,7 +24,7 @@ SpPharoJsSessionRegistry class >> ensureValidExistingOrNewSessionForClientId: cl
 	self sessions
 		at: clientId , sessionId
 		ifPresent: [ :app | "TODO: check if app instance is still ok" ^ sessionId ]].
-	newSessionId := PhxRandom uuid asString.
+	newSessionId := UUIDGenerator next asString.
 	newApp := SpPharoJsApp1 new.
 	newApp useBackend: #PharoJs.
 	self sessions at: clientId , newSessionId put: newApp.

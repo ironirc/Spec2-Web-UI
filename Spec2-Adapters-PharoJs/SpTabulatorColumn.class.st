@@ -95,9 +95,11 @@ SpTabulatorColumn >> type: anObject [
 
 { #category : #accessing }
 SpTabulatorColumn >> unpackBase64Jpg: anObject [
-
+	self flag: 'should use anObject cacheKey'.
+	"TODO: In the future => first time an SpPharoJsImage arrives, it contains both b64Array AND cacheKey
+	when 'same' image arrives, only cache will be given"
 	^ global Image new
-		  src: 'data:image/jpeg;base64,' , anObject b64Array;
+		  src: 'data:image/png;base64,' , anObject b64Array;
 		  yourself
 ]
 

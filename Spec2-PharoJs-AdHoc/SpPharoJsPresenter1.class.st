@@ -8,7 +8,10 @@ Class {
 		'input2',
 		'table',
 		'tableButton1',
-		'label1'
+		'label1',
+		'tableData',
+		'numberInput1',
+		'numberInput2'
 	],
 	#category : #'Spec2-PharoJs-AdHoc'
 }
@@ -31,6 +34,8 @@ SpPharoJsPresenter1 class >> defaultLayout [
 	main
 		add: #button1;
 		add: #label1;
+		add: #numberInput1;
+		add: #numberInput2;
 		add: #input1;
 		add: row;
 		add: bottomRow.
@@ -74,7 +79,9 @@ SpPharoJsPresenter1 >> connectPresenters [
 	input1 whenTextChangedDo: [ :t | self input1TextChangedTo: t ].
 	input1 whenSelectionChangedDo: [ :t | self input1SelectionChanged ].
 	input2 whenTextChangedDo: [ :t | self input2TextChangedTo: t ].
-	tableButton1 action: [ self tableButton1Clicked ]
+	tableButton1 action: [ self tableButton1Clicked ].
+	numberInput1 whenNumberChangedDo: [ :n |
+		self numberInput1ChangedToNumber: n ]
 ]
 
 { #category : #initialization }
@@ -90,14 +97,32 @@ SpPharoJsPresenter1 >> initializePresenters [
 	input1 placeholder: 'input1 ... '.
 	input2 := self newTextInput.
 	input2 placeholder: 'input2 ...'.
+	numberInput1 := self newNumberInput.
+	self whenDisplayDo: [ numberInput1 number: 42 ].
+	numberInput2 := self newNumberInput
+		                beFloat;
+		                digits: 3;
+		                climbRate: 0.005;
+		                minimum: 10.005;
+		                maximum: 20.05.
 	button2 := self newButton.
 	button2
 		label: 'Click me2';
 		color: Color green lighter.
+	self initializeTable.
+	tableButton1 := self newButton.
+	tableButton1
+		label: 'select some random items';
+		color: Color orange lighter
+]
+
+{ #category : #initialization }
+SpPharoJsPresenter1 >> initializeTable [
+
 	table := self newTable.
 	table
 		addColumn: (SpIndexTableColumn title: 'ID' evaluated: #id);
-			addColumn: ((SpImageTableColumn
+		addColumn: ((SpImageTableColumn
 				  title: 'Icon'
 				  evaluated: [ :aClass | self iconNamed: aClass systemIconName ])
 				 width: 50;
@@ -120,17 +145,13 @@ SpPharoJsPresenter1 >> initializePresenters [
 				 displayAlignment: [ :each | SpColumnAlignment center ];
 				 yourself);
 		items: self tableData;
-		beMultipleSelection.
-	tableButton1 := self newButton.
-	tableButton1
-		label: 'select some random items';
-		color: Color orange lighter
+		beMultipleSelection
 ]
 
 { #category : #initialization }
 SpPharoJsPresenter1 >> input1SelectionChanged [
 
-	button2 label: input1 selectedText.
+	"button2 label: input1 selectedText."
 
 ]
 
@@ -149,13 +170,20 @@ SpPharoJsPresenter1 >> input2TextChangedTo: t [
 ]
 
 { #category : #initialization }
+SpPharoJsPresenter1 >> numberInput1ChangedToNumber: n [
+
+	numberInput2 number: n squared
+]
+
+{ #category : #initialization }
 SpPharoJsPresenter1 >> tableButton1Clicked [
 
-	table selectIndexes: ((1 to: 50) collect: [ :e | self tableData size atRandom ])
+	table selectIndexes: ((1 to: 3) collect: [ :e | self tableData size atRandom ])
 ]
 
 { #category : #initialization }
 SpPharoJsPresenter1 >> tableData [
 
-	^ Object withAllSubclasses first: 100
+	tableData ifNil: [ tableData := Object withAllSubclasses first: 5 ].
+	^ tableData
 ]

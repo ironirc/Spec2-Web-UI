@@ -246,7 +246,7 @@ SpPharoJsBoxAdapter >> newVertical [
 					   | pct |
 					   pct := 100 / layout children size.
 					   layout children do: [ :e | 
-						   ws << ' ' << pct displayString << '%' ] ]).
+						   ws << ' ' << pct asFloat displayString << '%' ] ]).
 		  msg addStyle: 'height' value: '100%' ]
 ]
 

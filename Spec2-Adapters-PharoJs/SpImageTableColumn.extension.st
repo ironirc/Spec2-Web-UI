@@ -32,9 +32,9 @@ SpImageTableColumn >> getValueFor: anObject id: id tableAdaptor: tableAdaptor [
 	""
 	result := SpPharoJsImage new.
 	result b64Array: (ByteArray streamContents: [ :ws |
-			 PluginBasedJPEGReadWriter putForm: form onStream: ws ])
+			 "PluginBasedJPEGReadWriter" PNGReadWriter  putForm: form onStream: ws ])
 			base64Encoded.
-	result fileExtension: 'jpg'.
+	result fileExtension: 'png'.
 	result cacheKey: nil. "to be done"
 	^ result
 ]

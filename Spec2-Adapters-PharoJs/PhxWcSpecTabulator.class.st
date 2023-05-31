@@ -16,7 +16,7 @@ Class {
 	#category : #'Spec2-Adapters-PharoJs-WebComponents'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #constants }
 PhxWcSpecTabulator class >> tagName [
 
 	^ 'sp-table'
@@ -107,7 +107,7 @@ PhxWcSpecTabulator >> renderOn: x [
 	tabulator := global Tabulator new: div with: {
 			             ('height' -> '100%').
 			             "			             ('renderVertical' -> 'virtual')."
-			             ('selectable' -> false).
+			             ('selectable' -> true).
 			             ('progressiveLoad' -> 'load').
 			             ('dataReceiveParams' -> {
 				              ('current_page' -> 'currentPage').

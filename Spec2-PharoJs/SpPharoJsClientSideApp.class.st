@@ -165,50 +165,6 @@ SpPharoJsClientSideApp class >> exporterClass [
 	^ PjExporter
 ]
 
-{ #category : #accessing }
-SpPharoJsClientSideApp class >> handleSystemAnnouncement: ann withWebSocketMessageHandler: wsmh [
-
-	| jsCode aClass |
-	"Every instance knows it's exorter (via applicationClass), and should do this routine seperately"
-	aClass := ann classAffected.
-	aClass := self incrementalExporter exporter transpiler
-		          convertedClasses asOrderedCollection
-		          detect: [ :cls | 
-			          cls = aClass or: [ "[T#000373] auto push method changes to client does not work for class side methods" 
-				          cls classSide = aClass ] ]
-		          ifNone: [ ^ self ].
-	[ 
-	| successMsg updateViewMsg msg |
-	jsCode := self incrementalExporter exporter convertAllClassesToJs:
-		          { aClass }.
-	msg := PhxSpaExeExecuteCode javascript: jsCode.
-	wsmh boadcastMessage: msg.
-
-	"This code should be responsibility within comp23. Please remove here."
-	ann affectsMethods ifTrue: [ 
-		(ann method pragmaAt: #phxCss) ifNotNil: [ 
-			| js |
-			js := self incrementalExporter jsForObjectOrBlock: [ 
-				      PhxC23Component initializeAllCss ].
-			msg := PhxSpaExeExecuteCode javascript: js.
-			wsmh boadcastMessage: msg ] ].
-
-
-	"This code should be responsibility within comp23. Please remove here."
-	updateViewMsg := PhxSpaStcUpdateEntireComponentView new.
-	wsmh boadcastMessage: updateViewMsg.
-	successMsg := PhxSpaStcRaiseMessageToast new.
-	successMsg message: 'Successfully handled '.
-	wsmh boadcastMessage: successMsg ]
-		on: Error
-		do: [ :ex | 
-			| msg |
-			msg := PhxSpaStcRaiseErrorToast new.
-			msg message: ex messageText.
-			wsmh boadcastMessage: msg.
-			ex return: nil ]
-]
-
 { #category : #pharojs }
 SpPharoJsClientSideApp class >> headerLine [
 	^ nil
@@ -217,8 +173,9 @@ SpPharoJsClientSideApp class >> headerLine [
 { #category : #server }
 SpPharoJsClientSideApp class >> htmlPageWithInitialScript [
 	<pharoJsSkip>
-	self incrementalExporter reset.
-	^ self htmlPageWithJsScript: self incrementalExporter initialScript
+	"self incrementalExporter reset."
+	"self incrementalExporter javascriptCode"
+	^ self htmlPageWithJsScript:  nil 
 ]
 
 { #category : #pharojs }
@@ -234,14 +191,12 @@ SpPharoJsClientSideApp class >> htmlPageWithJsScript: aScript [
       content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes"
     />
 	<script type="text/javascript" src="' << self applicationName << '.js"></script>
-<link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
  <style>*, *:before, *:after {
     box-sizing: border-box;
 	}</style>
   </head>
   <body id="body">
-   
   </body>
 </html>' ]
 ]
@@ -252,12 +207,9 @@ SpPharoJsClientSideApp class >> httpPath [
 ]
 
 { #category : #server }
-SpPharoJsClientSideApp class >> incrementalExporter [
+SpPharoJsClientSideApp class >> initialScript [
 	<pharoJsSkip>
-	incrementalExporter ifNil: [ 
-		incrementalExporter := PhxPjIncrementalExporterWithCache new.
-		incrementalExporter applicationClass: self ].
-	^ incrementalExporter
+	^ (PjExporter newWithAppClass: self) javascriptCode , self name  , '.pj_boot();'
 ]
 
 { #category : #server }
@@ -318,7 +270,7 @@ SpPharoJsClientSideApp class >> setupCode [
 SpPharoJsClientSideApp class >> showSplashScreen [
 
 	| x |
-	x := PjDomBuilder "PhxC23Builder" newOnElement: self body.
+	x := PjDomBuilder newOnElement: self body.
 	x div: self applicationName , ' is loading...'
 ]
 

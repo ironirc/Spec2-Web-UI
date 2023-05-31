@@ -12,7 +12,7 @@ Class {
 	#category : #'Spec2-Adapters-PharoJs-WebComponents'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #constants }
 PhxWcSpecInputField class >> tagName [
 
 	^ 'sp-input'
@@ -22,7 +22,7 @@ PhxWcSpecInputField class >> tagName [
 PhxWcSpecInputField >> connected [
 
 	super connected.
-	self getAttributeNames do: [ :name | 
+	#( placeholder type ) do: [ :name |
 		input setAttribute: name to: (self getAttribute: name) ]
 ]
 
