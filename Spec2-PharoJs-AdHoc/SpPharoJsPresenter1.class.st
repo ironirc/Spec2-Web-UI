@@ -150,9 +150,9 @@ SpPharoJsPresenter1 >> initializeTable [
 
 { #category : #initialization }
 SpPharoJsPresenter1 >> input1SelectionChanged [
+	button2 label: input1 selectedText.
 
-	"button2 label: input1 selectedText."
-
+	
 ]
 
 { #category : #initialization }
