@@ -1,8 +1,8 @@
 Class {
 	#name : #SpPharoJsClientSideApp,
 	#superclass : #PjDomController,
-	#traits : 'PhxPromiseTrait + PhxLoggingTrait',
-	#classTraits : 'PhxPromiseTrait classTrait + PhxLoggingTrait classTrait',
+	#traits : 'PhxPjPromiseTrait + PhxPjLoggingTrait',
+	#classTraits : 'PhxPjPromiseTrait classTrait + PhxPjLoggingTrait classTrait',
 	#instVars : [
 		'messenger'
 	],

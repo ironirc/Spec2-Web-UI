@@ -4,8 +4,8 @@ I am a web component containing a Tabulator
 Class {
 	#name : #PhxWcSpecTabulator,
 	#superclass : #PjWebComponent,
-	#traits : 'PhxPromiseTrait',
-	#classTraits : 'PhxPromiseTrait classTrait',
+	#traits : 'PhxPjPromiseTrait',
+	#classTraits : 'PhxPjPromiseTrait classTrait',
 	#instVars : [
 		'div',
 		'tabulator',
