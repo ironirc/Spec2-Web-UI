@@ -131,6 +131,15 @@ SpPharoJsClientSideApp class >> appPackages [
 	^ #()
 ]
 
+{ #category : #css }
+SpPharoJsClientSideApp class >> appendStyleElementToHeadWith: aString [
+	| style |
+	style := self createElement: 'style'.
+	style innerHTML: aString.
+	self document head js_appendChild: style.
+	^ style
+]
+
 { #category : #constants }
 SpPharoJsClientSideApp class >> applicationName [
 	^'spec'
