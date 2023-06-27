@@ -1,7 +1,7 @@
 # Spec-PharoJS
 An attempt to use PharoJS as backend for Spec.  
 Everything is still in a very experimental state.
-
+More or less working: TextInput, NumericInput, Button, Table, BoxLayout.
 
 ```Smalltalk
 Metacello new
