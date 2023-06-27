@@ -1,6 +1,6 @@
 # Spec-PharoJS
 An attempt to use PharoJS as backend for Spec.  
-Everything is still in a very experimental state.
+Everything is still in a very experimental state with lots of dead code, ...
 More or less working: TextInput, NumericInput, Button, Table, BoxLayout.
 
 ```Smalltalk
