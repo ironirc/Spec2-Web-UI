@@ -7,3 +7,12 @@ Metacello new
   repository: 'github://ironirc/Spec-PharoJS:main/';
   load.
 ```
+
+Then start the webserver and register the client app:
+```Smalltalk
+PhxPjServer startDefaultZnServer.
+PhxPjServer registerApplication: SpPharoJsClientSideApp
+```
+
+Open webbrowser on:
+`http://localhost:8888/spec`
