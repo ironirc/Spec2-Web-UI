@@ -4,7 +4,7 @@ Everything is still in a very experimental state with lots of dead code, ...
 More or less working: TextInput, NumericInput, Button, Table, BoxLayout.  
 Take a look at SpPharoJsPresenter1 first to understand the behaviour a littlebit.  
 It's really a cascade of random things I've been playing with.  
-Let me now what you think or be my guest to join development.  
+Let me now what you think and/or feel free to join development.  
 
 ```Smalltalk
 Metacello new
