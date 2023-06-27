@@ -7,6 +7,7 @@ More or less working: TextInput, NumericInput, Button, Table, BoxLayout.
 Metacello new
   baseline: 'Spec2PharoJS';
   repository: 'github://ironirc/Spec-PharoJS:main/';
+  onWarningLog;
   load.
 ```
 
