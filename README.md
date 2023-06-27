@@ -2,8 +2,8 @@
 An attempt to use PharoJS as backend for Spec.  
 Everything is still in a very experimental state with lots of dead code, ...  
 More or less working: TextInput, NumericInput, Button, Table, BoxLayout.  
-The tiny table at the bottom left is quite powerfull (it works with https://tabulator.info) 
-All info gets transferred via serialized message over websocket, including the icons in the mini table. 
+The tiny table at the bottom left is quite powerfull (it works with https://tabulator.info)  
+All info gets transferred via serialized messages over websocket, including the icons in the tiny table. 
 Take a look at SpPharoJsPresenter1 first to understand the behaviour a littlebit.  
 It's really a cascade of random things I've been playing with.  
 Let me now what you think and/or feel free to join development.  
