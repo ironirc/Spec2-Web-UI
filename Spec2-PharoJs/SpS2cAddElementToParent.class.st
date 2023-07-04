@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'parentId'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-serverToClientMessages'
 }
 
 { #category : #accessing }

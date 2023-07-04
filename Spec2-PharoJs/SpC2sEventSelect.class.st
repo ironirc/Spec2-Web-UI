@@ -5,7 +5,7 @@ Class {
 		'start',
 		'end'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-clientToServerMessages'
 }
 
 { #category : #accessing }

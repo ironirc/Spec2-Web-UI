@@ -5,7 +5,7 @@ Class {
 		'page',
 		'pageSize'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-clientToServerMessages'
 }
 
 { #category : #private }

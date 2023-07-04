@@ -1,7 +1,7 @@
 Class {
 	#name : #SpS2cElementTakeFocus,
 	#superclass : #SpS2cMessageWithElementId,
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-serverToClientMessages'
 }
 
 { #category : #accessing }

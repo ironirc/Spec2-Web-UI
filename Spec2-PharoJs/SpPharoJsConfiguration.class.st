@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'styleSheet'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-specBackEnd'
 }
 
 { #category : #testing }

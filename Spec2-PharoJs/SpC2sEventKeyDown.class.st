@@ -10,7 +10,7 @@ Class {
 		'metaKey',
 		'repeat'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-clientToServerMessages'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'results'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-clientToServerMessages'
 }
 
 { #category : #accessing }

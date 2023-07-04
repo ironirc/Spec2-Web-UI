@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'sourceId'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-clientToServerMessages'
 }
 
 { #category : #'as yet unclassified' }

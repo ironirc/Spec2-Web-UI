@@ -6,7 +6,7 @@ Class {
 		'sessionId',
 		'clientId'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-clientToServerMessages'
 }
 
 { #category : #accessing }

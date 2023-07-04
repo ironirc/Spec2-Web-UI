@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'dict'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-server-support'
 }
 
 { #category : #accessing }

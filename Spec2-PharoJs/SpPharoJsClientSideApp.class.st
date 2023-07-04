@@ -10,7 +10,7 @@ Class {
 		'incrementalExporter',
 		'current'
 	],
-	#category : #'Spec2-PharoJs'
+	#category : #'Spec2-PharoJs-client'
 }
 
 { #category : #css }
