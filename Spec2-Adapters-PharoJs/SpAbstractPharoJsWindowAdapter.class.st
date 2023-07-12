@@ -3,7 +3,9 @@ Class {
 	#superclass : #SpAbstractPharoJsAdapter,
 	#instVars : [
 		'toolbarMorph',
-		'menuMorph'
+		'menuMorph',
+		'windowId',
+		'webSocketSession'
 	],
 	#category : #'Spec2-Adapters-PharoJs-Base'
 }
@@ -12,6 +14,20 @@ Class {
 SpAbstractPharoJsWindowAdapter class >> isAbstract [ 
 
 	^self name = #SpAbstractPharoJsWindowAdapter
+]
+
+{ #category : #private }
+SpAbstractPharoJsWindowAdapter >> adapt: aPresenter [
+
+"	| webSocketSession |
+	webSocketSession := SpPharoJsClientSideApp
+		                    openBrowserAndAwaitWebsocketSession.
+	CurrentWebSocketSession
+		value: webSocketSession
+		during: [ super adapt: aPresenter ]."
+	CurrentWebSocketSession value propertyAt: 'windowAdaptor' put: self. 
+	webSocketSession := CurrentWebSocketSession value.
+	super adapt: aPresenter 
 ]
 
 { #category : #private }
@@ -79,6 +95,13 @@ SpAbstractPharoJsWindowAdapter >> addStatusBarTo: aMorph [
 		vResizing: #rigid
 ]
 
+{ #category : #accessing }
+SpAbstractPharoJsWindowAdapter >> ensuredWindowId [
+	
+	windowId ifNil: [ windowId := self class nextIdNumber asString ].
+	^windowId
+]
+
 { #category : #private }
 SpAbstractPharoJsWindowAdapter >> newContainerMorph [
 
@@ -139,4 +162,22 @@ SpAbstractPharoJsWindowAdapter >> setToolbarTo: aMorph [
 		
 	toolbarMorph := newToolbarMorph
 
+]
+
+{ #category : #accessing }
+SpAbstractPharoJsWindowAdapter >> webSocketSession [
+
+	^ CurrentWebSocketSession value ifNil: [ webSocketSession ]
+]
+
+{ #category : #accessing }
+SpAbstractPharoJsWindowAdapter >> windowId [
+
+	^ windowId
+]
+
+{ #category : #accessing }
+SpAbstractPharoJsWindowAdapter >> windowId: anObject [
+
+	windowId := anObject
 ]

@@ -86,7 +86,7 @@ PhxWcSpecTabulator >> promiseDataFor: params [
 	msg pageSize: (params at: #size).
 	^ self promise: [ :resolve :reject |
 		  console time: 'fetch page'.
-		  SpPharoJsClientSideApp current messenger
+		  SpPharoJsClientApp current messenger
 			  sendMessageToServer: msg
 			  onResponseDo: [ :resp |
 				  console log: resp msg.

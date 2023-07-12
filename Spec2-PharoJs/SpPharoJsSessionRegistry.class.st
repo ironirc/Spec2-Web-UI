@@ -11,12 +11,6 @@ Class {
 }
 
 { #category : #accessing }
-SpPharoJsSessionRegistry class >> appForClientId: clientId sessionId: sessionId [
-
-	^ sessions at: clientId , sessionId
-]
-
-{ #category : #accessing }
 SpPharoJsSessionRegistry class >> ensureValidExistingOrNewSessionForClientId: clientId sessionId: sessionId [
 
 	| newApp newSessionId |

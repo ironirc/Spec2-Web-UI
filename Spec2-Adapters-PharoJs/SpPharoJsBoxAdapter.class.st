@@ -188,7 +188,7 @@ SpPharoJsBoxAdapter >> layout: aLayout [
 		aLayout hasAlignment 
 			ifTrue: [ widget := self applyAlignmentTo: widget ]."
 		"the spacing needs to be applied to the inner sub-panels"
-		self flag: 'Ivo skipping panels'.
+		self flag: 'Ivo skipping panels. What is startPanel en endPanel for anyway?'.
 	"	{ startPanel. endPanel } 
 			do: [ :each | each cellInset: aLayout spacing ]"
 		"widget homogeneous: aLayout isHomogeneous" ].

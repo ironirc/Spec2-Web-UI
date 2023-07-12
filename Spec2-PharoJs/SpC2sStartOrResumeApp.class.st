@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'windowId',
 		'sessionId',
-		'clientId'
+		'clientId',
+		'urlSessionId'
 	],
 	#category : #'Spec2-PharoJs-clientToServerMessages'
 }
@@ -23,14 +24,26 @@ SpC2sStartOrResumeApp >> clientId: anObject [
 
 { #category : #private }
 SpC2sStartOrResumeApp >> respondForRequestContext: rc [
-
-	<pharoJsSkip>
-	| sessionRegistry app |
+	"	| sessionRegistry app |
 	sessionRegistry := rc handler context.
 	app := sessionRegistry appForClientId: clientId sessionId: sessionId.
-	app context: rc webSocketInfo. "adaptors need it to be able to send messages to client"
-	rc webSocketInfo propertyAt: 'app' put: app.
-	app startWindowId: windowId
+	app context: rc webSocketSession. ""adaptors need it to be able to send messages to client""
+	rc webSocketSession propertyAt: 'app' put: app.
+	app windows
+		detect: [ :win | win adapter windowId = windowId ]
+		ifFound: [ :win | 
+			self halt. 
+			^ win open ]
+		ifNone: [ self error: 'no window found with this id' ]"
+
+	<pharoJsSkip>
+	'SpC2sStartOrResumeApp>>#respondForRequestContext:' crTrace.
+	SpPharoJsClientStarter 
+		resolvePendingBrowserSessionAt: self urlSessionId
+		with: rc.
+		
+	"msg := SpS2cSimpleResponse new.
+	rc sendResponseMessage: msg"
 ]
 
 { #category : #accessing }
@@ -43,6 +56,18 @@ SpC2sStartOrResumeApp >> sessionId [
 SpC2sStartOrResumeApp >> sessionId: anObject [
 
 	sessionId := anObject
+]
+
+{ #category : #accessing }
+SpC2sStartOrResumeApp >> urlSessionId [
+
+	^ urlSessionId
+]
+
+{ #category : #accessing }
+SpC2sStartOrResumeApp >> urlSessionId: anObject [
+
+	urlSessionId := anObject
 ]
 
 { #category : #accessing }

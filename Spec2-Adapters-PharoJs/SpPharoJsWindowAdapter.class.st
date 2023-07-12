@@ -1,9 +1,6 @@
 Class {
 	#name : #SpPharoJsWindowAdapter,
 	#superclass : #SpAbstractPharoJsWindowAdapter,
-	#instVars : [
-		'windowId'
-	],
 	#category : #'Spec2-Adapters-PharoJs-Base'
 }
 
@@ -206,7 +203,7 @@ SpPharoJsWindowAdapter >> open [
 { #category : #protocol }
 SpPharoJsWindowAdapter >> openWithDeferredAction: aBlock [
 
-	self flag: #TODO. "This and its children are more or less the same, it needs to be 
+	"self flag: #TODO." "This and its children are more or less the same, it needs to be 
 	revisited looking oportunities to improve the code reuse :("
 	"self widget openInWorld."
 "	self presenter initialPosition 
@@ -269,18 +266,6 @@ SpPharoJsWindowAdapter >> windowClosed [
 
 	self windowIsClosing.
 	self presenter windowClosed
-]
-
-{ #category : #accessing }
-SpPharoJsWindowAdapter >> windowId [
-
-	^ windowId
-]
-
-{ #category : #accessing }
-SpPharoJsWindowAdapter >> windowId: anObject [
-
-	windowId := anObject
 ]
 
 { #category : #updating }

@@ -41,11 +41,12 @@ SpC2sEvent >> initializeWithNativeEvent: e [
 SpC2sEvent >> respondForRequestContext: rc [
 
 	<pharoJsSkip>
-	(rc webSocketInfo propertyAt: 'app') windows do: [ :wind | 
-		wind
-			traversePresentersDo: [ :p | 
-				p adapter widget = sourceId ifTrue: [ 
-					self dispatchToSpecAdaptor: p adapter requestContext: rc ] ]
+	(rc webSocketSession propertyAt: 'windowAdaptor') ifNotNil: [
+		:winAdaptor |
+		winAdaptor owner presenter
+			traversePresentersDo: [ :p |
+				p adapter widget = sourceId ifTrue: [
+					 self dispatchToSpecAdaptor: p adapter requestContext: rc  ] ]
 			excluding: Set new ]
 ]
 

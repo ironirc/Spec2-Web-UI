@@ -1,5 +1,5 @@
 Class {
-	#name : #SpPharoJsClientSideApp,
+	#name : #SpPharoJsClientApp,
 	#superclass : #PjDomController,
 	#traits : 'PhxPjPromiseTrait + PhxPjLoggingTrait',
 	#classTraits : 'PhxPjPromiseTrait classTrait + PhxPjLoggingTrait classTrait',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #css }
-SpPharoJsClientSideApp class >> addCssReset [
+SpPharoJsClientApp class >> addCssReset [
 
 	<phxCss>
 	self appendStyleElementToHeadWith: '
@@ -106,7 +106,7 @@ select {
 ]
 
 { #category : #pharojs }
-SpPharoJsClientSideApp class >> appClasses [
+SpPharoJsClientApp class >> appClasses [
 
 	<pharoJsSkip>
 	^ SpS2cMessage withAllSubclasses , SpC2sEvent withAllSubclasses , {
@@ -115,10 +115,11 @@ SpPharoJsClientSideApp class >> appClasses [
 		  PhxWcSpecTabulator.
 		  SpTabulatorColumn.
 		  SpPharoJsImage }
+	
 ]
 
 { #category : #pharojs }
-SpPharoJsClientSideApp class >> appLaunchBlock [
+SpPharoJsClientApp class >> appLaunchBlock [
 
 	| appClass |
 	appClass := self.
@@ -126,13 +127,13 @@ SpPharoJsClientSideApp class >> appLaunchBlock [
 ]
 
 { #category : #pharojs }
-SpPharoJsClientSideApp class >> appPackages [
+SpPharoJsClientApp class >> appPackages [
 	<pharoJsSkip>
 	^ #()
 ]
 
 { #category : #css }
-SpPharoJsClientSideApp class >> appendStyleElementToHeadWith: aString [
+SpPharoJsClientApp class >> appendStyleElementToHeadWith: aString [
 	| style |
 	style := self createElement: 'style'.
 	style innerHTML: aString.
@@ -141,12 +142,12 @@ SpPharoJsClientSideApp class >> appendStyleElementToHeadWith: aString [
 ]
 
 { #category : #constants }
-SpPharoJsClientSideApp class >> applicationName [
+SpPharoJsClientApp class >> applicationName [
 	^'spec'
 ]
 
 { #category : #private }
-SpPharoJsClientSideApp class >> boot [
+SpPharoJsClientApp class >> boot [
 
 	window addEventListener: #load block: [ 
 		self addCssReset.
@@ -157,30 +158,39 @@ SpPharoJsClientSideApp class >> boot [
 ]
 
 { #category : #accessing }
-SpPharoJsClientSideApp class >> clientId [
+SpPharoJsClientApp class >> clientId [
 
 	^ PhxBrowserPersistentClientId value
 ]
 
 { #category : #'instance creation' }
-SpPharoJsClientSideApp class >> current [
+SpPharoJsClientApp class >> current [
 	current ifNil: [ current := self new ].
 	^current
 ]
 
 { #category : #server }
-SpPharoJsClientSideApp class >> exporterClass [
+SpPharoJsClientApp class >> currentUrl [
+
+	<pharoJsSkip>
+	^ String streamContents: [ :ws |
+		  ws << 'http://localhost:' << ZnServer default port printString << self httpPath ].
+
+]
+
+{ #category : #server }
+SpPharoJsClientApp class >> exporterClass [
 	<pharoJsSkip>
 	^ PjExporter
 ]
 
 { #category : #pharojs }
-SpPharoJsClientSideApp class >> headerLine [
+SpPharoJsClientApp class >> headerLine [
 	^ nil
 ]
 
 { #category : #server }
-SpPharoJsClientSideApp class >> htmlPageWithInitialScript [
+SpPharoJsClientApp class >> htmlPageWithInitialScript [
 	<pharoJsSkip>
 	"self incrementalExporter reset."
 	"self incrementalExporter javascriptCode"
@@ -188,7 +198,7 @@ SpPharoJsClientSideApp class >> htmlPageWithInitialScript [
 ]
 
 { #category : #pharojs }
-SpPharoJsClientSideApp class >> htmlPageWithJsScript: aScript [
+SpPharoJsClientApp class >> htmlPageWithJsScript: aScript [
 	<pharoJsSkip>
 	^ String streamContents: [ :ws | 
 		  ws << '<!DOCTYPE html>
@@ -211,24 +221,24 @@ SpPharoJsClientSideApp class >> htmlPageWithJsScript: aScript [
 ]
 
 { #category : #server }
-SpPharoJsClientSideApp class >> httpPath [ 
+SpPharoJsClientApp class >> httpPath [ 
 	^'/' , self applicationName
 ]
 
 { #category : #server }
-SpPharoJsClientSideApp class >> initialScript [
+SpPharoJsClientApp class >> initialScript [
 	<pharoJsSkip>
 	^ (PjExporter newWithAppClass: self) javascriptCode , self name  , '.pj_boot();'
 ]
 
 { #category : #server }
-SpPharoJsClientSideApp class >> newAppContext [
+SpPharoJsClientApp class >> newAppContext [
 	<pharoJsSkip>
 	^nil
 ]
 
 { #category : #server }
-SpPharoJsClientSideApp class >> newServerWebSocketHandler [
+SpPharoJsClientApp class >> newServerWebSocketHandler [
 
 	<pharoJsSkip>
 	| wsh |
@@ -238,24 +248,33 @@ SpPharoJsClientSideApp class >> newServerWebSocketHandler [
 	^ wsh
 ]
 
+{ #category : #'instance creation' }
+SpPharoJsClientApp class >> openBrowserWithStartId: startId [
+
+	WebBrowser
+		openOn: (String streamContents: [ :ws |
+				 ws << self currentUrl << '?startId=' << startId ])
+		inBackground: false
+]
+
 { #category : #pharojs }
-SpPharoJsClientSideApp class >> pharoJsSelectorPrefix [
+SpPharoJsClientApp class >> pharoJsSelectorPrefix [
 	^ 'pj_'
 ]
 
 { #category : #pharojs }
-SpPharoJsClientSideApp class >> polyfill: aClass withTranspiler: aPjDependentTranspiler unlessIn: aCollection [ 
+SpPharoJsClientApp class >> polyfill: aClass withTranspiler: aPjDependentTranspiler unlessIn: aCollection [ 
 	
 ]
 
 { #category : #private }
-SpPharoJsClientSideApp class >> promiseAllExternalResourcesLoaded [
+SpPharoJsClientApp class >> promiseAllExternalResourcesLoaded [
 
 	^ self promiseResolve: nil
 ]
 
 { #category : #css }
-SpPharoJsClientSideApp class >> promiseCssReset [
+SpPharoJsClientApp class >> promiseCssReset [
 
 	^self promise: [ :resolve :reject | 
 		self addCssReset.
@@ -263,20 +282,20 @@ SpPharoJsClientSideApp class >> promiseCssReset [
 ]
 
 { #category : #'instance creation' }
-SpPharoJsClientSideApp class >> registerAsApplicationAtPjServer [
+SpPharoJsClientApp class >> registerAsApplicationAtPjServer [
 	<pharoJsSkip>
 	<script>
 	PhxPjServer registerApplication: self
 ]
 
 { #category : #pharojs }
-SpPharoJsClientSideApp class >> setupCode [
+SpPharoJsClientApp class >> setupCode [
 	<pharoJsSkip>
 	^ '	var global=global ?? this'
 ]
 
 { #category : #private }
-SpPharoJsClientSideApp class >> showSplashScreen [
+SpPharoJsClientApp class >> showSplashScreen [
 
 	| x |
 	x := PjDomBuilder newOnElement: self body.
@@ -284,25 +303,25 @@ SpPharoJsClientSideApp class >> showSplashScreen [
 ]
 
 { #category : #accessing }
-SpPharoJsClientSideApp class >> webSocketPath [ 
+SpPharoJsClientApp class >> webSocketPath [ 
 	^self httpPath , '-ws'
 ]
 
 { #category : #'accessing derived' }
-SpPharoJsClientSideApp >> dialogManager [
+SpPharoJsClientApp >> dialogManager [
 
 	^ self
 ]
 
 { #category : #initialization }
-SpPharoJsClientSideApp >> initialize [
+SpPharoJsClientApp >> initialize [
 
 	super initialize.
 	self logSelfAndAll: { 'initialize' }
 ]
 
 { #category : #components }
-SpPharoJsClientSideApp >> messenger [
+SpPharoJsClientApp >> messenger [
 
 	messenger ifNil: [ 
 		messenger := PhxClientWebSocketHandler new.
@@ -319,20 +338,21 @@ SpPharoJsClientSideApp >> messenger [
 ]
 
 { #category : #components }
-SpPharoJsClientSideApp >> onWebSocketOpen: ev [
+SpPharoJsClientApp >> onWebSocketOpen: ev [
+	
 
-	self promiseAppSession then: [ :uuid | 
-		| msg |
-		msg := SpC2sStartOrResumeApp new.
-		msg clientId: PhxBrowserPersistentClientId value.
-		msg sessionId: PhxBrowserExpiringSessionId value.
-		msg windowId: PhxBrowserWindowId value.
-		self messenger sendMessageToServer: msg ]
+	| msg |
+	msg := SpC2sStartOrResumeApp new.
+"	msg clientId: PhxBrowserPersistentClientId value.
+	msg sessionId: PhxBrowserExpiringSessionId value."
+	msg windowId: PhxBrowserWindowId value.
+	msg urlSessionId: self urlParameterStartId.
+	(self messenger promiseResponseFor: msg) then: [ :rc | self log: rc msg. document body innerHTML: 'Yeah'  ]
 ]
 
 { #category : #components }
-SpPharoJsClientSideApp >> promiseAppSession [
-
+SpPharoJsClientApp >> promiseAppSession [
+	<pharoJsSkip>
 	^ self promise: [ :resolve :reject | 
 		  | msg |
 		  self logAll: { 'sending start app session to server' }.
@@ -356,7 +376,16 @@ SpPharoJsClientSideApp >> promiseAppSession [
 ]
 
 { #category : #'server messaging' }
-SpPharoJsClientSideApp >> webSocketUrl [
+SpPharoJsClientApp >> urlParameterStartId [ 
+
+	| url |
+	url := global URL new: document location.
+	^url searchParams get: 'startId'
+
+]
+
+{ #category : #'server messaging' }
+SpPharoJsClientApp >> webSocketUrl [
 	| protocol |
 	protocol := window location protocol = 'https:'
 		ifTrue: 'wss://'

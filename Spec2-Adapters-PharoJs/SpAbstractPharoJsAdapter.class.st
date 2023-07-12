@@ -584,7 +584,7 @@ SpAbstractPharoJsAdapter >> sendClickEvent [
 { #category : #websocket }
 SpAbstractPharoJsAdapter >> sendMessageToClient: msg [
 
-	^self application context sendEnvelope: msg wrapInEnvelope
+	^ self webSocketSession sendEnvelope: msg wrapInEnvelope
 ]
 
 { #category : #emulating }
@@ -738,6 +738,12 @@ SpAbstractPharoJsAdapter >> vShrinkWrap [
 SpAbstractPharoJsAdapter >> vSpaceFill [
 	
 	self widgetDo: [ :w | w vResizing: #spaceFill ]
+]
+
+{ #category : #private }
+SpAbstractPharoJsAdapter >> webSocketSession [
+
+	^ CurrentWebSocketSession value ifNil: [ self owner root adapter webSocketSession ]
 ]
 
 { #category : #protocol }
