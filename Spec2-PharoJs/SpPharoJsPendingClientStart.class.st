@@ -7,7 +7,7 @@ Class {
 		'incomingEnvelope',
 		'startedAt'
 	],
-	#category : #'Spec2-PharoJs-client'
+	#category : #'Spec2-PharoJs-server-support'
 }
 
 { #category : #accessing }
@@ -44,7 +44,7 @@ SpPharoJsPendingClientStart >> isPending [
 
 { #category : #private }
 SpPharoJsPendingClientStart >> sendAcknowledgeMessage [
-
+	SpPharoJsSessionRegistry registerSession: session at: startId. 
 	self session
 		sendMessage: SpS2cSimpleResponse new
 		isResponseToIncoming: self incomingEnvelope 

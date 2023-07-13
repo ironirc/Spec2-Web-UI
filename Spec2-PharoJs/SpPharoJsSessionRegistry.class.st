@@ -10,7 +10,7 @@ Class {
 	#category : #'Spec2-PharoJs-server-support'
 }
 
-{ #category : #accessing }
+{ #category : #obsolete }
 SpPharoJsSessionRegistry class >> ensureValidExistingOrNewSessionForClientId: clientId sessionId: sessionId [
 
 	| newApp newSessionId |
@@ -26,13 +26,23 @@ SpPharoJsSessionRegistry class >> ensureValidExistingOrNewSessionForClientId: cl
 ]
 
 { #category : #accessing }
-SpPharoJsSessionRegistry class >> prepareForNewRequest [
+SpPharoJsSessionRegistry class >> registerSession: session at: id [
+
+	self sessions at: id put: session.
 ]
 
 { #category : #accessing }
 SpPharoJsSessionRegistry class >> reset [
 	<script>
 	sessions := nil
+]
+
+{ #category : #accessing }
+SpPharoJsSessionRegistry class >> sessionAt: id [
+
+	^ self sessions
+		  at: id
+		  ifAbsent: [ self error: 'no session found for given id' ]
 ]
 
 { #category : #accessing }

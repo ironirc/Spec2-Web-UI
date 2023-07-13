@@ -1,7 +1,7 @@
 Class {
 	#name : #SpPharoJsClientAppTests,
 	#superclass : #TestCase,
-	#category : #'Spec2-PharoJs-client'
+	#category : #'Spec2-PharoJs-tests'
 }
 
 { #category : #tests }
@@ -9,6 +9,7 @@ SpPharoJsClientAppTests >> testGetSessionAndCloseWindow [
 
 	| session |
 	session := SpPharoJsClientStarter openBrowserAndAwaitWebsocketSession.
+	self assert: session isConnected.
 	session sendEnvelope: SpS2cCloseBrowserWindow new wrapInEnvelope.
 	50 milliseconds wait.
 	self assert: session isConnected not

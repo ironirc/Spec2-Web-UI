@@ -8,33 +8,34 @@ Class {
 	#category : #'Spec2-PharoJs-client'
 }
 
-{ #category : #'browser session acquiring' }
-SpPharoJsClientStarter class >> addPendingBrowserSessionAt: id [
+{ #category : #private }
+SpPharoJsClientStarter class >> addPendingBrowserSessionAt: aStartId [
 
 	| ps |
 	ps := SpPharoJsPendingClientStart new.
-	ps startId: id.
-	self monitor critical: [ self pendingBrowserSessions add: ps ].
-	self removeExpired
+	ps startId: aStartId.
+	self pendingBrowserSessions add: ps.
+	"take opportunity to clean up expired pending sessions"
+	self removeExpiredSessions
 ]
 
-{ #category : #'browser session acquiring' }
+{ #category : #private }
 SpPharoJsClientStarter class >> monitor [
 	monitor ifNil: [ monitor := Monitor new ].
 	^ monitor
 ]
 
-{ #category : #'browser session acquiring' }
+{ #category : #public }
 SpPharoJsClientStarter class >> openBrowserAndAwaitWebsocketSession [
 
 	^ self openBrowserAndAwaitWebsocketSessionForApp:
 		  SpPharoJsClientApp
 ]
 
-{ #category : #'browser session acquiring' }
+{ #category : #private }
 SpPharoJsClientStarter class >> openBrowserAndAwaitWebsocketSessionForApp: app [
 
-	| startId m pendingSession |
+	| startId m pbs |
 	startId := UUIDGenerator next asString.
 	m := self monitor.
 	m critical: [
@@ -43,24 +44,23 @@ SpPharoJsClientStarter class >> openBrowserAndAwaitWebsocketSessionForApp: app [
 		m
 			waitWhile: [ (self pendingBrowserSessionAt: startId) isPending ]
 			maxSeconds: 5.
-		pendingSession := self pendingBrowserSessionAt: startId.
-		pendingSession ifNotNil: [
-			self pendingBrowserSessions remove: pendingSession ].
-		pendingSession isPending ifTrue: [
-			self error: 'failed to start or connect client app' ] ].
-	pendingSession sendAcknowledgeMessage.
-	^ pendingSession session
+		pbs := self pendingBrowserSessionAt: startId.
+		(pbs isNil or: [ pbs isPending ]) ifTrue: [
+			self error: 'failed to start or connect client app' ].
+		pbs ifNotNil: [ self pendingBrowserSessions remove: pbs ] ].
+	pbs sendAcknowledgeMessage.
+	^ pbs session
 ]
 
-{ #category : #'browser session acquiring' }
-SpPharoJsClientStarter class >> pendingBrowserSessionAt: startId [
+{ #category : #private }
+SpPharoJsClientStarter class >> pendingBrowserSessionAt: aStartId [
 
 	self pendingBrowserSessions do: [ :pbs |
-		pbs startId = startId ifTrue: [ ^ pbs ] ].
-	^ nil
+		pbs startId = aStartId ifTrue: [ ^ pbs ] ].
+	self error: 'there''s no pending session for given id'
 ]
 
-{ #category : #'browser session acquiring' }
+{ #category : #private }
 SpPharoJsClientStarter class >> pendingBrowserSessions [
 
 	pendingBrowserSessions ifNil: [
@@ -68,27 +68,29 @@ SpPharoJsClientStarter class >> pendingBrowserSessions [
 	^ pendingBrowserSessions
 ]
 
-{ #category : #'browser session acquiring' }
-SpPharoJsClientStarter class >> removeExpired [
+{ #category : #private }
+SpPharoJsClientStarter class >> removeExpiredSessions [
 
-	self monitor critical: [
-		pendingBrowserSessions := pendingBrowserSessions reject: [ :e |
-			                          e isExpired ] ]
+	pendingBrowserSessions := pendingBrowserSessions reject: [ :e |
+		                          e isExpired ]
 ]
 
-{ #category : #'browser session acquiring' }
+{ #category : #public }
 SpPharoJsClientStarter class >> resetSessions [
+	"Should not be needed. Might be usefull during development"
 	<script>
 	pendingBrowserSessions := nil
 ]
 
-{ #category : #'browser session acquiring' }
+{ #category : #private }
 SpPharoJsClientStarter class >> resolvePendingBrowserSessionAt: startId with: aRequestContext [
 	self monitor critical: [
 		self pendingBrowserSessions
 			detect: [ :pbs | pbs startId = startId ]
 			ifFound: [ :e |
 				e incomingEnvelope: aRequestContext incomingEnvelope.
-				e session: aRequestContext webSocketSession ].
-		self monitor signal ]
+				e session: aRequestContext webSocketSession ]
+			ifNone: [self error: 'no pending session found for given id'].
+		self monitor signal.
+		self removeExpiredSessions ]
 ]

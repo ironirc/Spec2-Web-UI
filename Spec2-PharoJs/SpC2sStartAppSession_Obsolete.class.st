@@ -1,5 +1,5 @@
 Class {
-	#name : #SpC2sStartAppSession,
+	#name : #'SpC2sStartAppSession_Obsolete',
 	#superclass : #SpC2sMessage,
 	#instVars : [
 		'clientId',
@@ -9,19 +9,19 @@ Class {
 }
 
 { #category : #accessing }
-SpC2sStartAppSession >> clientId [
+SpC2sStartAppSession_Obsolete >> clientId [
 
 	^ clientId
 ]
 
 { #category : #accessing }
-SpC2sStartAppSession >> clientId: anObject [
+SpC2sStartAppSession_Obsolete >> clientId: anObject [
 
 	clientId := anObject
 ]
 
 { #category : #private }
-SpC2sStartAppSession >> respondForRequestContext: rc [
+SpC2sStartAppSession_Obsolete >> respondForRequestContext: rc [
 
 	"The client needs a session (id) to start with"
 
@@ -38,13 +38,13 @@ SpC2sStartAppSession >> respondForRequestContext: rc [
 ]
 
 { #category : #accessing }
-SpC2sStartAppSession >> sessionId [
+SpC2sStartAppSession_Obsolete >> sessionId [
 
 	^ sessionId
 ]
 
 { #category : #accessing }
-SpC2sStartAppSession >> sessionId: anObject [
+SpC2sStartAppSession_Obsolete >> sessionId: anObject [
 
 	sessionId := anObject
 ]
