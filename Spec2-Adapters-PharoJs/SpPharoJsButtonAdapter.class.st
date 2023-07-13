@@ -70,7 +70,7 @@ SpPharoJsButtonAdapter >> buildWidget [
 	msg textContent: self label.
 	msg events: #( click ).
 	msg styles: { 
-			('background-color' -> ('#' , self color asHexString)).
+			('background-color' -> ('#' , (self color ifNil: [ Color gray ]) asHexString)).
 		"	('flex-grow' -> 1).
 			('flex' -> 1)" }.
 	msg attributes: { ('ph-src' -> thisContext method printString) }.

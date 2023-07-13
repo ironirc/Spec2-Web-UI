@@ -26,7 +26,7 @@ SpPharoJsClientStarter class >> monitor [
 ]
 
 { #category : #public }
-SpPharoJsClientStarter class >> openBrowserAndAwaitWebsocketSession [
+SpPharoJsClientStarter class >> openBrowserAndAwaitWebSocketSession [
 
 	^ self openBrowserAndAwaitWebsocketSessionForApp:
 		  SpPharoJsClientApp
