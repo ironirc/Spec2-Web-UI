@@ -83,7 +83,7 @@ SpPharoJsClientStarter class >> resetSessions [
 ]
 
 { #category : #private }
-SpPharoJsClientStarter class >> resolvePendingBrowserSessionAt: startId with: aRequestContext [
+SpPharoJsClientStarter class >> resolvePendingBrowserSessionAt: startId inRequestContext: aRequestContext [
 	self monitor critical: [
 		self pendingBrowserSessions
 			detect: [ :pbs | pbs startId = startId ]

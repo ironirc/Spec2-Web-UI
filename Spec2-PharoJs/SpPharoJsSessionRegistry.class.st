@@ -5,10 +5,17 @@ Class {
 		'sessions'
 	],
 	#classInstVars : [
-		'dict'
+		'dict',
+		'session'
 	],
 	#category : #'Spec2-PharoJs-server-support'
 }
+
+{ #category : #accessing }
+SpPharoJsSessionRegistry class >> containsSessionId: id [
+
+	^ self sessions keys includes: id
+]
 
 { #category : #obsolete }
 SpPharoJsSessionRegistry class >> ensureValidExistingOrNewSessionForClientId: clientId sessionId: sessionId [
@@ -35,6 +42,17 @@ SpPharoJsSessionRegistry class >> registerSession: session at: id [
 SpPharoJsSessionRegistry class >> reset [
 	<script>
 	sessions := nil
+]
+
+{ #category : #accessing }
+SpPharoJsSessionRegistry class >> resumeSessionId: sessionId inRequestContext: rc [
+
+	| oldSession   |
+	oldSession := self sessionAt: sessionId.
+	oldSession isConnected ifTrue: [
+		self error: 'the session to be resumed is still connected' ].
+	rc handler replaceOldWebSocket: oldSession webSocket with: rc webSocket.
+	rc sendSuccess: 'session successfully resumed'
 ]
 
 { #category : #accessing }

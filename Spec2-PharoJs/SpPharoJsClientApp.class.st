@@ -4,7 +4,8 @@ Class {
 	#traits : 'PhxPjPromiseTrait + PhxPjLoggingTrait',
 	#classTraits : 'PhxPjPromiseTrait classTrait + PhxPjLoggingTrait classTrait',
 	#instVars : [
-		'messenger'
+		'messenger',
+		'sessionId'
 	],
 	#classInstVars : [
 		'incrementalExporter',
@@ -359,17 +360,18 @@ SpPharoJsClientApp >> initialize [
 { #category : #components }
 SpPharoJsClientApp >> messenger [
 
-	messenger ifNil: [ 
+	messenger ifNil: [
 		messenger := PhxClientWebSocketHandler new.
 		messenger webSocketUrl: self webSocketUrl.
 		messenger tokenProvider: nil.
 		messenger client: self.
-		messenger onEvent: PhxPseWebSocketOpened do: [ :ev | 
+		messenger onEvent: PhxPseWebSocketOpened do: [ :ev |
 			self log: 'Websocket has been opened.'.
+			self snackBarSuccess: 'websocket opened'.
 			self onWebSocketOpen: ev payload ].
-		messenger
-			onEvent: PhxPseWebSocketClosed
-			do: [ :ev | self log: 'Websocket has been closed.' ] ].
+		messenger onEvent: PhxPseWebSocketClosed do: [ :ev |
+			self snackBarError: 'websocket closed'.
+			self log: 'Websocket has been closed.' ] ].
 	^ messenger
 ]
 
@@ -377,17 +379,16 @@ SpPharoJsClientApp >> messenger [
 SpPharoJsClientApp >> onWebSocketOpen: ev [
 
 	| msg |
-	msg := SpC2sStartSessionApp new.
-	"	msg clientId: PhxBrowserPersistentClientId value.
-	msg sessionId: PhxBrowserExpiringSessionId value."
-	msg windowId: PhxBrowserWindowId value.
-	msg urlSessionId: self urlParameterStartId.
+	msg := SpC2sStartSession new.
+	msg sessionId: self urlParameterStartId.
 	(self messenger promiseResponseFor: msg) then: [ :rc |
-		rc msg isSuccess ifFalse: [ self snackBarError: rc msg message ] ]
+		rc msg isSuccess
+			ifTrue: [ self snackBarSuccess: rc msg message ]
+			ifFalse: [ self snackBarError: rc msg message ] ]
 ]
 
-{ #category : #components }
-SpPharoJsClientApp >> promiseAppSession [
+{ #category : #obsolete }
+SpPharoJsClientApp >> promiseAppSession_obsolete [
 	<pharoJsSkip>
 	^ self promise: [ :resolve :reject | 
 		  | msg |
@@ -432,10 +433,10 @@ SpPharoJsClientApp >> snackBarMessage: msg status: status [
 			('status' -> status) } asJsObject
 ]
 
-{ #category : #'accessing derived' }
-SpPharoJsClientApp >> toastManager [
+{ #category : #components }
+SpPharoJsClientApp >> snackBarSuccess: msg [
 
-	^ self
+	self snackBarMessage: msg status: 'success'
 ]
 
 { #category : #'server messaging' }

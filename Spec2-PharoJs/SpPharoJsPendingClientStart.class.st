@@ -44,10 +44,15 @@ SpPharoJsPendingClientStart >> isPending [
 
 { #category : #private }
 SpPharoJsPendingClientStart >> sendAcknowledgeMessage [
-	SpPharoJsSessionRegistry registerSession: session at: startId. 
+
+	| msg |
+	SpPharoJsSessionRegistry registerSession: session at: startId.
+	msg := PhxSpaResponse new.
+	msg type: #success.
+	msg message: 'session successfully started'.
 	self session
-		sendMessage: SpS2cSimpleResponse new
-		isResponseToIncoming: self incomingEnvelope 
+		sendMessage: msg
+		isResponseToIncoming: self incomingEnvelope
 ]
 
 { #category : #accessing }

@@ -26,7 +26,7 @@ SpAbstractPharoJsWindowAdapter >> adapt: aPresenter [
 		value: webSocketSession
 		during: [ super adapt: aPresenter ]."
 	CurrentWebSocketSession value propertyAt: 'windowAdaptor' put: self. 
-	webSocketSession := CurrentWebSocketSession value.
+	self webSocketSession: CurrentWebSocketSession value.
 	super adapt: aPresenter 
 ]
 
@@ -168,6 +168,12 @@ SpAbstractPharoJsWindowAdapter >> setToolbarTo: aMorph [
 SpAbstractPharoJsWindowAdapter >> webSocketSession [
 
 	^ CurrentWebSocketSession value ifNil: [ webSocketSession ]
+]
+
+{ #category : #accessing }
+SpAbstractPharoJsWindowAdapter >> webSocketSession: anObject [
+
+	webSocketSession := anObject
 ]
 
 { #category : #accessing }
