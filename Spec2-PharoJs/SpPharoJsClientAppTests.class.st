@@ -21,7 +21,8 @@ SpPharoJsClientAppTests >> testSessionReconnect [
 	| session |
 	session := SpPharoJsClientStarter openBrowserAndAwaitWebsocketSession.
 	session webSocket close.
-	3500 milliseconds wait.
+	self assert: session isConnected not.
+	2500 milliseconds wait.
 	self assert: session isConnected.
 	session sendEnvelope: SpS2cCloseBrowserWindow new wrapInEnvelope
 ]
