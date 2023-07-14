@@ -19,15 +19,8 @@ SpAbstractPharoJsWindowAdapter class >> isAbstract [
 { #category : #private }
 SpAbstractPharoJsWindowAdapter >> adapt: aPresenter [
 
-"	| webSocketSession |
-	webSocketSession := SpPharoJsClientSideApp
-		                    openBrowserAndAwaitWebsocketSession.
-	CurrentWebSocketSession
-		value: webSocketSession
-		during: [ super adapt: aPresenter ]."
-	CurrentWebSocketSession value propertyAt: 'windowAdaptor' put: self. 
-	self webSocketSession: CurrentWebSocketSession value.
-	super adapt: aPresenter 
+	self webSocketSession ifNil: [self openNewBrowserWindow].
+	super adapt: aPresenter
 ]
 
 { #category : #private }
@@ -135,6 +128,15 @@ SpAbstractPharoJsWindowAdapter >> newContainerMorph [
 ]
 
 { #category : #private }
+SpAbstractPharoJsWindowAdapter >> openNewBrowserWindow [
+
+	CurrentWebSocketSession value:
+		SpPharoJsClientStarter openBrowserAndAwaitWebSocketSession.
+	CurrentWebSocketSession value propertyAt: 'windowAdaptor' put: self.
+	self webSocketSession: CurrentWebSocketSession value
+]
+
+{ #category : #private }
 SpAbstractPharoJsWindowAdapter >> setToolbarTo: aMorph [
 	| newToolbarMorph toolbarPresenter |
 	
@@ -167,7 +169,7 @@ SpAbstractPharoJsWindowAdapter >> setToolbarTo: aMorph [
 { #category : #accessing }
 SpAbstractPharoJsWindowAdapter >> webSocketSession [
 
-	^ CurrentWebSocketSession value ifNil: [ webSocketSession ]
+	^webSocketSession
 ]
 
 { #category : #accessing }
