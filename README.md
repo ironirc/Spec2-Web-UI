@@ -23,7 +23,9 @@ PhxPjServer registerApplication: SpPharoJsClientSideApp
 ```
 
 Open presenter:
+```Smalltalk
 app := SpPharoJsApp1 new.
 (app new: SpPharoJsPresenter1) open.
+```
 
 ![image](https://github.com/ironirc/Spec-PharoJS/assets/10418880/11344b9f-fede-4046-89a8-7043135ae00b)
