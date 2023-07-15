@@ -82,7 +82,7 @@ SpPharoJsButtonAdapter >> buildWidget [
 { #category : #emulating }
 SpPharoJsButtonAdapter >> clicked [
 
-	| evt |
+	"| evt |
 	evt := MouseButtonEvent new
 		       setType: nil
 		       position: widget center
@@ -94,7 +94,12 @@ SpPharoJsButtonAdapter >> clicked [
 	(widget handlesMouseDown: evt) ifTrue: [ 
 		widget 
 			mouseDown: evt;
-			mouseUp: evt ]
+			mouseUp: evt ]"
+		
+	| msg |
+	msg := SpS2cElementClick new.
+	msg elementId: self widget.
+	self sendMessageToClient: msg.
 ]
 
 { #category : #updating }
@@ -142,7 +147,7 @@ SpPharoJsButtonAdapter >> getLabelText [
 SpPharoJsButtonAdapter >> handleClick: e [
 
 
-	self model action value
+	self model performAction
 ]
 
 { #category : #accessing }
@@ -275,12 +280,6 @@ SpPharoJsButtonAdapter >> styleName: aString [
 SpPharoJsButtonAdapter >> subcribeToModel [
 	"how else to hook up to all possible change events of the presenter?"
 	self subcribeToAll:  #(color label)
-]
-
-{ #category : #accessing }
-SpPharoJsButtonAdapter >> unscaledInitialExtent [
-
-	^ 15@26
 ]
 
 { #category : #updating }

@@ -589,7 +589,7 @@ SpAbstractPharoJsAdapter >> sendMessageToClient: msg [
 
 { #category : #emulating }
 SpAbstractPharoJsAdapter >> sendRightClickEvent [
-	| evt |
+"	| evt |
 
 	evt := MouseButtonEvent new 
 		setType: nil 
@@ -601,7 +601,14 @@ SpAbstractPharoJsAdapter >> sendRightClickEvent [
 
 	(widget handlesMouseDown: evt) ifTrue: [
 		widget mouseDown: evt.
-		widget mouseUp: evt ]
+		widget mouseUp: evt ]"
+	
+		| msg |
+	msg := SpS2cElementRightClick new.
+	msg elementId: self widget.
+	self sendMessageToClient: msg.
+	
+
 ]
 
 { #category : #protocol }

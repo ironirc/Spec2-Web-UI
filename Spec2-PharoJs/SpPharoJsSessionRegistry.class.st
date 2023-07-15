@@ -17,21 +17,6 @@ SpPharoJsSessionRegistry class >> containsSessionId: id [
 	^ self sessions keys includes: id
 ]
 
-{ #category : #obsolete }
-SpPharoJsSessionRegistry class >> ensureValidExistingOrNewSessionForClientId: clientId sessionId: sessionId [
-
-	| newApp newSessionId |
-	sessionId ifNotNil: [ 
-	self sessions
-		at: clientId , sessionId
-		ifPresent: [ :app | "TODO: check if app instance is still ok" ^ sessionId ]].
-	newSessionId := UUIDGenerator next asString.
-	newApp := SpPharoJsApp1 new.
-	newApp useBackend: #PharoJs.
-	self sessions at: clientId , newSessionId put: newApp.
-	^ newSessionId
-]
-
 { #category : #accessing }
 SpPharoJsSessionRegistry class >> registerSession: session at: id [
 

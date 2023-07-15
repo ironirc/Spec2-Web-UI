@@ -7,6 +7,16 @@ Class {
 { #category : #private }
 SpS2cElementClick >> executeInResponseContext: rc [
 
-	self element click
+	| listener |
+	listener := [ :event |
+	            rc sendResponseMessage: SpS2cSimpleResponse new ].
+	self element addEventListener: #click block: listener.
+	self element click.
+	self element removeEventListener: #click with: listener
+]
 
+{ #category : #private }
+SpS2cElementClick >> expectsResponse [
+
+	^ true
 ]

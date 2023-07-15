@@ -111,7 +111,7 @@ SpPharoJsWindowAdapter >> close [
 SpPharoJsWindowAdapter >> delete [
 
 	self widgetDo: [ :w | 
-		w delete.
+		self sendMessageToClient: SpS2cCloseBrowserWindow new.
 		self application windowClosed: self ]
 ]
 
