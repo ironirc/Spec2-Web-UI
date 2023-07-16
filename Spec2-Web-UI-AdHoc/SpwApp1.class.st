@@ -1,5 +1,5 @@
 Class {
-	#name : #SpPharoJsApp1,
+	#name : #SpwApp1,
 	#superclass : #SpApplication,
 	#instVars : [
 		'context'
@@ -8,41 +8,41 @@ Class {
 }
 
 { #category : #constants }
-SpPharoJsApp1 class >> applicationName [
+SpwApp1 class >> applicationName [
 
 	^ self name asString
 ]
 
 { #category : #'instance creation' }
-SpPharoJsApp1 class >> defaultBackendName [
+SpwApp1 class >> defaultBackendName [
 
 	^ #PharoJs "#Morphic"
 ]
 
 { #category : #'instance creation' }
-SpPharoJsApp1 class >> open [
+SpwApp1 class >> open [
 
 	<script>
 	self new run
 ]
 
 { #category : #accessing }
-SpPharoJsApp1 >> context [
+SpwApp1 >> context [
 
 	^ context
 ]
 
 { #category : #accessing }
-SpPharoJsApp1 >> context: anObject [
+SpwApp1 >> context: anObject [
 
 	context := anObject
 ]
 
 { #category : #accessing }
-SpPharoJsApp1 >> start [
+SpwApp1 >> start [
 
 	self windows do: [ :win | 
 		win open.
 		^ self ].
-	(self new: SpPharoJsPresenter1) open
+	(self new: SpwPresenter1) open
 ]

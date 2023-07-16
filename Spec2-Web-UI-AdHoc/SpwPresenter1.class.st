@@ -1,5 +1,5 @@
 Class {
-	#name : #SpPharoJsPresenter1,
+	#name : #SpwPresenter1,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'button2',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #layout }
-SpPharoJsPresenter1 class >> defaultLayout [
+SpwPresenter1 class >> defaultLayout [
 
 	| main row bottomRow tableControls |
 	main := SpBoxLayout newTopToBottom.
@@ -43,14 +43,14 @@ SpPharoJsPresenter1 class >> defaultLayout [
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> button1Clicked [
+SpwPresenter1 >> button1Clicked [
 
 	self inspect.
 	"input adapter inspect"
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> button2Clicked [
+SpwPresenter1 >> button2Clicked [
 
 	"Color random ifNotNil: [ :clr |"
 
@@ -72,7 +72,7 @@ SpPharoJsPresenter1 >> button2Clicked [
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> connectPresenters [
+SpwPresenter1 >> connectPresenters [
 
 	button1 action: [ self button1Clicked ].
 	button2 action: [ self button2Clicked ].
@@ -85,7 +85,7 @@ SpPharoJsPresenter1 >> connectPresenters [
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> initializePresenters [
+SpwPresenter1 >> initializePresenters [
 
 	button1 := self newButton.
 	button1
@@ -117,7 +117,7 @@ SpPharoJsPresenter1 >> initializePresenters [
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> initializeTable [
+SpwPresenter1 >> initializeTable [
 
 	table := self newTable.
 	table
@@ -149,40 +149,40 @@ SpPharoJsPresenter1 >> initializeTable [
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> input1SelectionChanged [
+SpwPresenter1 >> input1SelectionChanged [
 	button2 label: input1 selectedText.
 
 	
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> input1TextChangedTo: t [
+SpwPresenter1 >> input1TextChangedTo: t [
 
 	input2 text: t.
 	"input2 takeKeyboardFocus "
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> input2TextChangedTo: t [
+SpwPresenter1 >> input2TextChangedTo: t [
 
 	input1 text: t.
 
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> numberInput1ChangedToNumber: n [
+SpwPresenter1 >> numberInput1ChangedToNumber: n [
 
 	numberInput2 number: n squared
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> tableButton1Clicked [
+SpwPresenter1 >> tableButton1Clicked [
 
 	table selectIndexes: ((1 to: 3) collect: [ :e | self tableData size atRandom ])
 ]
 
 { #category : #initialization }
-SpPharoJsPresenter1 >> tableData [
+SpwPresenter1 >> tableData [
 
 	tableData ifNil: [ tableData := Object withAllSubclasses first: 5 ].
 	^ tableData
