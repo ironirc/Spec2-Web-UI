@@ -9,7 +9,8 @@ Class {
 	],
 	#classInstVars : [
 		'incrementalExporter',
-		'current'
+		'current',
+		'initialScript'
 	],
 	#category : #'Spec2-PharoJs-client'
 }
@@ -203,6 +204,12 @@ SpPharoJsClientApp class >> exporterClass [
 	^ PjExporter
 ]
 
+{ #category : #private }
+SpPharoJsClientApp class >> handleSystemAnnouncement: ann [
+
+	initialScript := nil
+]
+
 { #category : #pharojs }
 SpPharoJsClientApp class >> headerLine [
 	^ nil
@@ -248,8 +255,12 @@ SpPharoJsClientApp class >> httpPath [
 
 { #category : #server }
 SpPharoJsClientApp class >> initialScript [
+
 	<pharoJsSkip>
-	^ (PjExporter newWithAppClass: self) javascriptCode , self name  , '.pj_boot();'
+	initialScript ifNil: [
+		initialScript := (PjExporter newWithAppClass: self) javascriptCode
+		                 , self name , '.pj_boot();' ].
+	^ initialScript
 ]
 
 { #category : #server }
@@ -339,6 +350,24 @@ var snackbarTransitions=_Element.style.transition;_Element.style.transition="";r
 _Element.style.opacity=1;_Element.style.marginTop="0px";_Element.style.marginBottom="0px";_Element.style.transition=snackbarTransitions;requestAnimationFrame(function(){_Element.style.height="0px";_Element.style.opacity=0})});setTimeout(function(){_Container.removeChild(_Element)},1000)};_create();_This.Open()}if(typeof module!=="undefined"){module.exports=SnackBar}'
 ]
 
+{ #category : #private }
+SpPharoJsClientApp class >> subscribeToSystemAnnouncer [
+	<script>
+	self unsubscribeFromSystemAnnouncer.
+	SystemAnnouncer uniqueInstance weak
+		when:
+			ClassAdded , ClassModifiedClassDefinition , ClassRemoved
+				, ClassRenamed , MethodAdded , MethodModified , MethodRemoved
+		send: #handleSystemAnnouncement:
+		to: self 
+]
+
+{ #category : #private }
+SpPharoJsClientApp class >> unsubscribeFromSystemAnnouncer [
+	<script>
+	SystemAnnouncer uniqueInstance unsubscribe: self.
+]
+
 { #category : #accessing }
 SpPharoJsClientApp class >> webSocketPath [ 
 	^self httpPath , '-ws'
@@ -385,31 +414,6 @@ SpPharoJsClientApp >> onWebSocketOpen: ev [
 		rc msg isSuccess
 			ifTrue: [ self snackBarSuccess: rc msg message ]
 			ifFalse: [ self snackBarError: rc msg message ] ]
-]
-
-{ #category : #obsolete }
-SpPharoJsClientApp >> promiseAppSession_obsolete [
-	<pharoJsSkip>
-	^ self promise: [ :resolve :reject | 
-		  | msg |
-		  self logAll: { 'sending start app session to server' }.
-		  msg := SpC2sStartAppSession_Obsolete new.
-		  msg clientId: PhxBrowserPersistentClientId value.
-		  msg sessionId: PhxBrowserExpiringSessionId value.
-"		  msg windowId: PhxBrowserWindowId value."
-		  self messenger
-			  sendMessageToServer: msg
-			  onResponseDo: [ :env | 
-				  | sessionId |
-				  self logAll: { 
-						  'receiving session envelope:'.
-						  env }.
-				  sessionId := env msg payload.
-				  PhxBrowserExpiringSessionId
-					  value: sessionId
-					  expireInSeconds: 3600.
-				  resolve value: sessionId ]
-			  isResponseToIncomingEnvelope: nil ]
 ]
 
 { #category : #components }
