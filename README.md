@@ -24,8 +24,7 @@ PhxPjServer registerApplication: SpwClientApp
 
 Open presenter:
 ```Smalltalk
-app := SpwApp1 new.
-(app new: SpwPresenter1) open.
+SpwApp1 open
 ```
 
 ![image](https://github.com/ironirc/Spec-PharoJS/assets/10418880/11344b9f-fede-4046-89a8-7043135ae00b)
