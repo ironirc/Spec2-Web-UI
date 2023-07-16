@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'toolbarMorph',
 		'menuMorph',
-		'windowId',
 		'webSocketSession'
 	],
 	#category : #'Spec2-Web-UI-Adapters-Adaptors'
@@ -88,13 +87,6 @@ SpwAbstractWindow_A >> addStatusBarTo: aMorph [
 		vResizing: #rigid
 ]
 
-{ #category : #accessing }
-SpwAbstractWindow_A >> ensuredWindowId [
-	
-	windowId ifNil: [ windowId := self class nextIdNumber asString ].
-	^windowId
-]
-
 { #category : #private }
 SpwAbstractWindow_A >> newContainerMorph [
 
@@ -169,16 +161,4 @@ SpwAbstractWindow_A >> webSocketSession [
 SpwAbstractWindow_A >> webSocketSession: anObject [
 
 	webSocketSession := anObject
-]
-
-{ #category : #accessing }
-SpwAbstractWindow_A >> windowId [
-
-	^ windowId
-]
-
-{ #category : #accessing }
-SpwAbstractWindow_A >> windowId: anObject [
-
-	windowId := anObject
 ]
