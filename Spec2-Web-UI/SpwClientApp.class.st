@@ -206,6 +206,18 @@ SpwClientApp class >> currentUrl [
 
 ]
 
+{ #category : #'instance creation' }
+SpwClientApp class >> ensureRegisteredAtPjServer [
+
+	<pharoJsSkip>
+	<script>
+	[ PhxPjServer registerApplication: self ]
+		on: Error
+		do: [ :ex |
+			PhxPjServer startDefaultZnServer.
+			PhxPjServer registerApplication: self ]
+]
+
 { #category : #server }
 SpwClientApp class >> exporterClass [
 	<pharoJsSkip>
@@ -319,13 +331,6 @@ SpwClientApp class >> promiseCssReset [
 	^self promise: [ :resolve :reject | 
 		self addCssReset.
 		resolve value ]
-]
-
-{ #category : #'instance creation' }
-SpwClientApp class >> registerAsApplicationAtPjServer [
-	<pharoJsSkip>
-	<script>
-	PhxPjServer registerApplication: self
 ]
 
 { #category : #pharojs }

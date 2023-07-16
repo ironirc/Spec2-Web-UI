@@ -46,7 +46,8 @@ BaselineOfSpec2WebUi >> packages: spec [
 
 { #category : #baselines }
 BaselineOfSpec2WebUi >> postload: aLoader package: aPackageSpec [
-	
+
+	SpwClientApp ensureRegisteredAtPjServer
 ]
 
 { #category : #'private - accessing' }
