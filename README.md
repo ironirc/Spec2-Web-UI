@@ -19,7 +19,7 @@ Metacello new
 Then start the webserver and register the client app:
 ```Smalltalk
 PhxPjServer startDefaultZnServer.
-PhxPjServer registerApplication: SpPharoJsClientSideApp
+PhxPjServer registerApplication: SpPharoJsClientApp
 ```
 
 Open presenter:
