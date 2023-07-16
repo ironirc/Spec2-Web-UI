@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfSpec2PharoJS,
+	#name : #BaselineOfSpec2WebUi,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfSpec2PharoJS
+	#category : #BaselineOfSpec2WebUi
 }
 
 { #category : #baselines }
-BaselineOfSpec2PharoJS >> baseline: spec [
+BaselineOfSpec2WebUi >> baseline: spec [
 	<baseline>
 
 	self compatibility: spec.
@@ -20,7 +20,7 @@ BaselineOfSpec2PharoJS >> baseline: spec [
 ]
 
 { #category : #'private - accessing' }
-BaselineOfSpec2PharoJS >> compatibility: spec [
+BaselineOfSpec2WebUi >> compatibility: spec [
 
 	"Define a 'Compatibility' group that can be used as a dependency later to overcome differences in Pharo releases"
 
@@ -28,29 +28,29 @@ BaselineOfSpec2PharoJS >> compatibility: spec [
 ]
 
 { #category : #'private - accessing' }
-BaselineOfSpec2PharoJS >> groups: spec [
+BaselineOfSpec2WebUi >> groups: spec [
 
 ]
 
 { #category : #'private - accessing' }
-BaselineOfSpec2PharoJS >> packages: spec [
+BaselineOfSpec2WebUi >> packages: spec [
 
 	spec
-		package: 'Spec2-Adapters-PharoJs'
+		package: 'Spec2-Web-UI-Adapters'
 		with: [ spec requires: #( 'PharoXBasics' ) ].
 	spec
-		package: 'Spec2-PharoJs'
+		package: 'Spec2-Web-UI'
 		with: [ spec requires: #( 'PharoXBasics' ) ].
-	spec package: 'Spec2-PharoJs-AdHoc'
+	spec package: 'Spec2-Web-UI-AdHoc'
 ]
 
 { #category : #baselines }
-BaselineOfSpec2PharoJS >> postload: aLoader package: aPackageSpec [
+BaselineOfSpec2WebUi >> postload: aLoader package: aPackageSpec [
 	
 ]
 
 { #category : #'private - accessing' }
-BaselineOfSpec2PharoJS >> prerequisites: spec [
+BaselineOfSpec2WebUi >> prerequisites: spec [
 	spec baseline: 'PharoXBasics' with: [ spec repository: 'github://ironirc/pharox-pj-basics:main' ].
 
 ]
