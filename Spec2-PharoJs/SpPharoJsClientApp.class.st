@@ -123,6 +123,10 @@ SpPharoJsClientApp class >> addJsSnackBar [
 
 ]
 
+{ #category : #private }
+SpPharoJsClientApp class >> afterExportApp [
+]
+
 { #category : #pharojs }
 SpPharoJsClientApp class >> appClasses [
 
@@ -259,7 +263,7 @@ SpPharoJsClientApp class >> httpPath [
 
 { #category : #server }
 SpPharoJsClientApp class >> initialScript [
-
+<script>
 	<pharoJsSkip>
 	initialScript ifNil: [
 		initialScript := (PjExporter newWithAppClass: self) javascriptCode
@@ -356,20 +360,23 @@ _Element.style.opacity=1;_Element.style.marginTop="0px";_Element.style.marginBot
 
 { #category : #private }
 SpPharoJsClientApp class >> subscribeToSystemAnnouncer [
+
 	<script>
+	<pharoJsSkip>
 	self unsubscribeFromSystemAnnouncer.
 	SystemAnnouncer uniqueInstance weak
-		when:
-			ClassAdded , ClassModifiedClassDefinition , ClassRemoved
-				, ClassRenamed , MethodAdded , MethodModified , MethodRemoved
+		when: ClassAdded , ClassModifiedClassDefinition , ClassRemoved
+			, ClassRenamed , MethodAdded , MethodModified , MethodRemoved
 		send: #handleSystemAnnouncement:
-		to: self 
+		to: self
 ]
 
 { #category : #private }
 SpPharoJsClientApp class >> unsubscribeFromSystemAnnouncer [
+
 	<script>
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	<pharoJsSkip>
+	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #accessing }

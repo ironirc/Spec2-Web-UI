@@ -19,7 +19,7 @@ SpPharoJsClientAppTests >> testButton [
 	msg := SpS2cElementClick new.
 	msg elementId: btn adapter widget.
 	window adapter sendMessageToClient: msg.
-	20 milliseconds wait.
+	(Delay forMilliseconds: 20) wait.
 	self assert: actionExecuted.
 	window adapter sendMessageToClient: SpS2cCloseBrowserWindow new
 ]
@@ -31,7 +31,7 @@ SpPharoJsClientAppTests >> testGetSessionAndCloseWindow [
 	session := SpPharoJsClientStarter openBrowserAndAwaitWebSocketSession.
 	self assert: session isConnected.
 	session sendMessage: SpS2cCloseBrowserWindow new.
-	50 milliseconds wait.
+	(Delay forMilliseconds: 50) wait.
 	self assert: session isConnected not.
 ]
 
@@ -42,7 +42,7 @@ SpPharoJsClientAppTests >> testSessionReconnect [
 	session := SpPharoJsClientStarter openBrowserAndAwaitWebSocketSession.
 	session webSocket close.
 	self assert: session isConnected not.
-	2500 milliseconds wait.
+	(Delay forMilliseconds: 2500) wait.
 	self assert: session isConnected.
 	session sendMessage: SpS2cCloseBrowserWindow new
 ]
