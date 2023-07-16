@@ -165,6 +165,10 @@ SpPharoJsClientApp class >> applicationName [
 ]
 
 { #category : #private }
+SpPharoJsClientApp class >> beforeExportApp [
+]
+
+{ #category : #private }
 SpPharoJsClientApp class >> boot [
 
 	window addEventListener: #load block: [ 

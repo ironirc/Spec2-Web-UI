@@ -33,7 +33,7 @@ SpPharoJsPendingClientStart >> initialize [
 SpPharoJsPendingClientStart >> isExpired [
 
 	startedAt ifNil: [ ^ true ].
-	^ DateAndTime now - startedAt > 5000 milliseconds
+	^ DateAndTime now - startedAt > (Duration milliSeconds: 5000 )
 ]
 
 { #category : #testing }
