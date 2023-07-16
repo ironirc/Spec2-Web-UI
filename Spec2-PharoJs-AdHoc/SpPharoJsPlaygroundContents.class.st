@@ -8,8 +8,8 @@ Class {
 SpPharoJsPlaygroundContents >> stuff20230516 [
 
 	| app |
-	app := SpPharoJsApp1 current.
-	app reset.
-	app windows.
-	app windows any presenter
+	app := SpPharoJsApp1 new.
+	(app new: SpPharoJsPresenter1) open.
+	SpPharoJsPresenter1 new open.
+	SpButtonPresenter new open
 ]
