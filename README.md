@@ -16,15 +16,15 @@ Metacello new
   load.
 ```
 
-Then start the webserver and register the client app:
+Open the experimental presenter:
+```Smalltalk
+SpwApp1 open
+```
+
+If for some reason the server didn't start or the app didn't get registered during post load:
 ```Smalltalk
 PhxPjServer startDefaultZnServer.
 PhxPjServer registerApplication: SpwClientApp
-```
-
-Open presenter:
-```Smalltalk
-SpwApp1 open
 ```
 
 ![image](https://github.com/ironirc/Spec-PharoJS/assets/10418880/11344b9f-fede-4046-89a8-7043135ae00b)
