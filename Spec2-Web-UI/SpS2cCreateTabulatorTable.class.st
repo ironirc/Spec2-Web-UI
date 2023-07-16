@@ -34,7 +34,7 @@ SpS2cCreateTabulatorTable >> data: anObject [
 
 { #category : #private }
 SpS2cCreateTabulatorTable >> tag [
-	^'spw-table'
+	^SpwTabulator_WC tagName
 ]
 
 { #category : #private }

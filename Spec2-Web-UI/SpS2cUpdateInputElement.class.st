@@ -75,7 +75,7 @@ SpS2cUpdateInputElement >> selectionStart: anObject [
 
 { #category : #accessing }
 SpS2cUpdateInputElement >> tag [
-	^'spw-input'
+	^SpwInputField_WC tagName
 ]
 
 { #category : #accessing }
