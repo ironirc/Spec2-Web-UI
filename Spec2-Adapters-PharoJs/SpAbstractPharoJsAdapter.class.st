@@ -14,7 +14,7 @@ Class {
 SpAbstractPharoJsAdapter class >> adaptingName [
 	"Override me if adapter will not follow the common pattern"
 
-	"remove 'SpMorphic' part and *in general*, I will have the adapting name"
+	"remove 'SpPharoJs' part and *in general*, I will have the adapting name"
 
 	^ (self name withoutPrefix: 'SpPharoJs') asSymbol
 ]
@@ -53,6 +53,12 @@ SpAbstractPharoJsAdapter class >> nextIdNumber [
 SpAbstractPharoJsAdapter class >> nextIdString [
 
 	^ 'el-' , self nextIdNumber printString
+]
+
+{ #category : #accessing }
+SpAbstractPharoJsAdapter class >> proxyClass [ 
+
+	^SpPharoJsWidgetProxy
 ]
 
 { #category : #'drag and drop' }
@@ -530,6 +536,16 @@ SpAbstractPharoJsAdapter >> muteModelAspect: aspect while: aBlock [
 
 	mutedModelSubscriptions add: aspect.
 	aBlock ensure: [ mutedModelSubscriptions remove: aspect ]
+]
+
+{ #category : #private }
+SpAbstractPharoJsAdapter >> newWidgetProxy [
+
+	| w |
+	w := self class proxyClass new.
+	w id: self class nextIdString.
+	w adaptor: self.
+	^ w
 ]
 
 { #category : #styling }

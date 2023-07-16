@@ -8,6 +8,12 @@ Class {
 	#category : #'Spec2-Adapters-PharoJs-Base'
 }
 
+{ #category : #constants }
+SpPharoJsButtonAdapter class >> proxyClass [ 
+
+	^SpPharoJsButtonProxy
+]
+
 { #category : #'widget API' }
 SpPharoJsButtonAdapter >> action [
 
