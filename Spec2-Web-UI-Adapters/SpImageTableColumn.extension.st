@@ -27,14 +27,8 @@ SpImageTableColumn >> asTabulatorColumnWithIndex: i [
 SpImageTableColumn >> getValueFor: anObject id: id tableAdaptor: tableAdaptor [
 	"^tableAdaptor getValueFor: anObject id: id stringColumn: self"
 
-	| form result |
+	| form   |
 	form := self evaluation value: anObject.
-	""
-	result := SpwImage new.
-	result b64Array: (ByteArray streamContents: [ :ws |
-			 "PluginBasedJPEGReadWriter" PNGReadWriter  putForm: form onStream: ws ])
-			base64Encoded.
-	result fileExtension: 'png'.
-	result cacheKey: nil. "to be done"
-	^ result
+	^SpwImage forForm: form.
+	
 ]

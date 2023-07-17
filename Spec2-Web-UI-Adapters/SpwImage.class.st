@@ -6,8 +6,32 @@ Class {
 		'fileExtension',
 		'cacheKey'
 	],
+	#classInstVars : [
+		'cache'
+	],
 	#category : #'Spec2-Web-UI-Adapters-Table'
 }
+
+{ #category : #accessing }
+SpwImage class >> cache [
+
+	cache ifNil: [ cache := Dictionary new ].
+	^cache
+]
+
+{ #category : #accessing }
+SpwImage class >> forForm: aForm [
+
+	<pharoJsSkip>
+	^ self cache at: aForm ifAbsentPut: [
+		  | newInstance |
+		  newInstance := SpwImage new.
+		  newInstance b64Array: (ByteArray streamContents: [ :ws |
+				   PNGReadWriter putForm: aForm onStream: ws ]) base64Encoded.
+		  newInstance fileExtension: 'png'.
+		  newInstance cacheKey: aForm hash.
+		  newInstance ]
+]
 
 { #category : #accessing }
 SpwImage >> b64Array [
@@ -43,4 +67,10 @@ SpwImage >> fileExtension [
 SpwImage >> fileExtension: anObject [
 
 	fileExtension := anObject
+]
+
+{ #category : #accessing }
+SpwImage >> getB64Array [
+
+	^ self class cache at: self cacheKey ifAbsentPut: [self b64Array]
 ]
