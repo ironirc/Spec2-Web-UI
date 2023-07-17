@@ -67,7 +67,7 @@ SpwLabel_A >> buildWidget [
 	rw := self newRemoteWidget.
 	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: rw id.
-	msg tag: 'div'.
+	msg tag: SpwLabel_WC tagName.
 	msg textContent: self getText asString.
 "	msg events: #( click )."
 "	msg styles: { 

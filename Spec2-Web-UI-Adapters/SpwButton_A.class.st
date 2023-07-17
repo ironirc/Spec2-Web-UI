@@ -72,7 +72,7 @@ SpwButton_A >> buildWidget [
 	rw := self newRemoteWidget.
 	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: rw id.
-	msg tag: 'button'.
+	msg tag: SpwButton_WC tagName.
 	msg textContent: self label.
 	msg events: #( click ).
 	msg styles: { ('background-color'
