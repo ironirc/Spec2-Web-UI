@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 SpwBackend class >> backendName [
 
-	^ #PharoJs
+	^ #WebUI
 ]
 
 { #category : #private }

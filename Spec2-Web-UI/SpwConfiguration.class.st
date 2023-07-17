@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 SpwConfiguration class >> isAvailableFor: aBackend inApplication: anApplication [
 
-	^ aBackend name = #PharoJs
+	^ aBackend name = #WebUI
 ]
 
 { #category : #styling }
