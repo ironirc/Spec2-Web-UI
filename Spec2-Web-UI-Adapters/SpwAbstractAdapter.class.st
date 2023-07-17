@@ -588,19 +588,11 @@ SpwAbstractAdapter >> removeSubWidgets [
 
 { #category : #emulating }
 SpwAbstractAdapter >> sendClickEvent [
-	| evt |
 
-	evt := MouseButtonEvent new 
-		setType: nil 
-		position: widget center 
-		which: MouseButtonEvent redButton 
-		buttons: MouseButtonEvent redButton 
-		hand: nil 
-		stamp: nil.
-
-	(widget handlesMouseDown: evt) ifTrue: [
-		widget handleMouseDown: evt.
-		widget handleMouseUp: evt ]
+	| msg |
+	msg := SpS2cElementClick new.
+	msg elementId: self widget id.
+	self sendMessageToClient: msg
 ]
 
 { #category : #websocket }

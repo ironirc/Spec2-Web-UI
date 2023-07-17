@@ -85,24 +85,7 @@ SpwButton_A >> buildWidget [
 { #category : #emulating }
 SpwButton_A >> clicked [
 
-	"| evt |
-	evt := MouseButtonEvent new
-		       setType: nil
-		       position: widget center
-		       which: MouseButtonEvent redButton
-		       buttons: MouseButtonEvent redButton
-		       hand: nil
-		       stamp: nil.
-
-	(widget handlesMouseDown: evt) ifTrue: [ 
-		widget 
-			mouseDown: evt;
-			mouseUp: evt ]"
-		
-	| msg |
-	msg := SpS2cElementClick new.
-	msg elementId: self widget id.
-	self sendMessageToClient: msg.
+	self sendClickEvent 
 ]
 
 { #category : #updating }
