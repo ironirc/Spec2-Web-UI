@@ -4,6 +4,12 @@ Class {
 	#category : #'Spec2-Web-UI-Adapters-Adaptors'
 }
 
+{ #category : #accessing }
+SpwLabel_A class >> remoteWidgetClass [ 
+
+	^SpwLabel_RW
+]
+
 { #category : #private }
 SpwLabel_A >> applyDecorationsTo: aString [
 	| text |
