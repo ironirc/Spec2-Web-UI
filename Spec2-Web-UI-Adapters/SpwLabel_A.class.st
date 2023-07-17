@@ -62,18 +62,9 @@ SpwLabel_A >> buildWidget [
 		setProperty: #minWidth toValue: 3. 
 	^ label"
 	
-	| rw msg |
-	self widget ifNotNil: [ ^ self ].
+	| rw  |
 	rw := self newRemoteWidget.
-	msg := SpS2cUpdateArbitraryElement new.
-	msg elementId: rw id.
-	msg tag: SpwLabel_WC tagName.
-	msg textContent: self getText asString.
-"	msg events: #( click )."
-"	msg styles: { 
-			('background-color' -> ('#' , self color asHexString))}."
-	msg attributes: { ('ph-src' -> thisContext method printString) }.
-	self sendMessageToClient: msg.
+	rw sendCreateMessage. 
 	^ rw
 ]
 

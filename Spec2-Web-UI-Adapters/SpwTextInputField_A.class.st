@@ -62,25 +62,9 @@ SpwTextInputField_A >> buildWidget [
 
 	^ newWidget"
 
-	| rw msg |
+	| rw   |
 	rw := self newRemoteWidget.
-	msg := SpS2cUpdateInputElement new.
-	msg elementId: rw id.
-	msg events: #( 'input' 'select' ).
-	"msg styles: { 
-			('flex-grow' -> 1).
-			('flex' -> 1) }."
-	msg attributes: {
-			('method' -> thisContext method printString).
-			('placeholder' -> self model placeholder).
-			('type' -> self htmlInputType).
-			('maxLength' -> self htmlMaxLength) }.
-
-	msg readOnly: self model isEditable not.
-	msg disabled: self model isEnabled not.
-	msg visible: self model isVisible.
-	msg value: self model text.
-	self sendMessageToClient: msg.
+	rw sendCreateMessage. 
 	^ rw
 ]
 

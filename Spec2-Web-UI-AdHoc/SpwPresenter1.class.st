@@ -184,6 +184,6 @@ SpwPresenter1 >> tableButton1Clicked [
 { #category : #initialization }
 SpwPresenter1 >> tableData [
 
-	tableData ifNil: [ tableData := Object withAllSubclasses first: 5 ].
+	tableData ifNil: [ tableData := Object withAllSubclasses first: 100 ].
 	^ tableData
 ]

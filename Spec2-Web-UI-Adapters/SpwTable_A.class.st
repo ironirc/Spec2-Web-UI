@@ -10,6 +10,12 @@ SpwTable_A class >> intercellSpacing [
 	^ 2@0
 ]
 
+{ #category : #accessing }
+SpwTable_A class >> remoteWidgetClass [
+
+	^ SpwTable_RW
+]
+
 { #category : #initialization }
 SpwTable_A >> addKeyBindingsTo: aWidget [
 
@@ -78,17 +84,9 @@ SpwTable_A >> buildWidget [
 	self addModelTo: widget.
 	^ widget"
 
-	| rw msg |
+	| rw   |
 	rw := self newRemoteWidget.
-	msg := SpS2cCreateTabulatorTable new.
-	msg styles: { 
-			"('height' -> '500px')".
-			"('flex' -> 1)" }.
-	msg elementId: rw id.
-"	msg data: model items."
-	msg columns: self tabulatorColumns.
-	msg attributes: { ('ph-src' -> thisContext method printString) }.
-	self sendMessageToClient: msg.
+	rw sendCreateMessage. 
 	^ rw
 ]
 

@@ -14,3 +14,15 @@ SpwLabel_RW >> contents [
 	envelope := self adaptor sendMessageToClient: msg.
 	^ envelope msg results first value
 ]
+
+{ #category : #accessing }
+SpwLabel_RW >> sendCreateMessage [
+
+	| msg |
+	msg := SpS2cUpdateArbitraryElement new.
+	msg elementId: self id.
+	msg tag: SpwLabel_WC tagName.
+	msg textContent: self adaptor getText asString.
+	msg attributes: { ('ph-src' -> thisContext method printString) }.
+	self sendMessageToClient: msg.
+]

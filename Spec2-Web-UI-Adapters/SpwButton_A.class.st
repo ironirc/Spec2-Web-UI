@@ -51,7 +51,7 @@ SpwButton_A >> buildLabel: text withIcon: icon [
 { #category : #factory }
 SpwButton_A >> buildWidget [
 
-	| msg rw |
+	| rw |
 	"button 
 		getEnabledSelector: #enabled ;
 		getFontSelector: #font ;
@@ -68,17 +68,8 @@ SpwButton_A >> buildWidget [
 	button 
 		bindKeyCombination: Character space 
 		toAction: [ self action ]."
-	self widget ifNotNil: [ ^ self ].
 	rw := self newRemoteWidget.
-	msg := SpS2cUpdateArbitraryElement new.
-	msg elementId: rw id.
-	msg tag: SpwButton_WC tagName.
-	msg textContent: self label.
-	msg events: #( click ).
-	msg styles: { ('background-color'
-		 -> ('#' , (self color ifNil: [ Color gray ]) asHexString)) }.
-	msg attributes: { ('ph-src' -> thisContext method printString) }.
-	self sendMessageToClient: msg.
+	rw sendCreateMessage.
 	^ rw
 ]
 

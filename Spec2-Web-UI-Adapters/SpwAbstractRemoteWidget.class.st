@@ -38,3 +38,14 @@ SpwAbstractRemoteWidget >> id: anObject [
 
 	id := anObject
 ]
+
+{ #category : #accessing }
+SpwAbstractRemoteWidget >> model [
+	^self adaptor model
+]
+
+{ #category : #websocket }
+SpwAbstractRemoteWidget >> sendMessageToClient: msg [
+
+	^self adaptor sendMessageToClient: msg
+]
