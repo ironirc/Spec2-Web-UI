@@ -169,7 +169,7 @@ SpwButton_A >> labelChanged [
 
 	| msg |
 	msg := SpS2cUpdateArbitraryElement new.
-	msg elementId: widget.
+	msg elementId: widget id.
 	msg tag: 'button'.
 	msg textContent: self label.
 	self sendMessageToClient: msg
