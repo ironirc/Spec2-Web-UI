@@ -627,7 +627,7 @@ SpwAbstractAdapter >> sendRightClickEvent [
 	
 		| msg |
 	msg := SpS2cElementRightClick new.
-	msg elementId: self widget.
+	msg elementId: self widget id.
 	self sendMessageToClient: msg.
 	
 
