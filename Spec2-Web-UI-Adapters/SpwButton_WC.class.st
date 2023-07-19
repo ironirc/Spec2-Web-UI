@@ -16,7 +16,6 @@ SpwButton_WC class >> tagName [
 { #category : #rendering }
 SpwButton_WC >> cssText [  
 
-
 ^':host {
           display: block; /* make the custom element a block element */
         }
