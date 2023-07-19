@@ -1,8 +1,8 @@
 Class {
 	#name : #'SpwLabel_WC',
-	#superclass : #PjWebComponent,
+	#superclass : #'SpwAbstract_WC',
 	#instVars : [
-		'button'
+		'label'
 	],
 	#category : #'Spec2-Web-UI-Adapters-WebComponents'
 }
@@ -11,6 +11,19 @@ Class {
 SpwLabel_WC class >> tagName [
 
 	^ 'spw-label'
+]
+
+{ #category : #accessing }
+SpwLabel_WC >> label [
+
+	^ label
+]
+
+{ #category : #accessing }
+SpwLabel_WC >> label: anObject [
+
+	label := anObject.
+	self render
 ]
 
 { #category : #rendering }
@@ -22,4 +35,5 @@ SpwLabel_WC >> renderOn: x [
 				('width' -> '100%').
 				('box-sizing' -> 'border-box') }.
 		button := el ]"
+	x span: (self label ifNil: [ '' ])
 ]

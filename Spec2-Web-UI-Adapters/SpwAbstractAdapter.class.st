@@ -472,7 +472,7 @@ SpwAbstractAdapter >> isMorphicAdapter [
 { #category : #visibility }
 SpwAbstractAdapter >> isVisible [
 	
-	^ widget visible
+	^ widget isVisible
 ]
 
 { #category : #emulating }
@@ -693,7 +693,7 @@ SpwAbstractAdapter >> subcribeToAll: aspects [
 { #category : #'model subscriptions' }
 SpwAbstractAdapter >> subcribeToModel [
 
-
+	self subcribeToAll: #( visible )
 ]
 
 { #category : #protocol }
@@ -759,6 +759,16 @@ SpwAbstractAdapter >> vShrinkWrap [
 SpwAbstractAdapter >> vSpaceFill [
 	
 	self widgetDo: [ :w | w vResizing: #spaceFill ]
+]
+
+{ #category : #'presenter events' }
+SpwAbstractAdapter >> visibleChanged [
+
+	| msg |
+	msg := SpS2cUpdateInputElement new.
+	msg elementId: widget id.
+	msg visible: self model isVisible.
+	self sendMessageToClient: msg
 ]
 
 { #category : #private }

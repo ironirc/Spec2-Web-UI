@@ -354,11 +354,7 @@ SpwBaseText_A >> subcribeToModel [
 { #category : #'presenter events' }
 SpwBaseText_A >> textChanged [
 
-	| msg |
-	msg := SpS2cUpdateInputElement new.
-	msg elementId: widget id.
-	msg value: self model text.
-	self sendMessageToClient: msg
+	self widget value: self model text
 ]
 
 { #category : #emulating }

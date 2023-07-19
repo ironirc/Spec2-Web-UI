@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'PhxPjPromiseTrait classTrait + PhxPjLoggingTrait classTrait',
 	#instVars : [
 		'messenger',
-		'sessionId'
+		'sessionId',
+		'nodeCache'
 	],
 	#classInstVars : [
 		'incrementalExporter',
@@ -131,13 +132,11 @@ SpwClientApp class >> afterExportApp [
 SpwClientApp class >> appClasses [
 
 	<pharoJsSkip>
-	^ SpS2cMessage withAllSubclasses , SpC2sEvent withAllSubclasses , {
+	^ SpS2cMessage withAllSubclasses , SpC2sEvent withAllSubclasses
+	  , SpwAbstract_WC withAllSubclasses , {
 		  PhxSpaResponse.
-		  SpwInputField_WC.
-		  SpwTabulator_WC.
 		  SpwTabulatorColumn.
 		  SpwImage }
-	
 ]
 
 { #category : #pharojs }
@@ -399,7 +398,8 @@ SpwClientApp >> dialogManager [
 SpwClientApp >> initialize [
 
 	super initialize.
-	self logSelfAndAll: { 'initialize' }
+	self logSelfAndAll: { 'initialize' }.
+	nodeCache := Dictionary new
 ]
 
 { #category : #components }
@@ -420,6 +420,24 @@ SpwClientApp >> messenger [
 	^ messenger
 ]
 
+{ #category : #'accessing derived' }
+SpwClientApp >> nodeAt: key put: node [
+
+	^ nodeCache at: key put: node
+]
+
+{ #category : #'accessing derived' }
+SpwClientApp >> nodeCache [
+
+	^ nodeCache
+]
+
+{ #category : #'accessing derived' }
+SpwClientApp >> nodeOrNilAt: key [
+
+	^ nodeCache at: key ifAbsent: [ nil ]
+]
+
 { #category : #components }
 SpwClientApp >> onWebSocketOpen: ev [
 
@@ -430,6 +448,12 @@ SpwClientApp >> onWebSocketOpen: ev [
 		rc msg isSuccess
 			ifTrue: [ self snackBarSuccess: rc msg message ]
 			ifFalse: [ self snackBarError: rc msg message ] ]
+]
+
+{ #category : #'accessing derived' }
+SpwClientApp >> removeKey: key [
+
+	nodeCache removeKey: key
 ]
 
 { #category : #components }

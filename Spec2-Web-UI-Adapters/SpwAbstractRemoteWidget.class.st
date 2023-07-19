@@ -12,7 +12,7 @@ Class {
 		'id',
 		'adaptor'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Widget'
+	#category : #'Spec2-Web-UI-Adapters-RemoteWidget'
 }
 
 { #category : #accessing }
@@ -37,6 +37,17 @@ SpwAbstractRemoteWidget >> id [
 SpwAbstractRemoteWidget >> id: anObject [
 
 	id := anObject
+]
+
+{ #category : #testing }
+SpwAbstractRemoteWidget >> isVisible [
+
+	| msg envelope |
+	msg := SpS2cQuerySomeStuff new.
+	msg elementId: self id.
+	msg selectors: #( isVisible ).
+	envelope := self adaptor sendMessageToClient: msg.
+	^ envelope msg results first value
 ]
 
 { #category : #accessing }

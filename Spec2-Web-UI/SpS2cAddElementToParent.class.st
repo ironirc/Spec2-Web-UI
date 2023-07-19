@@ -10,9 +10,10 @@ Class {
 { #category : #accessing }
 SpS2cAddElementToParent >> executeInResponseContext: rc [
 
-	| el  |
+	| el |
 	el := self element.
-	(self document getElementById: parentId) appendChild: el
+	(self getElementById: parentId) appendChild: el.
+	SpwClientApp current removeKey: elementId
 ]
 
 { #category : #accessing }

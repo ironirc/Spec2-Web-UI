@@ -5,7 +5,9 @@ Class {
 		'attributes',
 		'styles',
 		'textContent',
-		'value'
+		'value',
+		'properties',
+		'visible'
 	],
 	#category : #'Spec2-Web-UI-serverToClientMessages'
 }
@@ -43,9 +45,19 @@ SpS2cUpdateElement >> executeInResponseContext: rc [
 	| el x |
 	el := self ensuredElementIn: rc.
 	x := PjDomBuilder newOnElement: el.
-	self updateOn: x.
-	(document contains: el) ifFalse: [ document body appendChild: el ].
+	self updateElement: el builder: x
+]
 
+{ #category : #accessing }
+SpS2cUpdateElement >> properties [
+
+	^ properties
+]
+
+{ #category : #accessing }
+SpS2cUpdateElement >> properties: anObject [
+
+	properties := anObject
 ]
 
 { #category : #accessing }
@@ -73,12 +85,18 @@ SpS2cUpdateElement >> textContent: anObject [
 ]
 
 { #category : #private }
-SpS2cUpdateElement >> updateOn: x [
-
+SpS2cUpdateElement >> updateElement: el builder: x [
+	"console log: 'updating element:' with: el. "
 	styles ifNotNil: [x _style: styles].
 	attributes ifNotNil: [x _attr: attributes].
 	textContent ifNotNil: [ x _text: textContent ].
-	value ifNotNil: [ x currentElement value: value ]
+	value ifNotNil: [ el value: value ].
+	properties ifNotNil: [el initializeWithProperties: properties ].
+	visible ifNotNil: [
+		console log:  'visibility:' with: el with: el style. 
+		el style visibility: (visible
+				 ifTrue: [ 'visible' ]
+				 ifFalse: [ 'hidden' ]) ].	
 
 ]
 
@@ -92,4 +110,16 @@ SpS2cUpdateElement >> value [
 SpS2cUpdateElement >> value: anObject [
 
 	value := anObject
+]
+
+{ #category : #accessing }
+SpS2cUpdateElement >> visible [
+
+	^ visible
+]
+
+{ #category : #accessing }
+SpS2cUpdateElement >> visible: anObject [
+
+	visible := anObject
 ]

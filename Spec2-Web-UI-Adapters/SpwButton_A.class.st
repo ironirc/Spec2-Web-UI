@@ -136,7 +136,7 @@ SpwButton_A >> helpText [
 { #category : #accessing }
 SpwButton_A >> icon [
 
-	^ widget label icon
+	^ widget icon
 ]
 
 { #category : #'menus support' }
@@ -149,7 +149,7 @@ SpwButton_A >> keyStroke: anEvent fromMorph: aMorph [
 
 { #category : #'widget API' }
 SpwButton_A >> label [
-	
+	self halt.
 	^ self 
 		buildLabel: (self presenter label withAccentuatedCharacter: self presenter shortcutCharacter) 
 		withIcon: self presenter icon
@@ -158,12 +158,9 @@ SpwButton_A >> label [
 { #category : #updating }
 SpwButton_A >> labelChanged [
 
-	| msg |
-	msg := SpS2cUpdateArbitraryElement new.
-	msg elementId: widget id.
-	msg tag: 'button'.
-	msg textContent: self label.
-	self sendMessageToClient: msg
+
+	self widget label: self model label.
+
 ]
 
 { #category : #'widget API' }
@@ -256,6 +253,7 @@ SpwButton_A >> styleName: aString [
 { #category : #updating }
 SpwButton_A >> subcribeToModel [
 	"how else to hook up to all possible change events of the presenter?"
+	super subcribeToModel.
 	self subcribeToAll:  #(color label)
 ]
 

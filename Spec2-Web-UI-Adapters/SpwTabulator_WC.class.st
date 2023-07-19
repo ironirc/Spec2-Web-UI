@@ -3,15 +3,16 @@ I am a web component containing a Tabulator
 "
 Class {
 	#name : #'SpwTabulator_WC',
-	#superclass : #PjWebComponent,
+	#superclass : #'SpwAbstract_WC',
 	#traits : 'PhxPjPromiseTrait',
 	#classTraits : 'PhxPjPromiseTrait classTrait',
 	#instVars : [
-		'div',
 		'tabulator',
 		'tableBuiltPromise',
 		'resolveTableBuiltPromise',
-		'columns'
+		'columns',
+		'tabulatorDiv',
+		'tabulatorColumnObjects'
 	],
 	#category : #'Spec2-Web-UI-Adapters-WebComponents'
 }
@@ -66,7 +67,7 @@ SpwTabulator_WC >> deselectIndexes: indexesOrNil [
 { #category : #initialization }
 SpwTabulator_WC >> focus [ 
 
-	div focus.
+	tabulatorDiv focus.
 
 ]
 
@@ -99,14 +100,22 @@ SpwTabulator_WC >> promiseDataFor: params [
 
 { #category : #initialization }
 SpwTabulator_WC >> renderOn: x [
+	"	(document contains: self) ifFalse: [
+		console log: 'skip render (not yet in document)' ]."
 
+	tabulator ifNotNil: [
+		console log: 'redrawing table'.
+		tabulator redraw: true.
+		^ self ].
 	self addTabulatorCssTo: x.
 	x style: '*, *:before, *:after {
     box-sizing: border-box;'.
-	x div: [ :el | div := el ].
-	tabulator := global Tabulator new: div with: {
+	x div: [ :el | tabulatorDiv := el ].
+	console log: 'tabulatorColumnObjects:' with: tabulatorColumnObjects.
+	tabulator := global Tabulator new: tabulatorDiv with: {
 			             ('height' -> '100%').
-			             "			             ('renderVertical' -> 'virtual')."
+			             "('renderVertical' -> 'virtual')."
+			             ('columns' -> tabulatorColumnObjects).
 			             ('selectable' -> true).
 			             ('progressiveLoad' -> 'load').
 			             ('dataReceiveParams' -> {
@@ -118,9 +127,8 @@ SpwTabulator_WC >> renderOn: x [
 			             ('movableColumns' -> true).
 			             ('ajaxRequestFunc'
 			              -> [ :url :config :params | "console log: url _: config _: params."
-			
-				              self promiseDataFor: params ]).
-			            " ('ajaxResponse' -> [ :url :params :response | self unpackTableData: response  ])" }
+				              self promiseDataFor: params ])
+			             "('ajaxResponse' -> [ :url :params :response | self unpackTableData: response  ])" }
 			             asJsObject.
 	tabulator
 		on: 'rowSelected'
@@ -140,7 +148,7 @@ SpwTabulator_WC >> renderOn: x [
 	tabulator
 		on: 'dataProcessed'
 		do: [ :r | console timeEnd: 'dataProcessed' ].
-tabulator
+	tabulator
 		on: 'renderStarted'
 		do: [ :r | console time: 'rendering' ].
 	tabulator
@@ -148,9 +156,9 @@ tabulator
 		do: [ :r | console timeEnd: 'rendering' ].
 	tabulator
 		on: 'pageLoaded'
-		do: [ :r | console timeEnd: 'pageLoaded'. 	console time: 'pageLoaded'.   ].
-		
-	
+		do: [ :r |
+			console timeEnd: 'pageLoaded'.
+			console time: 'pageLoaded' ]
 ]
 
 { #category : #'api - selection' }
@@ -177,7 +185,7 @@ SpwTabulator_WC >> setColumns: aCollection [
 		convertedCols add: (self convertColumn: col columnIndex: idx) ].
 	console log: 'Setting cols'.
 	console log: convertedCols.
-	tabulator setColumns: convertedCols
+	tabulatorColumnObjects := convertedCols
 ]
 
 { #category : #initialization }

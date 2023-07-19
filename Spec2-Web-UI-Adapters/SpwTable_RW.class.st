@@ -1,7 +1,7 @@
 Class {
 	#name : #'SpwTable_RW',
 	#superclass : #SpwAbstractRemoteWidget,
-	#category : #'Spec2-Web-UI-Adapters-Widget'
+	#category : #'Spec2-Web-UI-Adapters-RemoteWidget'
 }
 
 { #category : #accessing }

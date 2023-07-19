@@ -221,16 +221,6 @@ SpwTextInputField_A >> text: aString [
 		acceptTextInModel
 ]
 
-{ #category : #'presenter events' }
-SpwTextInputField_A >> visibleChanged [
-
-	| msg |
-	msg := SpS2cUpdateInputElement new.
-	msg elementId: widget.
-	msg visible: self model isVisible.
-	self sendMessageToClient: msg
-]
-
 { #category : #emulating }
 SpwTextInputField_A >> widgetEventReceiver [
 	

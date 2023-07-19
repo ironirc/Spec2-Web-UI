@@ -84,5 +84,5 @@ SpwLabel_A >> getText [
 { #category : #accessing }
 SpwLabel_A >> label [
 	
-	^ widget contents
+	^ widget label
 ]

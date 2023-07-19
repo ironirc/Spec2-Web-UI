@@ -16,7 +16,7 @@ SpwApp1 class >> applicationName [
 { #category : #'instance creation' }
 SpwApp1 class >> defaultBackendName [
 
-	^ #WebUI
+	^ #WebUI "#Morphic"
 ]
 
 { #category : #'instance creation' }

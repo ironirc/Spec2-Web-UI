@@ -14,6 +14,8 @@ SpS2cMessageWithElementId >> createElement [
 	| el |
 	el := self document createElement: self tag.
 	el setAttribute: 'id' value: elementId.
+	self nodeCache nodeAt: elementId put: el. 
+	console log: 'created element:' with: el. 
 	^ el
 ]
 
@@ -29,7 +31,7 @@ SpS2cMessageWithElementId >> createElementAndAddEventListenersIn: rc [
 { #category : #accessing }
 SpS2cMessageWithElementId >> element [
 
-	^ self document getElementById: elementId
+	^ self getElementById: elementId
 ]
 
 { #category : #accessing }
@@ -62,6 +64,13 @@ SpS2cMessageWithElementId >> events: anObject [
 	events := anObject
 ]
 
+{ #category : #accessing }
+SpS2cMessageWithElementId >> getElementById: anId [
+
+	^ (self document getElementById: anId) ifNil: [
+		  self nodeCache nodeOrNilAt: anId ]
+]
+
 { #category : #private }
 SpS2cMessageWithElementId >> initializeNewElement: el in: rc [
 
@@ -73,4 +82,10 @@ SpS2cMessageWithElementId >> initializeNewElement: el in: rc [
 			msg := cls newForNativeEvent: nativeEvent.
 			msg sourceId: elementId.
 			rc wsHandler sendMessageToServer: msg ] ]
+]
+
+{ #category : #private }
+SpS2cMessageWithElementId >> nodeCache [
+
+	^ SpwClientApp current
 ]

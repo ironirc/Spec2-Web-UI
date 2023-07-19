@@ -38,10 +38,8 @@ SpS2cCreateTabulatorTable >> tag [
 ]
 
 { #category : #private }
-SpS2cCreateTabulatorTable >> updateOn: x [
+SpS2cCreateTabulatorTable >> updateElement: el builder: x [
 
-	| webComp |
-	super updateOn: x.
-	webComp := x currentElement.
-	webComp tableBuiltPromise then: [ webComp setColumns: self columns ]
+	super updateElement: el builder: x.
+	 el setColumns: self columns 
 ]

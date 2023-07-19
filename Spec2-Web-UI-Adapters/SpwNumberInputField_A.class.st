@@ -4,6 +4,12 @@ Class {
 	#category : #'Spec2-Web-UI-Adapters-Adaptors'
 }
 
+{ #category : #constants }
+SpwNumberInputField_A class >> remoteWidgetClass [
+
+	^ SpwNumberInputField_RW 
+]
+
 { #category : #'ensure bounds' }
 SpwNumberInputField_A >> htmlInputType [
 

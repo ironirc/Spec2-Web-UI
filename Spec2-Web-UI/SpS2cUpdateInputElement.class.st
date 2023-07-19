@@ -6,9 +6,9 @@ Class {
 		'selectAll',
 		'type',
 		'disabled',
-		'visible',
 		'selectionStart',
-		'selectionEnd'
+		'selectionEnd',
+		'tag'
 	],
 	#category : #'Spec2-Web-UI-serverToClientMessages'
 }
@@ -75,7 +75,13 @@ SpS2cUpdateInputElement >> selectionStart: anObject [
 
 { #category : #accessing }
 SpS2cUpdateInputElement >> tag [
-	^SpwInputField_WC tagName
+	^tag
+]
+
+{ #category : #accessing }
+SpS2cUpdateInputElement >> tag: anObject [
+
+	tag := anObject
 ]
 
 { #category : #accessing }
@@ -91,32 +97,15 @@ SpS2cUpdateInputElement >> type: anObject [
 ]
 
 { #category : #updating }
-SpS2cUpdateInputElement >> updateOn: x [
+SpS2cUpdateInputElement >> updateElement: el builder: x [
 
-	super updateOn: x.
-	readOnly ifNotNil: [ x currentElement readOnly: readOnly ].
-	disabled ifNotNil: [ x currentElement disabled: disabled ].
-	visible ifNotNil: [ 
-		x currentElement style visibility: (visible
-				 ifTrue: [ '' ]
-				 ifFalse: [ 'hidden' ]) ].
-	type ifNotNil: [ x currentElement type: type ].
-	selectAll == true ifTrue: [ x currentElement select ].
-	selectionStart ifNotNil: [ 
-		selectionEnd ifNotNil: [ 
-			x currentElement
-				setSelectionStart: selectionStart
-				end: selectionEnd ] ]
-]
+	super updateElement: el builder: x.
+	"	readOnly ifNotNil: [ el readOnly: readOnly ]."
+	"	disabled ifNotNil: [ el disabled: disabled ]."
 
-{ #category : #accessing }
-SpS2cUpdateInputElement >> visible [
-
-	^ visible
-]
-
-{ #category : #accessing }
-SpS2cUpdateInputElement >> visible: anObject [
-
-	visible := anObject
+	type ifNotNil: [ el type: type ].
+	selectAll == true ifTrue: [ el select ].
+	selectionStart ifNotNil: [
+		selectionEnd ifNotNil: [
+			el setSelectionStart: selectionStart end: selectionEnd ] ]
 ]
