@@ -41,8 +41,8 @@ SpwApp1 >> context: anObject [
 { #category : #accessing }
 SpwApp1 >> start [
 
-	self windows do: [ :win | 
+	"self windows do: [ :win | 
 		win open.
-		^ self ].
+		^ self ]."
 	(self new: SpwPresenter1) open
 ]
