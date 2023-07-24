@@ -90,6 +90,7 @@ SpwPresenter1 >> initializePresenters [
 	button1 := self newButton.
 	button1
 		label: 'Inspect presenter';
+		iconName: #pharo;
 		color: Color yellow.
 	label1 := self newLabel.
 	label1 label: 'label1'.
