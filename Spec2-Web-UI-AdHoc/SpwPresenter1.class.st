@@ -91,7 +91,8 @@ SpwPresenter1 >> initializePresenters [
 	button1
 		label: 'Inspect presenter';
 		iconName: #pharo;
-		color: Color yellow.
+		color: Color yellow;
+		help: 'opens an inspector on the presenter of this window (in Pharo-morphic world)'.
 	label1 := self newLabel.
 	label1 label: 'label1'.
 	input1 := self newTextInput.
@@ -109,11 +110,12 @@ SpwPresenter1 >> initializePresenters [
 	button2 := self newButton.
 	button2
 		label: 'Click me2';
+		iconName: #home;
 		color: Color green lighter.
 	self initializeTable.
 	tableButton1 := self newButton.
 	tableButton1
-		label: 'select some random items';
+		label: 'select some random items of the table';
 		color: Color orange lighter
 ]
 

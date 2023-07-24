@@ -3,7 +3,8 @@ Class {
 	#superclass : #'SpwAbstract_WC',
 	#instVars : [
 		'label',
-		'icon'
+		'icon',
+		'helpText'
 	],
 	#category : #'Spec2-Web-UI-Adapters-WebComponents'
 }
@@ -29,6 +30,18 @@ button {
 button:active {
           filter: brightness(80%);  /* darken the button */
         }'
+]
+
+{ #category : #accessing }
+SpwButton_WC >> helpText [
+
+	^ helpText
+]
+
+{ #category : #accessing }
+SpwButton_WC >> helpText: anObject [
+
+	helpText := anObject
 ]
 
 { #category : #accessing }
@@ -59,11 +72,16 @@ SpwButton_WC >> label: anObject [
 
 { #category : #rendering }
 SpwButton_WC >> renderOn: x [
+
 	x style: self cssText.
 	x button: [ :btn |
 		#( readOnly disabled ) do: [ :att |
 			(self getAttribute: att) ifNotNil: [ :attVal |
 				btn setAttribute: att to: attVal ] ].
-		self icon ifNotNil: [:i | i renderOn: x ].
-		self label ifNotNil: [ x << self label ] ]
+		self icon ifNotNil: [ :i | i renderOn: x ].
+		self label ifNotNil: [ x << self label ].
+		self helpText ifNotNil: [
+			global tippy
+				new: btn
+				with: { ('content' -> self helpText) } asJsObject ] ]
 ]

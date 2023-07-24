@@ -254,13 +254,13 @@ SpwClientApp class >> htmlPageWithJsScript: aScript [
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes"
     />
-	<script type="text/javascript" src="' << self applicationName << '.js"></script>
-<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
-
  <style>*, *:before, *:after {
     box-sizing: border-box;
 	}</style>
-	
+	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+	<script src="https://unpkg.com/@popperjs/core@2"></script>
+	<script src="https://unpkg.com/tippy.js@6"></script>
+	<script type="text/javascript" src="' << self applicationName << '.js"></script>
   </head>
   <body id="body">
   </body>

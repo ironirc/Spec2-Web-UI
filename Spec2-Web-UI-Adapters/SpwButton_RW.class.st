@@ -5,6 +5,17 @@ Class {
 }
 
 { #category : #accessing }
+SpwButton_RW >> helpText [
+
+	| msg envelope  |
+	msg := SpS2cQuerySomeStuff new.
+	msg elementId: self id.
+	msg selectors: #( helpText ).
+	envelope := self adaptor sendMessageToClient: msg.
+	^ envelope msg results first value
+]
+
+{ #category : #accessing }
 SpwButton_RW >> icon [
 
 	| msg envelope |
@@ -50,9 +61,12 @@ SpwButton_RW >> sendCreateMessage [
 
 	msg attributes: { ('spw-src' -> thisContext method printString) }.
 	msg properties: { ('label' -> self model label) } asJsObject.
-	msg addProperty: 'icon' value: (self model icon ifNotNil: [ :frm |
-			 SpwImageServerCache imageForForm: frm ]).
-
+	self model icon ifNotNil: [ :frm |
+		msg
+			addProperty: 'icon'
+			value: (SpwImageServerCache imageForForm: frm) ].
+	self model help ifNotNil: [ :txt |
+		msg addProperty: 'helpText' value: txt ].
 	msg visible: self model isVisible.
 	self sendMessageToClient: msg
 ]
