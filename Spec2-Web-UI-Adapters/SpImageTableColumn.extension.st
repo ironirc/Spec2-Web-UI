@@ -29,6 +29,6 @@ SpImageTableColumn >> getValueFor: anObject id: id tableAdaptor: tableAdaptor [
 
 	| form   |
 	form := self evaluation value: anObject.
-	^SpwImage forForm: form.
+	^SpwImageServerCache imageForForm: form.
 	
 ]

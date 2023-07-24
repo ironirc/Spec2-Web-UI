@@ -2,7 +2,8 @@ Class {
 	#name : #'SpwButton_WC',
 	#superclass : #'SpwAbstract_WC',
 	#instVars : [
-		'label'
+		'label',
+		'icon'
 	],
 	#category : #'Spec2-Web-UI-Adapters-WebComponents'
 }
@@ -31,6 +32,19 @@ button:active {
 ]
 
 { #category : #accessing }
+SpwButton_WC >> icon [
+
+	^ icon
+]
+
+{ #category : #accessing }
+SpwButton_WC >> icon: anObject [
+
+	icon := anObject.
+	self render.
+]
+
+{ #category : #accessing }
 SpwButton_WC >> label [
 
 	^ label
@@ -50,5 +64,6 @@ SpwButton_WC >> renderOn: x [
 		#( readOnly disabled ) do: [ :att |
 			(self getAttribute: att) ifNotNil: [ :attVal |
 				btn setAttribute: att to: attVal ] ].
+		self icon ifNotNil: [:i | i renderOn: x ].
 		self label ifNotNil: [ x << self label ] ]
 ]

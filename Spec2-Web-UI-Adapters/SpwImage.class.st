@@ -20,20 +20,6 @@ SpwImage class >> cache [
 ]
 
 { #category : #accessing }
-SpwImage class >> forForm: aForm [
-
-	<pharoJsSkip>
-	^ self cache at: aForm ifAbsentPut: [
-		  | newInstance |
-		  newInstance := SpwImage new.
-		  newInstance b64Array: (ByteArray streamContents: [ :ws |
-				   PNGReadWriter putForm: aForm onStream: ws ]) base64Encoded.
-		  newInstance fileExtension: 'png'.
-		  newInstance cacheKey: aForm hash.
-		  newInstance ]
-]
-
-{ #category : #accessing }
 SpwImage >> b64Array [
 
 	^ b64Array
@@ -73,4 +59,10 @@ SpwImage >> fileExtension: anObject [
 SpwImage >> getB64Array [
 
 	^ self class cache at: self cacheKey ifAbsentPut: [self b64Array]
+]
+
+{ #category : #rendering }
+SpwImage >> renderOn: x [
+
+	x img: [ :i | i src: 'data:image/png;base64,' , self getB64Array ]
 ]
