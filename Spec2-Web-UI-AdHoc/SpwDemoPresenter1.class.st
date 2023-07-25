@@ -1,5 +1,5 @@
 Class {
-	#name : #SpwPresenter1,
+	#name : #SpwDemoPresenter1,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'button2',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #layout }
-SpwPresenter1 class >> defaultLayout [
+SpwDemoPresenter1 class >> defaultLayout [
 
 	| main row bottomRow tableControls |
 	main := SpBoxLayout newTopToBottom.
@@ -43,14 +43,14 @@ SpwPresenter1 class >> defaultLayout [
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> button1Clicked [
+SpwDemoPresenter1 >> button1Clicked [
 
 	self inspect.
 	"input adapter inspect"
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> button2Clicked [
+SpwDemoPresenter1 >> button2Clicked [
 
 	"Color random ifNotNil: [ :clr |"
 
@@ -72,7 +72,7 @@ SpwPresenter1 >> button2Clicked [
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> connectPresenters [
+SpwDemoPresenter1 >> connectPresenters [
 
 	button1 action: [ self button1Clicked ].
 	button2 action: [ self button2Clicked ].
@@ -85,7 +85,7 @@ SpwPresenter1 >> connectPresenters [
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> initializePresenters [
+SpwDemoPresenter1 >> initializePresenters [
 
 	button1 := self newButton.
 	button1
@@ -120,7 +120,7 @@ SpwPresenter1 >> initializePresenters [
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> initializeTable [
+SpwDemoPresenter1 >> initializeTable [
 
 	table := self newTable.
 	table
@@ -152,40 +152,40 @@ SpwPresenter1 >> initializeTable [
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> input1SelectionChanged [
+SpwDemoPresenter1 >> input1SelectionChanged [
 	button2 label: input1 selectedText.
 
 	
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> input1TextChangedTo: t [
+SpwDemoPresenter1 >> input1TextChangedTo: t [
 
 	input2 text: t.
 	"input2 takeKeyboardFocus "
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> input2TextChangedTo: t [
+SpwDemoPresenter1 >> input2TextChangedTo: t [
 
 	input1 text: t.
 
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> numberInput1ChangedToNumber: n [
+SpwDemoPresenter1 >> numberInput1ChangedToNumber: n [
 
 	numberInput2 number: n squared
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> tableButton1Clicked [
+SpwDemoPresenter1 >> tableButton1Clicked [
 
-	table selectIndexes: ((1 to: 3) collect: [ :e | self tableData size atRandom ])
+	table selectIndexes: ((1 to: 20) collect: [ :e | self tableData size atRandom ])
 ]
 
 { #category : #initialization }
-SpwPresenter1 >> tableData [
+SpwDemoPresenter1 >> tableData [
 
 	tableData ifNil: [ tableData := Object withAllSubclasses first: 100 ].
 	^ tableData

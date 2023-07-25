@@ -8,8 +8,8 @@ Class {
 SpwPlaygroundContents >> stuff20230516 [
 
 	| app |
-	app := SpwApp1 new.
-	(app new: SpwPresenter1) open.
-	SpwPresenter1 new open.
+	app := SpwDemoApp1 new.
+	(app new: SpwDemoPresenter1) open.
+	SpwDemoPresenter1 new open.
 	SpButtonPresenter new open
 ]

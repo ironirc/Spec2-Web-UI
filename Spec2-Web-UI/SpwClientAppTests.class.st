@@ -8,7 +8,7 @@ Class {
 SpwClientAppTests >> testButton [
 
 	| app btn actionExecuted msg window |
-	app := SpwApp1 new.
+	app := SpwDemoApp1 new.
 	btn := app new: SpButtonPresenter.
 	btn
 		label: 'Click me';

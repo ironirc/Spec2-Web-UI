@@ -1,5 +1,5 @@
 Class {
-	#name : #SpwApp1,
+	#name : #SpwDemoApp1,
 	#superclass : #SpApplication,
 	#instVars : [
 		'context'
@@ -8,41 +8,41 @@ Class {
 }
 
 { #category : #constants }
-SpwApp1 class >> applicationName [
+SpwDemoApp1 class >> applicationName [
 
 	^ self name asString
 ]
 
 { #category : #'instance creation' }
-SpwApp1 class >> defaultBackendName [
+SpwDemoApp1 class >> defaultBackendName [
 
 	^ #WebUI "#Morphic"
 ]
 
 { #category : #'instance creation' }
-SpwApp1 class >> open [
+SpwDemoApp1 class >> open [
 
 	<script>
 	self new run
 ]
 
 { #category : #accessing }
-SpwApp1 >> context [
+SpwDemoApp1 >> context [
 
 	^ context
 ]
 
 { #category : #accessing }
-SpwApp1 >> context: anObject [
+SpwDemoApp1 >> context: anObject [
 
 	context := anObject
 ]
 
 { #category : #accessing }
-SpwApp1 >> start [
+SpwDemoApp1 >> start [
 
 	"self windows do: [ :win | 
 		win open.
 		^ self ]."
-	(self new: SpwPresenter1) open
+	(self new: SpwDemoPresenter1) open
 ]
