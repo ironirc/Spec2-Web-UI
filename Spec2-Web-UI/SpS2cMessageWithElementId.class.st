@@ -79,9 +79,10 @@ SpS2cMessageWithElementId >> initializeNewElement: el in: rc [
 		cls := SpC2sWidgetEvent forEventName: eventName.
 		el addEventListener: eventName block: [ :nativeEvent | 
 			| msg |
+			nativeEvent preventDefault.
 			msg := cls newForNativeEvent: nativeEvent.
 			msg sourceId: elementId.
-			rc wsHandler sendMessageToServer: msg ] ]
+			rc wsHandler sendMessageToServer: msg.  ] ]
 ]
 
 { #category : #private }

@@ -1,6 +1,6 @@
 Class {
 	#name : #'SpwMenuItem_WC',
-	#superclass : #'SpwAbstract_WC',
+	#superclass : #'SpwMenuItemBase_WC',
 	#category : #'Spec2-Web-UI-Adapters-WebComponents'
 }
 

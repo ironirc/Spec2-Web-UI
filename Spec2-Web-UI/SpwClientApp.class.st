@@ -260,6 +260,8 @@ SpwClientApp class >> htmlPageWithJsScript: aScript [
 	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 	<script src="https://unpkg.com/@popperjs/core@2"></script>
 	<script src="https://unpkg.com/tippy.js@6"></script>
+<script src="https://cdn.jsdelivr.net/npm/@floating-ui/core@1.4.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@floating-ui/dom@1.5.0"></script>
 	<script type="text/javascript" src="' << self applicationName << '.js"></script>
   </head>
   <body id="body">

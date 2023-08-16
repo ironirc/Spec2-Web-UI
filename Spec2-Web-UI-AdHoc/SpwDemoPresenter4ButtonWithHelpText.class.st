@@ -1,25 +1,39 @@
 Class {
-	#name : #SpwDemoPresenter3Menu,
+	#name : #SpwDemoPresenter4ButtonWithHelpText,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'menu',
-		'label'
+		'button1',
+		'label1',
+		'menu'
 	],
 	#category : #'Spec2-Web-UI-AdHoc'
 }
 
 { #category : #layout }
-SpwDemoPresenter3Menu class >> defaultLayout [
+SpwDemoPresenter4ButtonWithHelpText class >> defaultLayout [
 
-	| main  |
-	main := SpBoxLayout newLeftToRight.
-	main add: #menu.
-	main add: #label.
+	| main |
+	main := SpBoxLayout newTopToBottom.
+	main add: #button1.
+	main add: #label1.
 	^ main
 ]
 
 { #category : #initialization }
-SpwDemoPresenter3Menu >> initializePresenters [
+SpwDemoPresenter4ButtonWithHelpText >> button1Clicked [
+
+	self inspect.
+	"input adapter inspect"
+]
+
+{ #category : #initialization }
+SpwDemoPresenter4ButtonWithHelpText >> connectPresenters [
+
+
+]
+
+{ #category : #initialization }
+SpwDemoPresenter4ButtonWithHelpText >> initializePresenters [
 
 	menu := self newMenu.
 	menu
@@ -36,12 +50,21 @@ SpwDemoPresenter3Menu >> initializePresenters [
 			item
 				name: 'Other actions';
 				subMenu: self subMenu ].
-	label := self newLabel.
-	label label: 'label1'
+	button1 := self newButton.
+	button1
+		label: 'Inspect presenter';
+		iconName: #pharo;
+		color: Color yellow;
+		help:
+			'opens an inspector on the presenter of this window (in Pharo-morphic world)';
+		contextMenu: menu.
+
+	label1 := self newLabel.
+	label1 label: 'label1'
 ]
 
 { #category : #initialization }
-SpwDemoPresenter3Menu >> subMenu [
+SpwDemoPresenter4ButtonWithHelpText >> subMenu [
 
 	| aSubMenu |
 	aSubMenu := self newMenu.

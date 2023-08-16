@@ -22,6 +22,22 @@ SpwMenu_RW >> sendCreateMessage [
 	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: self id.
 	msg tag: SpwMenu_WC tagName.
-	msg properties: { ('label' -> self model label) } asJsObject.
+	msg events: #( itemselect ).
+
+	"msg properties: { ('title' -> self model title) } asJsObject."
 	self sendMessageToClient: msg.
+	self model menuGroups
+		do: [ :eachGroup |
+			eachGroup menuItems do: [ :each |
+				| menuItemWidget msg2 |
+				menuItemWidget := each build.
+				msg2 := SpS2cAddElementToParent new.
+				msg2 elementId: menuItemWidget id.
+				msg2 parentId: self id.
+				self sendMessageToClient: msg2 ] ]
+		separatedBy: [ "gtkWidget add: (GtkSeparatorMenuItem new
+				show;
+				yourself)"
+			self halt ].
+	self model root adapter registerWidget: self
 ]

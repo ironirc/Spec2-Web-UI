@@ -13,17 +13,18 @@ SpwTextInputField_RW >> sendCreateMessage [
 	msg elementId: self id.
 	msg events: #( 'input' 'select' ).
 	msg attributes: {
-			('method' -> thisContext method printString).
 			('placeholder' -> self model placeholder).
 			('type' -> self adaptor htmlInputType).
 			('maxLength' -> self adaptor htmlMaxLength) }.
+	"('method' -> thisContext method printString)."
 	self model isEditable ifFalse: [
 		msg addAttribute: 'readOnly' value: '' ].
 	self model isEnabled ifFalse: [
 		msg addAttribute: 'disabled' value: '' ].
 	msg visible: self model isVisible.
 	msg value: self model text.
-	self sendMessageToClient: msg
+	self sendMessageToClient: msg.
+	self model root adapter registerWidget: self
 ]
 
 { #category : #accessing }

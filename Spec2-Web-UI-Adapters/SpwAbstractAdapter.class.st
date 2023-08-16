@@ -347,6 +347,18 @@ SpwAbstractAdapter >> hSpaceFill [
 	self widgetDo: [ :w | w hResizing: #spaceFill ]
 ]
 
+{ #category : #'event installing' }
+SpwAbstractAdapter >> handleContextmenu: e [
+
+	self model contextMenu ifNotNil: [ :cm |
+		| menuWidget msg |
+		menuWidget := cm build.
+		msg := SpS2cShowMenuOnTargetWidget new.
+		msg elementId: menuWidget id.
+		msg targetId: self widget id.
+		self sendMessageToClient: msg ]
+]
+
 { #category : #protocol }
 SpwAbstractAdapter >> help [
 

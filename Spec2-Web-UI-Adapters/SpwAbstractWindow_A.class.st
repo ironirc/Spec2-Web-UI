@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'toolbarMorph',
 		'menuMorph',
-		'webSocketSession'
+		'webSocketSession',
+		'widgetRegistry'
 	],
 	#category : #'Spec2-Web-UI-Adapters-Adaptors'
 }
@@ -19,7 +20,10 @@ SpwAbstractWindow_A class >> isAbstract [
 SpwAbstractWindow_A >> adapt: aPresenter [
 
 	self webSocketSession ifNil: [self openNewBrowserWindow].
-	super adapt: aPresenter
+	widgetRegistry := nil. 
+
+	super adapt: aPresenter.
+	self registerWidget: self widget.
 ]
 
 { #category : #private }
@@ -122,6 +126,12 @@ SpwAbstractWindow_A >> openNewBrowserWindow [
 ]
 
 { #category : #private }
+SpwAbstractWindow_A >> registerWidget: w [
+
+	self widgetRegistry at: w id put: w
+]
+
+{ #category : #private }
 SpwAbstractWindow_A >> setToolbarTo: aMorph [
 	| newToolbarMorph toolbarPresenter |
 	
@@ -161,4 +171,10 @@ SpwAbstractWindow_A >> webSocketSession [
 SpwAbstractWindow_A >> webSocketSession: anObject [
 
 	webSocketSession := anObject
+]
+
+{ #category : #accessing }
+SpwAbstractWindow_A >> widgetRegistry [
+	widgetRegistry ifNil: [ widgetRegistry := Dictionary new ].
+	^ widgetRegistry
 ]

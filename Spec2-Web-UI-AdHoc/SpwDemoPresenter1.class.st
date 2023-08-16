@@ -92,7 +92,8 @@ SpwDemoPresenter1 >> initializePresenters [
 		label: 'Inspect presenter';
 		iconName: #pharo;
 		color: Color yellow;
-		help: 'opens an inspector on the presenter of this window (in Pharo-morphic world)'.
+		help:
+			'opens an inspector on the presenter of this window (in Pharo-morphic world)'.
 	label1 := self newLabel.
 	label1 label: 'label1'.
 	input1 := self newTextInput.
@@ -111,7 +112,8 @@ SpwDemoPresenter1 >> initializePresenters [
 	button2
 		label: 'Click me2';
 		iconName: #home;
-		color: Color green lighter.
+		color: Color green lighter;
+		help: 'update both inputs with current date and time'.
 	self initializeTable.
 	tableButton1 := self newButton.
 	tableButton1

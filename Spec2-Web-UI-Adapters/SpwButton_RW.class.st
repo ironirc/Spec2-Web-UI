@@ -55,11 +55,11 @@ SpwButton_RW >> sendCreateMessage [
 	msg := SpS2cUpdateArbitraryElement new.
 	msg elementId: self id.
 	msg tag: SpwButton_WC tagName.
-	msg events: #( click ).
+	msg events: #( click contextmenu ).
 	msg styles: { ('background-color'
 		 -> ('#' , (self adaptor color ifNil: [ Color gray ]) asHexString)) }.
 
-	msg attributes: { ('spw-src' -> thisContext method printString) }.
+	"msg attributes: { ('spw-src' -> thisContext method printString) }."
 	msg properties: { ('label' -> self model label) } asJsObject.
 	self model icon ifNotNil: [ :frm |
 		msg
@@ -68,5 +68,6 @@ SpwButton_RW >> sendCreateMessage [
 	self model help ifNotNil: [ :txt |
 		msg addProperty: 'helpText' value: txt ].
 	msg visible: self model isVisible.
-	self sendMessageToClient: msg
+	self sendMessageToClient: msg.
+	self model root adapter registerWidget: self
 ]

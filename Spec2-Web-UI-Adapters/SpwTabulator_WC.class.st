@@ -73,7 +73,7 @@ SpwTabulator_WC >> focus [
 
 { #category : #initialization }
 SpwTabulator_WC >> initialize [
-
+	super initialize. 
 	self tableBuiltPromise. "setup the promise before anything else"
 ]
 

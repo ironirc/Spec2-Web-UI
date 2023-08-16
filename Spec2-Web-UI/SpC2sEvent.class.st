@@ -43,11 +43,9 @@ SpC2sEvent >> respondForRequestContext: rc [
 	<pharoJsSkip>
 	(rc webSocketSession propertyAt: 'windowAdaptor') ifNotNil: [
 		:winAdaptor |
-		winAdaptor owner presenter
-			traversePresentersDo: [ :p |
-				p adapter widget id = sourceId ifTrue: [
-					 self dispatchToSpecAdaptor: p adapter requestContext: rc  ] ]
-			excluding: Set new ]
+		self
+			dispatchToSpecAdaptor: (winAdaptor widgetRegistry at: sourceId) adaptor
+			requestContext: rc ]
 ]
 
 { #category : #accessing }

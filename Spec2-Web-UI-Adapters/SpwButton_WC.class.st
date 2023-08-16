@@ -29,7 +29,9 @@ button {
 			}
 button:active {
           filter: brightness(80%);  /* darken the button */
-        }'
+        }
+
+'
 ]
 
 { #category : #accessing }
@@ -79,9 +81,9 @@ SpwButton_WC >> renderOn: x [
 			(self getAttribute: att) ifNotNil: [ :attVal |
 				btn setAttribute: att to: attVal ] ].
 		self icon ifNotNil: [ :i | i renderOn: x ].
-		self label ifNotNil: [ x << self label ].
-		self helpText ifNotNil: [
-			global tippy
-				new: btn
-				with: { ('content' -> self helpText) } asJsObject ] ]
+		self label ifNotNil: [ x << self label ] ].
+	self helpText ifNotNil: [
+		x tag: SpwTooltip_WC tagName with: [ :tt |
+			tt label: self helpText.
+			tt referenceElement: self ] ]
 ]

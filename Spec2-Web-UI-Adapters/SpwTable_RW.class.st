@@ -13,4 +13,5 @@ SpwTable_RW >> sendCreateMessage [
 	msg columns: self adaptor tabulatorColumns.
 	msg attributes: { ('ph-src' -> thisContext method printString) }.
 	self sendMessageToClient: msg.
+	self model root adapter registerWidget: self
 ]
