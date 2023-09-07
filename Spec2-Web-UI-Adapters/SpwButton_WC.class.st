@@ -27,7 +27,7 @@ button {
           color: inherit; /* inherit the color from the parent */
           background-color: inherit; /* inherit the background color from the parent */
 			}
-button:active {
+.active {
           filter: brightness(80%);  /* darken the button */
         }
 
@@ -81,7 +81,14 @@ SpwButton_WC >> renderOn: x [
 			(self getAttribute: att) ifNotNil: [ :attVal |
 				btn setAttribute: att to: attVal ] ].
 		self icon ifNotNil: [ :i | i renderOn: x ].
-		self label ifNotNil: [ x << self label ] ].
+		self label ifNotNil: [ x << self label ].
+		x onMouseDown: [ :e |
+			e button == 0 ifTrue: [
+				btn classList add: 'active' ] ].
+			x onMouseUp: [ :e |
+			e button == 0 ifTrue: [
+				btn classList remove: 'active' ] ] ].
+
 	self helpText ifNotNil: [
 		x tag: SpwTooltip_WC tagName with: [ :tt |
 			tt label: self helpText.
