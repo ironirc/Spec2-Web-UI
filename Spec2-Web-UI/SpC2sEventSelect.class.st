@@ -1,32 +1,34 @@
 Class {
-	#name : #SpC2sEventSelect,
-	#superclass : #SpC2sWidgetEvent,
+	#name : 'SpC2sEventSelect',
+	#superclass : 'SpC2sWidgetEvent',
 	#instVars : [
 		'start',
 		'end'
 	],
-	#category : #'Spec2-Web-UI-clientToServerMessages'
+	#category : 'Spec2-Web-UI-clientToServerMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'clientToServerMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventSelect class >> eventName [ 
 
 	^'select'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventSelect >> end [
 
 	^ end
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventSelect >> end: anObject [
 
 	end := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpC2sEventSelect >> initializeWithNativeEvent: e [
 
 	super initializeWithNativeEvent: e.
@@ -34,13 +36,13 @@ SpC2sEventSelect >> initializeWithNativeEvent: e [
 	end := e target selectionEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventSelect >> start [
 
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventSelect >> start: anObject [
 
 	start := anObject

@@ -1,14 +1,16 @@
 Class {
-	#name : #SpC2sFetchTableData,
-	#superclass : #SpC2sEvent,
+	#name : 'SpC2sFetchTableData',
+	#superclass : 'SpC2sEvent',
 	#instVars : [
 		'page',
 		'pageSize'
 	],
-	#category : #'Spec2-Web-UI-clientToServerMessages'
+	#category : 'Spec2-Web-UI-clientToServerMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'clientToServerMessages'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SpC2sFetchTableData >> dispatchToSpecAdaptor: ad requestContext: rc [
 
 	| msg startIdx endIdx pageObjects |
@@ -25,25 +27,25 @@ SpC2sFetchTableData >> dispatchToSpecAdaptor: ad requestContext: rc [
 	rc sendResponseMessage: msg
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sFetchTableData >> page [
 
 	^ page
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sFetchTableData >> page: anObject [
 
 	page := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sFetchTableData >> pageSize [
 
 	^ pageSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sFetchTableData >> pageSize: anObject [
 
 	pageSize := anObject

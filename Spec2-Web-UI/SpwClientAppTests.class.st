@@ -1,10 +1,12 @@
 Class {
-	#name : #SpwClientAppTests,
-	#superclass : #TestCase,
-	#category : #'Spec2-Web-UI-tests'
+	#name : 'SpwClientAppTests',
+	#superclass : 'TestCase',
+	#category : 'Spec2-Web-UI-tests',
+	#package : 'Spec2-Web-UI',
+	#tag : 'tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpwClientAppTests >> testButton [
 
 	| app btn actionExecuted msg window |
@@ -24,7 +26,7 @@ SpwClientAppTests >> testButton [
 	window adapter sendMessageToClient: SpS2cCloseBrowserWindow new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpwClientAppTests >> testGetSessionAndCloseWindow [
 
 	| session |
@@ -35,7 +37,7 @@ SpwClientAppTests >> testGetSessionAndCloseWindow [
 	self assert: session isConnected not.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpwClientAppTests >> testSessionReconnect [
 
 	| session |

@@ -1,10 +1,12 @@
 Class {
-	#name : #'SpwText_A',
-	#superclass : #'SpwBaseText_A',
-	#category : #'Spec2-Web-UI-Adapters-Adaptors'
+	#name : 'SpwText_A',
+	#superclass : 'SpwBaseText_A',
+	#category : 'Spec2-Web-UI-Adapters-Adaptors',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Adaptors'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SpwText_A >> accept: aString notifying: aNotifyier [
 
 	^ super 
@@ -12,12 +14,12 @@ SpwText_A >> accept: aString notifying: aNotifyier [
 		notifying: aNotifyier
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwText_A >> addFocusRotationKeyBindings [
 	"Text areas needs to be able to process tab. Cancel the binding."
 ]
 
-{ #category : #'protocol - shortcuts' }
+{ #category : 'protocol - shortcuts' }
 SpwText_A >> bindKeyCombination: aShortcut toAction: aBlock [ 
 
 	self widgetDo: [ :w | 
@@ -26,7 +28,7 @@ SpwText_A >> bindKeyCombination: aShortcut toAction: aBlock [
 			toAction: aBlock ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwText_A >> buildWidget [
 	"| newWidget |
 	
@@ -87,7 +89,7 @@ SpwText_A >> buildWidget [
 
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwText_A >> codePaneMenu: aMenu shifted: shifted [
 
 	| menuPresenter |
@@ -102,13 +104,13 @@ SpwText_A >> codePaneMenu: aMenu shifted: shifted [
 		  during: [ menuPresenter value build ]
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpwText_A >> copyText [
 
 	self editor copySelection
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwText_A >> cursorPosition [
 
 	^ self widgetDo: [ :w |
@@ -116,50 +118,50 @@ SpwText_A >> cursorPosition [
 			ifNotNil: [ :sel | self linePositionOf: sel ] ]
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwText_A >> cursorPositionIndex: index [ 
 
 	self widgetDo: [ :w | w textArea pointBlock: (w textArea paragraph characterBlockForIndex: index) ]
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpwText_A >> cutText [
 
 	self editor cut
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwText_A >> editor [
 
 	^ widget textArea editor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwText_A >> eventHandlerReceiver: aWidget [
 
 	^ aWidget textArea
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpwText_A >> findNextText [
 
 	self editor findAgain
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpwText_A >> findText [
 
 	self editor find
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SpwText_A >> lineAtCursorPosition [
 
 	^ self widgetDo: [ :w | 
 		w textArea editor lineAtCursorPosition ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwText_A >> linePositionOf: sel [
 
 	| textLine linePosition |
@@ -168,38 +170,38 @@ SpwText_A >> linePositionOf: sel [
 	^ linePosition @ textLine lineNumber
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpwText_A >> pasteText [
 
 	self editor paste
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwText_A >> presenterStyles [
 	"The presenters in the style"
 
 	^ self presenter scrollBarStyles, self presenter styles 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 SpwText_A >> selectAndPasteText [
 
 	self editor pasteRecent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwText_A >> setEditable: aBoolean to: aWidget [
 
 	aWidget textArea readOnly: aBoolean not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwText_A >> setGhostText: text to: aWidget [
 
 	aWidget ghostText: text
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwText_A >> setText: text to: aWidget [
 
 	updating ifTrue: [ ^ self ].
@@ -209,7 +211,7 @@ SpwText_A >> setText: text to: aWidget [
 	self updateExtentPropagationOf: text on: aWidget
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwText_A >> setUndoRedo: aBoolean to: newWidget [
 
 	newWidget textArea editingState undoManager: (aBoolean 
@@ -217,7 +219,7 @@ SpwText_A >> setUndoRedo: aBoolean to: newWidget [
 		ifFalse: [ SpNullHistoryIterator new ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwText_A >> setWrapWord: aBoolean to: aWidget [
 
 	aBoolean 
@@ -225,7 +227,7 @@ SpwText_A >> setWrapWord: aBoolean to: aWidget [
 		ifFalse: [ aWidget beNotWrapped ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwText_A >> updateExtentPropagationOf: string on: aWidget [
 	| stringMorph width height |
 

@@ -1,19 +1,21 @@
 Class {
-	#name : #'SpwMenuPopup_WC',
-	#superclass : #'SpwAbstract_WC',
+	#name : 'SpwMenuPopup_WC',
+	#superclass : 'SpwAbstract_WC',
 	#instVars : [
 		'referenceElement'
 	],
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SpwMenuPopup_WC class >> tagName [
 
 	^ 'spw-menu-popup'
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwMenuPopup_WC >> cssText [ 
 
 	^':host {
@@ -23,7 +25,7 @@ position: absolute;
 	
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwMenuPopup_WC >> renderOn: x [
 
 	x style: self cssText.

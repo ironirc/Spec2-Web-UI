@@ -1,6 +1,6 @@
 Class {
-	#name : #'SpwTooltip_WC',
-	#superclass : #'SpwAbstract_WC',
+	#name : 'SpwTooltip_WC',
+	#superclass : 'SpwAbstract_WC',
 	#instVars : [
 		'referenceElement',
 		'label',
@@ -9,16 +9,18 @@ Class {
 		'mouseLeaveListener',
 		'mouseDownListener'
 	],
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SpwTooltip_WC class >> tagName [
 
 	^ 'spw-tooltip'
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwTooltip_WC >> cssText [ 
 
 	^':host {
@@ -54,49 +56,49 @@ transform: rotate(45deg);
 '
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwTooltip_WC >> hide [
 	PjDomController cssClassesRemoveAll: { 'show' } element: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTooltip_WC >> label [
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTooltip_WC >> label: anObject [
 
 	label := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTooltip_WC >> mouseDownListener [
 
 	mouseDownListener ifNil: [ mouseDownListener := [ self hide ] ].
 	^ mouseDownListener
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTooltip_WC >> mouseEnterListener [
 
 	mouseEnterListener ifNil: [ mouseEnterListener := [ self show ] ].
 	^ mouseEnterListener
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTooltip_WC >> mouseLeaveListener [
 
 	mouseLeaveListener ifNil: [ mouseLeaveListener := [ self hide ] ].
 	^ mouseLeaveListener
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwTooltip_WC >> promiseComputedPosition [
 
 	| FUI |
-	FUI := global FloatingUIDOM.
+	FUI := globalThis FloatingUIDOM.
 	^ FUI
 		  computePosition: self referenceElement
 		  for: self
@@ -108,13 +110,13 @@ SpwTooltip_WC >> promiseComputedPosition [
 				  asJsObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTooltip_WC >> referenceElement [
 
 	^ referenceElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTooltip_WC >> referenceElement: refEl [
 	referenceElement := refEl.
 	refEl addEventListener: 'mouseenter' block:  self mouseEnterListener .
@@ -123,7 +125,7 @@ SpwTooltip_WC >> referenceElement: refEl [
 
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwTooltip_WC >> renderOn: x [
 
 	x style: self cssText.
@@ -133,7 +135,7 @@ SpwTooltip_WC >> renderOn: x [
 		x _class: 'arrow' ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwTooltip_WC >> show [
 	PjDomController cssClassesElement: self set: { 'show' }.
 	self updatePosition.
@@ -141,14 +143,14 @@ SpwTooltip_WC >> show [
 
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwTooltip_WC >> updatePosition [
 
 	self promiseComputedPosition ifNotNil: [ :prom |
 		prom then: [ :obj | self updatePositionWith: obj ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwTooltip_WC >> updatePositionWith: pos [
 
 	| pl arrOffs |

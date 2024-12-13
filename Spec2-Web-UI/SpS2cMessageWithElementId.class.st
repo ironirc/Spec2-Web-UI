@@ -1,14 +1,16 @@
 Class {
-	#name : #SpS2cMessageWithElementId,
-	#superclass : #SpS2cMessage,
+	#name : 'SpS2cMessageWithElementId',
+	#superclass : 'SpS2cMessage',
 	#instVars : [
 		'elementId',
 		'events'
 	],
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cMessageWithElementId >> createElement [
 
 	| el |
@@ -19,7 +21,7 @@ SpS2cMessageWithElementId >> createElement [
 	^ el
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cMessageWithElementId >> createElementAndAddEventListenersIn: rc [
 
 	| el |
@@ -28,50 +30,50 @@ SpS2cMessageWithElementId >> createElementAndAddEventListenersIn: rc [
 	^ el
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cMessageWithElementId >> element [
 
 	^ self getElementById: elementId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cMessageWithElementId >> elementId [
 
 	^ elementId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cMessageWithElementId >> elementId: anObject [
 
 	elementId := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cMessageWithElementId >> ensuredElementIn: rc [
 
 	^ self element ifNil: [ self createElementAndAddEventListenersIn: rc ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cMessageWithElementId >> events [
 
 	^ events
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cMessageWithElementId >> events: anObject [
 
 	events := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cMessageWithElementId >> getElementById: anId [
 
 	^ (self document getElementById: anId) ifNil: [
 		  self nodeCache nodeOrNilAt: anId ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cMessageWithElementId >> initializeNewElement: el in: rc [
 
 	events do: [ :eventName | 
@@ -82,10 +84,10 @@ SpS2cMessageWithElementId >> initializeNewElement: el in: rc [
 			nativeEvent preventDefault.
 			msg := cls newForNativeEvent: nativeEvent.
 			msg sourceId: elementId.
-			rc wsHandler sendMessageToServer: msg.  ] ]
+			rc wsHandler sendMessageToServer: msg inResponseToEnvelope: nil.  ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cMessageWithElementId >> nodeCache [
 
 	^ SpwClientApp current

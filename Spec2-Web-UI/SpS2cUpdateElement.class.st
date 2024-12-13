@@ -1,6 +1,6 @@
 Class {
-	#name : #SpS2cUpdateElement,
-	#superclass : #SpS2cMessageWithElementId,
+	#name : 'SpS2cUpdateElement',
+	#superclass : 'SpS2cMessageWithElementId',
 	#instVars : [
 		'attributes',
 		'styles',
@@ -9,10 +9,12 @@ Class {
 		'properties',
 		'visible'
 	],
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> addAttribute: attributeName value: aValue [
 
 	self attributes:
@@ -20,33 +22,33 @@ SpS2cUpdateElement >> addAttribute: attributeName value: aValue [
 			 attributeName -> aValue)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> addProperty: propertyName value: aValue [
 
 	self properties:
 		((self properties ifNil: [ #(  ) ]) copyWith: propertyName -> aValue)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> addStyle: styleName value: aValue [
 
 	self styles:
 		((self styles ifNil: [ #(  ) ]) copyWith: styleName -> aValue)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> attributes [
 
 	^ attributes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> attributes: anObject [
 
 	attributes := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cUpdateElement >> executeInResponseContext: rc [
 
 	| el x |
@@ -55,43 +57,43 @@ SpS2cUpdateElement >> executeInResponseContext: rc [
 	self updateElement: el builder: x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> properties [
 
 	^ properties
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> properties: anObject [
 
 	properties := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> styles [
 
 	^ styles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> styles: anObject [
 
 	styles := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> textContent [
 
 	^ textContent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> textContent: anObject [
 
 	textContent := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cUpdateElement >> updateElement: el builder: x [
 	"console log: 'updating element:' with: el. "
 	styles ifNotNil: [x _style: styles].
@@ -107,25 +109,25 @@ SpS2cUpdateElement >> updateElement: el builder: x [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> value: anObject [
 
 	value := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> visible [
 
 	^ visible
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateElement >> visible: anObject [
 
 	visible := anObject

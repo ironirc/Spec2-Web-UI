@@ -1,10 +1,12 @@
 Class {
-	#name : #'SpwWindow_A',
-	#superclass : #'SpwAbstractWindow_A',
-	#category : #'Spec2-Web-UI-Adapters-Adaptors'
+	#name : 'SpwWindow_A',
+	#superclass : 'SpwAbstractWindow_A',
+	#category : 'Spec2-Web-UI-Adapters-Adaptors',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Adaptors'
 }
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> aboutTitle [
     ^ self model model
          ifNotNil: [ :m | (m respondsTo: #aboutTitle)
@@ -12,13 +14,13 @@ SpwWindow_A >> aboutTitle [
 		ifFalse: [m class name]].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwWindow_A >> addFocusRotationKeyBindings [
 	"Windows should not process keybindings (because then the active widget will not get 
 	 the event)"
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> addPresenterIn: aWindow withSpecLayout: aSpec [
 
 	| contentWidget |
@@ -39,19 +41,19 @@ SpwWindow_A >> addPresenterIn: aWindow withSpecLayout: aSpec [
 	self addContent: contentWidget toWindow: aWindow
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> askOkToClose [
 
 	^ self model askOkToClose
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> beep [ 
 	
 	widget flash
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwWindow_A >> buildWidget [
 	"^ SpWindow new  <- MORPHIC stuff !!!
 		model: model;
@@ -71,13 +73,13 @@ SpwWindow_A >> buildWidget [
 	^ rw
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> cancelled [
 
 	^ false
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> centered [
 
 	self widgetDo: [ :w | 
@@ -86,7 +88,7 @@ SpwWindow_A >> centered [
 			position: (self currentWorld extent - w extent) // 2 ]
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> centeredRelativeTo: aWindowPresenter [
 	| bounds position |
 
@@ -99,13 +101,13 @@ SpwWindow_A >> centeredRelativeTo: aWindowPresenter [
 		w position: position ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> close [
 
 	"self widget ifNotNil: [ :w | w close ]"
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> delete [
 
 	self widgetDo: [ :w | 
@@ -113,19 +115,19 @@ SpwWindow_A >> delete [
 		self application windowClosed: self ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> extent: aPoint [
 
 	^ self widget extent: aPoint
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> initialExtent [
 
 	^ self model initialExtent
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwWindow_A >> installFocusLostEvent: anEvent to: aWidget [
 
 	aWidget announcer
@@ -133,7 +135,7 @@ SpwWindow_A >> installFocusLostEvent: anEvent to: aWidget [
 		do: [ anEvent action value ]
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwWindow_A >> installFocusReceivedEvent: anEvent to: aWidget [
 
 	aWidget announcer
@@ -141,64 +143,64 @@ SpwWindow_A >> installFocusReceivedEvent: anEvent to: aWidget [
 		do: [ anEvent action value ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> isDisplayed [
 
 	^ self widget isDisplayed
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> isMaximized [
 
 	self widgetDo: [ :w | ^ w isMaximized ].
 	^ false
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> isMinimized [
 
 	self widgetDo: [ :w | ^ w isMinimized ].
 	^ false
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> isResizable [
 
 	^ self model isResizable
 ]
 
-{ #category : #'spec protocol' }
+{ #category : 'spec protocol' }
 SpwWindow_A >> isTopWindow [
 
 	self widgetDo: [ :w | ^ w isTopWindow ].
 	^ false
 ]
 
-{ #category : #'spec protocol' }
+{ #category : 'spec protocol' }
 SpwWindow_A >> maximize [
 
 	self widgetDo: [ :w | w maximize ]
 ]
 
-{ #category : #'spec protocol' }
+{ #category : 'spec protocol' }
 SpwWindow_A >> minimize [
 
 	self widgetDo: [ :w | w minimize ]
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> okToChange [
 
 	^ self model okToChange
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> open [
 
 	self openWithDeferredAction: [  ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> openWithDeferredAction: aBlock [
 
 	"self flag: #TODO." "This and its children are more or less the same, it needs to be 
@@ -213,7 +215,7 @@ SpwWindow_A >> openWithDeferredAction: aBlock [
 	aBlock value
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwWindow_A >> rebuildWithSpecLayout: aSpec [
 
 	| sub |
@@ -224,13 +226,13 @@ SpwWindow_A >> rebuildWithSpecLayout: aSpec [
 	self widget model: self
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> resize: aPoint [
 
 	widget extent: aPoint
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwWindow_A >> subscribeToAnnouncements: aWindow [
 
 	aWindow announcer 
@@ -239,19 +241,19 @@ SpwWindow_A >> subscribeToAnnouncements: aWindow [
 		when: WindowClosed send: #windowClosed to: self
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 SpwWindow_A >> taskbarIcon [
 
 	^ self model taskbarIcon
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> title [
 
 	^ self model title
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwWindow_A >> title: aString [
 
 	"self widgetDo: [ :w | 
@@ -259,20 +261,20 @@ SpwWindow_A >> title: aString [
 				 theString localizedForPresenter: self presenter ]) ]"
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwWindow_A >> windowClosed [
 
 	self windowIsClosing.
 	self presenter windowClosed
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwWindow_A >> windowIsClosing [
 
 	self model windowIsClosing
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwWindow_A >> windowIsOpened [
 
 	self presenter windowIsOpened

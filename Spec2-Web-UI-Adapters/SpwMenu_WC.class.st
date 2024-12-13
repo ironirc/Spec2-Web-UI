@@ -1,25 +1,27 @@
 Class {
-	#name : #'SpwMenu_WC',
-	#superclass : #'SpwAbstract_WC',
+	#name : 'SpwMenu_WC',
+	#superclass : 'SpwAbstract_WC',
 	#instVars : [
 		'activeItem',
 		'owner'
 	],
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SpwMenu_WC class >> tagName [ 
 	^'spw-menu'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> activateFirstItem [
 
 	self activateItem: self items first
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> activateItem: anItem [
 
 	activeItem ifNotNil: [ activeItem deactivate ].
@@ -27,7 +29,7 @@ SpwMenu_WC >> activateItem: anItem [
 	anItem ifNotNil: [ anItem activate ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> closeSelfAndOwners [
 	self owner ifNotNil: [ :o |
 		o deactivate.
@@ -37,7 +39,7 @@ SpwMenu_WC >> closeSelfAndOwners [
 	self remove
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SpwMenu_WC >> connectedForFirstTime [
 
 	super connectedForFirstTime.
@@ -48,7 +50,7 @@ SpwMenu_WC >> connectedForFirstTime [
 		block: [ :e | self handleKeyDown: e ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwMenu_WC >> cssText [ 
 
 	^'
@@ -59,7 +61,7 @@ outline: none;
 '
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SpwMenu_WC >> handleKeyDown: e [
 
 	e key = 'ArrowDown' ifTrue: [ ^ self navigateDown ].
@@ -72,25 +74,25 @@ SpwMenu_WC >> handleKeyDown: e [
 		^ activeItem ifNotNil: [ ^ self selectActiveItem ] ]
 ]
 
-{ #category : #'accessing derived' }
+{ #category : 'accessing derived' }
 SpwMenu_WC >> itemAfter: anItem [ 
 
 	^self items at: (self items indexOf: anItem) + 1
 ]
 
-{ #category : #'accessing derived' }
+{ #category : 'accessing derived' }
 SpwMenu_WC >> itemBefore: anItem [ 
 
 	^self items at: (self items indexOf: anItem) - 1
 ]
 
-{ #category : #'accessing derived' }
+{ #category : 'accessing derived' }
 SpwMenu_WC >> items [ 
 
 	^Array from: self children 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> navigateDown [
 
 	self activateItem:
@@ -98,7 +100,7 @@ SpwMenu_WC >> navigateDown [
 			 self items first ])
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> navigateLeft [
 
 	self owner ifNotNil: [ :o |
@@ -106,7 +108,7 @@ SpwMenu_WC >> navigateLeft [
 		o menu focus ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> navigateRight [
 
 	activeItem ifNotNil: [
@@ -115,7 +117,7 @@ SpwMenu_WC >> navigateRight [
 			sm activateFirstItem ] ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> navigateUp [
 
 	self activateItem:
@@ -123,36 +125,36 @@ SpwMenu_WC >> navigateUp [
 			 self items last ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenu_WC >> owner [
 
 	^ owner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenu_WC >> owner: anObject [
 
 	owner := anObject
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwMenu_WC >> renderOn: x [
 	self tabIndex: 0. "makes the component focusable"
 	x style: self cssText.
 	x slot: [ :el |  ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> selectActiveItem [
 
 	activeItem ifNotNil: [ activeItem select ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenu_WC >> selectItem: anItem [
 
 	| event |
-	event := global CustomEvent
+	event := globalThis CustomEvent
 		         new: 'itemselect'
 		         with:
 		         { ('detail' -> { ('itemId' -> anItem id) }) } asJsObject.

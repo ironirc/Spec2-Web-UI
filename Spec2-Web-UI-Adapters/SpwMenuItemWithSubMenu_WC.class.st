@@ -1,18 +1,20 @@
 Class {
-	#name : #'SpwMenuItemWithSubMenu_WC',
-	#superclass : #'SpwMenuItem_WC',
+	#name : 'SpwMenuItemWithSubMenu_WC',
+	#superclass : 'SpwMenuItem_WC',
 	#instVars : [
 		'subMenu'
 	],
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SpwMenuItemWithSubMenu_WC class >> tagName [ 
 	^'spw-menu-item-with-sub-menu'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemWithSubMenu_WC >> activate [  
 
 	super activate.
@@ -21,7 +23,7 @@ SpwMenuItemWithSubMenu_WC >> activate [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemWithSubMenu_WC >> cssText [ 
 
 	^super cssText , '
@@ -41,19 +43,19 @@ SpwMenuItemWithSubMenu_WC >> cssText [
 '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemWithSubMenu_WC >> select [
 
 	self menu selectItem: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemWithSubMenu_WC >> subMenu [
 
 	^ subMenu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemWithSubMenu_WC >> subMenu: anObject [
 
 	subMenu ifNotNil: [ subMenu owner: nil ].

@@ -1,10 +1,12 @@
 Class {
-	#name : #SpS2cElementClick,
-	#superclass : #SpS2cMessageWithElementId,
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#name : 'SpS2cElementClick',
+	#superclass : 'SpS2cMessageWithElementId',
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cElementClick >> executeInResponseContext: rc [
 
 	| listener |
@@ -15,8 +17,8 @@ SpS2cElementClick >> executeInResponseContext: rc [
 	self element removeEventListener: #click with: listener
 ]
 
-{ #category : #private }
-SpS2cElementClick >> expectsResponse [
+{ #category : 'private' }
+SpS2cElementClick >> expectsResponseFromClient [ 
 
 	^ true
 ]

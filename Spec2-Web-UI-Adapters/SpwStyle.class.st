@@ -1,14 +1,16 @@
 Class {
-	#name : #SpwStyle,
-	#superclass : #Object,
+	#name : 'SpwStyle',
+	#superclass : 'Object',
 	#instVars : [
 		'styles',
 		'mergedProperties'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Stylesheet'
+	#category : 'Spec2-Web-UI-Adapters-Stylesheet',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Stylesheet'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpwStyle class >> fromStylesheet: aStyle adapter: anAdapter [
 	"I collect all styles that apply to an adapter.
 	 I traverse all styles in a very precise order: from more generic to more specific, this way 
@@ -20,7 +22,7 @@ SpwStyle class >> fromStylesheet: aStyle adapter: anAdapter [
 		otherStyles: anAdapter presenterStyles
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpwStyle class >> fromStylesheet: aStyle baseStyleName: aName otherStyles: otherStyleNames [
 	"I collect all styles that apply to an adapter.
 	 I traverse all styles in a very precise order: from more generic to more specific, this way 
@@ -45,7 +47,7 @@ SpwStyle class >> fromStylesheet: aStyle baseStyleName: aName otherStyles: other
 	^ self newStyles: styles asArray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpwStyle class >> newStyles: anArray [
 
 	^ self new 
@@ -53,7 +55,7 @@ SpwStyle class >> newStyles: anArray [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwStyle >> applyTo: aMorph [ 
 "Ivo lets skip for now"
 	"aMorph setProperty: #style toValue: self.
@@ -61,13 +63,13 @@ SpwStyle >> applyTo: aMorph [
 		do: [ :each | each applyTo: aMorph ]"
 ]
 
-{ #category : #'accessing - container' }
+{ #category : 'accessing - container' }
 SpwStyle >> borderWidth [
 
 	^ self lookupProperty: SpContainerStyle valueOf: #borderWidth
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwStyle >> calculateMergedProperties [
 	| properties groups |
 	
@@ -84,25 +86,25 @@ SpwStyle >> calculateMergedProperties [
 	^ properties
 ]
 
-{ #category : #'accessing - geometry' }
+{ #category : 'accessing - geometry' }
 SpwStyle >> extent [
 
 	^ self lookupProperty: SpGeometryStyle valueOf: #extent
 ]
 
-{ #category : #'accessing - font' }
+{ #category : 'accessing - font' }
 SpwStyle >> font [
 
 	^ self lookupProperty: SpFontStyle valueOf: #definedFont
 ]
 
-{ #category : #'accessing - geometry' }
+{ #category : 'accessing - geometry' }
 SpwStyle >> height [
 
 	^ self lookupProperty: SpGeometryStyle valueOf: #height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwStyle >> lookupProperty: aPropertyClass valueOf: aSymbol [
 	"I perform the lookup of a property, for which I need a class and a property name.
 	 I will traverse all collected properties from last to first, to ensure most detailed 
@@ -115,19 +117,19 @@ SpwStyle >> lookupProperty: aPropertyClass valueOf: aSymbol [
 	^ nil
 ]
 
-{ #category : #'accessing - geometry' }
+{ #category : 'accessing - geometry' }
 SpwStyle >> maxHeight [
 
 	^ self lookupProperty: SpGeometryStyle valueOf: #maxHeight
 ]
 
-{ #category : #'accessing - geometry' }
+{ #category : 'accessing - geometry' }
 SpwStyle >> maxWidth [
 
 	^ self lookupProperty: SpGeometryStyle valueOf: #maxWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwStyle >> mergedLookupProperty: aPropertyClass valueOf: aSymbol [
 	"I perform the lookup of a property, for which I need a class and a property name.
 	 I will traverse all collected properties from last to first, to ensure most detailed 
@@ -137,38 +139,38 @@ SpwStyle >> mergedLookupProperty: aPropertyClass valueOf: aSymbol [
 		
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwStyle >> mergedProperties [
 
 	^ mergedProperties ifNil: [ mergedProperties := self calculateMergedProperties ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwStyle >> mergedPropertiesLike: aClass [
 
 	^ self mergedProperties select: [ :eachProperty | eachProperty class = aClass ]
 		
 ]
 
-{ #category : #'accessing - geometry' }
+{ #category : 'accessing - geometry' }
 SpwStyle >> minHeight [
 
 	^ self lookupProperty: SpGeometryStyle valueOf: #minHeight
 ]
 
-{ #category : #'accessing - geometry' }
+{ #category : 'accessing - geometry' }
 SpwStyle >> minWidth [
 
 	^ self lookupProperty: SpGeometryStyle valueOf: #minWidth
 ]
 
-{ #category : #'accessing - container' }
+{ #category : 'accessing - container' }
 SpwStyle >> padding [ 
 
 	^ self lookupProperty: SpContainerStyle valueOf: #padding
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwStyle >> propertiesLike: aClass [
 
 	^ (self styles 
@@ -181,17 +183,17 @@ SpwStyle >> propertiesLike: aClass [
 		flattened
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwStyle >> styles [
 	^ styles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwStyle >> styles: anObject [
 	styles := anObject
 ]
 
-{ #category : #'accessing - geometry' }
+{ #category : 'accessing - geometry' }
 SpwStyle >> width [
 
 	^ self lookupProperty: SpGeometryStyle valueOf: #width

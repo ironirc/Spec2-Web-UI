@@ -1,16 +1,18 @@
 Class {
-	#name : #'SpwLabel_A',
-	#superclass : #SpwAbstractAdapter,
-	#category : #'Spec2-Web-UI-Adapters-Adaptors'
+	#name : 'SpwLabel_A',
+	#superclass : 'SpwAbstractAdapter',
+	#category : 'Spec2-Web-UI-Adapters-Adaptors',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Adaptors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwLabel_A class >> remoteWidgetClass [ 
 
 	^SpwLabel_RW
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwLabel_A >> applyDecorationsTo: aString [
 	| text |
 
@@ -34,7 +36,7 @@ SpwLabel_A >> applyDecorationsTo: aString [
 	^ text
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwLabel_A >> applyStyle: aMorph [
 
 "	aMorph fitContents.
@@ -46,7 +48,7 @@ SpwLabel_A >> applyStyle: aMorph [
 		ifTrue: [ aMorph height: aMorph font height ]"
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwLabel_A >> buildWidget [
 
 "	| label |
@@ -68,20 +70,20 @@ SpwLabel_A >> buildWidget [
 	^ rw
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwLabel_A >> getHelpText [
 
 	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 SpwLabel_A >> getText [
 	^ self presenter label
 		ifNotNil: [ :aString | 
 			self applyDecorationsTo: (aString localizedForPresenter: self presenter) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwLabel_A >> label [
 	
 	^ widget label

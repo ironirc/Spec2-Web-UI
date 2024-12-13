@@ -1,16 +1,18 @@
 Class {
-	#name : #'SpwTextInputField_A',
-	#superclass : #'SpwBaseText_A',
-	#category : #'Spec2-Web-UI-Adapters-Adaptors'
+	#name : 'SpwTextInputField_A',
+	#superclass : 'SpwBaseText_A',
+	#category : 'Spec2-Web-UI-Adapters-Adaptors',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Adaptors'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 SpwTextInputField_A class >> remoteWidgetClass [
 
 	^ SpwTextInputField_RW
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwTextInputField_A >> accept: aText notifying: aNotifyier [
 	"We use #asString because rubric send Text instead of strings."
 
@@ -19,7 +21,7 @@ SpwTextInputField_A >> accept: aText notifying: aNotifyier [
 		notifying: aNotifyier
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTextInputField_A >> buildWidget [
 	"| newWidget |
 
@@ -68,19 +70,19 @@ SpwTextInputField_A >> buildWidget [
 	^ rw
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwTextInputField_A >> cursorPositionIndex: index [ 
 
 	self widgetDo: [ :w | ^ w textArea editor selectAt: index ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwTextInputField_A >> deliverResponse: msg [ 
 
 	self halt. 
 ]
 
-{ #category : #'presenter events' }
+{ #category : 'presenter events' }
 SpwTextInputField_A >> editableChanged [
 
 	| msg |
@@ -90,7 +92,7 @@ SpwTextInputField_A >> editableChanged [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #'presenter events' }
+{ #category : 'presenter events' }
 SpwTextInputField_A >> enabledChanged [
 
 	| msg |
@@ -100,7 +102,7 @@ SpwTextInputField_A >> enabledChanged [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #'spec protocol' }
+{ #category : 'spec protocol' }
 SpwTextInputField_A >> encrypted: aBoolean [
 
 	self widgetDo: [ :w | 
@@ -108,32 +110,32 @@ SpwTextInputField_A >> encrypted: aBoolean [
 		w changed ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwTextInputField_A >> eventHandlerReceiver: aWidget [
 
 	^ aWidget textArea
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwTextInputField_A >> getPlaceholderText [
 
 	^ self presenter placeholder ifNotNil: [ :aString | 
 		aString localizedForPresenter: self presenter ]
 ]
 
-{ #category : #'widget events' }
+{ #category : 'widget events' }
 SpwTextInputField_A >> handleBlur: e [
 
 	
 ]
 
-{ #category : #'widget events' }
+{ #category : 'widget events' }
 SpwTextInputField_A >> handleChange: e [
 
 
 ]
 
-{ #category : #'widget events' }
+{ #category : 'widget events' }
 SpwTextInputField_A >> handleInput: e [
 
 	"('typed ' , e key asString ) crTrace"
@@ -143,14 +145,14 @@ SpwTextInputField_A >> handleInput: e [
 		while: [ self accept: e newValue notifying: nil ]
 ]
 
-{ #category : #'widget events' }
+{ #category : 'widget events' }
 SpwTextInputField_A >> handleKeydown: e [
 
 	"('typed ' , e key asString ) crTrace"
 
 ]
 
-{ #category : #'widget events' }
+{ #category : 'widget events' }
 SpwTextInputField_A >> handleSelect: e [
 
 	self
@@ -158,13 +160,13 @@ SpwTextInputField_A >> handleSelect: e [
 		while: [ self setSelection: (e start + 1 to: e end) ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTextInputField_A >> htmlInputType [
 	self model isPassword ifTrue: [ ^'password' ].
 	^'text'
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTextInputField_A >> htmlMaxLength [
 
 	^ String streamContents: [ :ws | 
@@ -172,13 +174,13 @@ SpwTextInputField_A >> htmlMaxLength [
 			  (maxLen > 0) ifTrue: [ ws << maxLen asString ] ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwTextInputField_A >> isPassword [
 	
 	^ self widget font isKindOf: FixedFaceFont
 ]
 
-{ #category : #'presenter events' }
+{ #category : 'presenter events' }
 SpwTextInputField_A >> isPasswordChanged [
 
 	| msg |
@@ -188,7 +190,7 @@ SpwTextInputField_A >> isPasswordChanged [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #'presenter events' }
+{ #category : 'presenter events' }
 SpwTextInputField_A >> maxLengthChanged [
 
 	| msg |
@@ -198,13 +200,13 @@ SpwTextInputField_A >> maxLengthChanged [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwTextInputField_A >> setEditable: aBoolean to: aWidget [
 
 	aWidget textArea readOnly: aBoolean not
 ]
 
-{ #category : #'model-widget-bindings' }
+{ #category : 'model-widget-bindings' }
 SpwTextInputField_A >> subcribeToModel [
 
 	"how else to hook up to all possible change events of the presenter?"
@@ -213,7 +215,7 @@ SpwTextInputField_A >> subcribeToModel [
 	self subcribeToAll: #(enabled editable isPassword maxLength visible )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTextInputField_A >> text: aString [
 
 	widget
@@ -221,7 +223,7 @@ SpwTextInputField_A >> text: aString [
 		acceptTextInModel
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwTextInputField_A >> widgetEventReceiver [
 	
 	^ widget

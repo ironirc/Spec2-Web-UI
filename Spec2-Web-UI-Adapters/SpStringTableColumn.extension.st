@@ -1,6 +1,6 @@
-Extension { #name : #SpStringTableColumn }
+Extension { #name : 'SpStringTableColumn' }
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpStringTableColumn >> asTabulatorColumnWithIndex: i [
 
 	| col |
@@ -14,7 +14,7 @@ SpStringTableColumn >> asTabulatorColumnWithIndex: i [
 	^ col
 ]
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpStringTableColumn >> getValueFor: anObject id: id tableAdaptor: tableAdaptor [
 	"^tableAdaptor getValueFor: anObject id: id stringColumn: self"
 	^self evaluation value: anObject

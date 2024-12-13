@@ -1,20 +1,22 @@
 Class {
-	#name : #SpC2sEvent,
-	#superclass : #SpC2sMessage,
+	#name : 'SpC2sEvent',
+	#superclass : 'SpC2sMessage',
 	#instVars : [
 		'sourceId'
 	],
-	#category : #'Spec2-Web-UI-clientToServerMessages'
+	#category : 'Spec2-Web-UI-clientToServerMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'clientToServerMessages'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SpC2sEvent class >> forEventName: aName [
 
 	self subclasses do: [ :e | e eventName = aName ifTrue: [ ^e ] ].
 	^self error: 'Event class not found for name: ' , aName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SpC2sEvent class >> newForNativeEvent: e [
 
 	^ self new
@@ -22,7 +24,7 @@ SpC2sEvent class >> newForNativeEvent: e [
 		  yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpC2sEvent >> dispatchToSpecAdaptor: ad requestContext: rc [
 
 	ad
@@ -31,13 +33,13 @@ SpC2sEvent >> dispatchToSpecAdaptor: ad requestContext: rc [
 		with: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpC2sEvent >> initializeWithNativeEvent: e [
 
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpC2sEvent >> respondForRequestContext: rc [
 
 	<pharoJsSkip>
@@ -48,13 +50,13 @@ SpC2sEvent >> respondForRequestContext: rc [
 			requestContext: rc ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEvent >> sourceId [
 
 	^ sourceId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEvent >> sourceId: anObject [
 
 	sourceId := anObject

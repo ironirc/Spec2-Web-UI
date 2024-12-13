@@ -1,6 +1,6 @@
-Extension { #name : #SpApplication }
+Extension { #name : 'SpApplication' }
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpApplication >> defaultConfigurationForPharoJs [
 
 	^ SpwConfiguration new

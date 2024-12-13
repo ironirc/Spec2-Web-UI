@@ -1,13 +1,15 @@
 Class {
-	#name : #SpS2cQuerySomeStuff,
-	#superclass : #SpS2cMessageWithElementId,
+	#name : 'SpS2cQuerySomeStuff',
+	#superclass : 'SpS2cMessageWithElementId',
 	#instVars : [
 		'selectors'
 	],
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpS2cQuerySomeStuff >> executeInResponseContext: rc [
 
 	| msg el |
@@ -19,18 +21,18 @@ SpS2cQuerySomeStuff >> executeInResponseContext: rc [
 	rc sendResponseMessage: msg
 ]
 
-{ #category : #testing }
-SpS2cQuerySomeStuff >> expectsResponse [ 
+{ #category : 'testing' }
+SpS2cQuerySomeStuff >> expectsResponseFromClient [ 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cQuerySomeStuff >> selectors [
 
 	^ selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cQuerySomeStuff >> selectors: anObject [
 
 	selectors := anObject

@@ -1,6 +1,6 @@
 Class {
-	#name : #SpwSessionRegistry,
-	#superclass : #Object,
+	#name : 'SpwSessionRegistry',
+	#superclass : 'Object',
 	#classVars : [
 		'sessions'
 	],
@@ -8,28 +8,30 @@ Class {
 		'dict',
 		'session'
 	],
-	#category : #'Spec2-Web-UI-server-support'
+	#category : 'Spec2-Web-UI-server-support',
+	#package : 'Spec2-Web-UI',
+	#tag : 'server-support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwSessionRegistry class >> containsSessionId: id [
 
 	^ self sessions keys includes: id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwSessionRegistry class >> registerSession: session at: id [
 
 	self sessions at: id put: session.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwSessionRegistry class >> reset [
 	<script>
 	sessions := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwSessionRegistry class >> resumeSessionId: sessionId inRequestContext: rc [
 
 	| oldSession   |
@@ -40,7 +42,7 @@ SpwSessionRegistry class >> resumeSessionId: sessionId inRequestContext: rc [
 	rc sendSuccess: 'session successfully resumed'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwSessionRegistry class >> sessionAt: id [
 
 	^ self sessions
@@ -48,7 +50,7 @@ SpwSessionRegistry class >> sessionAt: id [
 		  ifAbsent: [ self error: 'no session found for given id' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwSessionRegistry class >> sessions [
 	sessions ifNil: [ sessions := Dictionary new ].
 	^ sessions

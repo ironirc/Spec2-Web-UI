@@ -1,1 +1,1 @@
-Package { #name : #'Spec2-Web-UI-Adapters' }
+Package { #name : 'Spec2-Web-UI-Adapters' }

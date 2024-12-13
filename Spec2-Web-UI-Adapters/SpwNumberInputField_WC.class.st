@@ -1,16 +1,18 @@
 Class {
-	#name : #'SpwNumberInputField_WC',
-	#superclass : #'SpwInputField_WC',
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#name : 'SpwNumberInputField_WC',
+	#superclass : 'SpwInputField_WC',
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 SpwNumberInputField_WC class >> tagName [
 
 	^ 'spw-number-input'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwNumberInputField_WC >> cssText [
 
 	^'.input-wrapper {
@@ -56,7 +58,7 @@ SpwNumberInputField_WC >> cssText [
 }'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwNumberInputField_WC >> renderOn_notYet: x [
 
 	x style: self cssText.
@@ -73,6 +75,6 @@ SpwNumberInputField_WC >> renderOn_notYet: x [
 				x onClick: [ self decrement ] ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwNumberInputField_WC >> setSelectionStart: newS end: newE [
 ]

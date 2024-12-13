@@ -1,15 +1,17 @@
 Class {
-	#name : #'SpwAbstractList_A',
-	#superclass : #SpwAbstractAdapter,
-	#category : #'Spec2-Web-UI-Adapters-List'
+	#name : 'SpwAbstractList_A',
+	#superclass : 'SpwAbstractAdapter',
+	#category : 'Spec2-Web-UI-Adapters-List',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'List'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwAbstractList_A class >> isAbstract [
 	^ self = SpwAbstractList_A
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractList_A >> acceptDroppingMorph: aTransferMorph event: anEvent [ 
 	
 	self presenter acceptDrop cull: (self 
@@ -17,7 +19,7 @@ SpwAbstractList_A >> acceptDroppingMorph: aTransferMorph event: anEvent [
 		event: anEvent)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractList_A >> addActivationKeyBindings: aWidget [
 
 	self 
@@ -25,7 +27,7 @@ SpwAbstractList_A >> addActivationKeyBindings: aWidget [
 		toAction: [ self triggerActivationAction ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractList_A >> addKeyBindingsTo: aWidget [
 
 	super addKeyBindingsTo: aWidget.
@@ -33,7 +35,7 @@ SpwAbstractList_A >> addKeyBindingsTo: aWidget [
 	self addActivationKeyBindings: aWidget
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 SpwAbstractList_A >> configureScrolling [
 	self presenter verticalAlignment
 		whenChangedDo: [ widget
@@ -50,18 +52,18 @@ SpwAbstractList_A >> configureScrolling [
 		to: self.
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwAbstractList_A >> elementAt: index [
 
 	^ self widget dataSource elementAt: index
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwAbstractList_A >> itemFilter [
 	^ self model itemFilter
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 SpwAbstractList_A >> scrollingChanged [
 	widget container updateAllRows.
 	self presenter verticalAlignment
@@ -69,7 +71,7 @@ SpwAbstractList_A >> scrollingChanged [
 		lastVisibleRowIndex: widget lastVisibleRowIndex
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractList_A >> sendClickEventToRow: aNumber [
 	| evt rowWidget |
 
@@ -87,7 +89,7 @@ SpwAbstractList_A >> sendClickEventToRow: aNumber [
 		widget handleMouseUp: evt ]
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractList_A >> sendClickWithShiftEventToRow: aNumber [
 	| evt rowWidget |
 
@@ -105,14 +107,14 @@ SpwAbstractList_A >> sendClickWithShiftEventToRow: aNumber [
 		widget handleMouseUp: evt ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractList_A >> showContextMenu [
 
 	self widgetDo: [ :w |
 		w showMenuForIndex: { self presenter selection selectedIndex. 1 } ]
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractList_A >> transferFrom: aTransferMorph event: anEvent [
 	| rowAndColumn |
 
@@ -123,13 +125,13 @@ SpwAbstractList_A >> transferFrom: aTransferMorph event: anEvent [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractList_A >> triggerActivationAction [
 
 	self presenter doActivateAtIndex: self presenter selection selectedIndex
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwAbstractList_A >> updateItemFilterBlockWith: block [
 
 	^ block
@@ -141,7 +143,7 @@ SpwAbstractList_A >> updateItemFilterBlockWith: block [
 			self updateSearch ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwAbstractList_A >> updateSearch [
 
 	self presenter isSearchEnabled
@@ -149,7 +151,7 @@ SpwAbstractList_A >> updateSearch [
 		ifFalse: [ widget disableFunction ]
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractList_A >> wantsDroppedMorph: aTransferMorph event: anEvent [ 
 	
 	^ self presenter wantsDrop cull: (self 

@@ -1,32 +1,34 @@
 Class {
-	#name : #'SpwLabel_WC',
-	#superclass : #'SpwAbstract_WC',
+	#name : 'SpwLabel_WC',
+	#superclass : 'SpwAbstract_WC',
 	#instVars : [
 		'label'
 	],
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 SpwLabel_WC class >> tagName [
 
 	^ 'spw-label'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwLabel_WC >> label [
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwLabel_WC >> label: anObject [
 
 	label := anObject.
 	self render
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwLabel_WC >> renderOn: x [
 
 	"x button: [ :el |

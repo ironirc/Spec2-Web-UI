@@ -1,10 +1,12 @@
 Class {
-	#name : #'SpwTextInputField_RW',
-	#superclass : #SpwAbstractRemoteWidget,
-	#category : #'Spec2-Web-UI-Adapters-RemoteWidget'
+	#name : 'SpwTextInputField_RW',
+	#superclass : 'SpwAbstractRemoteWidget',
+	#category : 'Spec2-Web-UI-Adapters-RemoteWidget',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'RemoteWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTextInputField_RW >> sendCreateMessage [
 
 	| msg |
@@ -27,13 +29,13 @@ SpwTextInputField_RW >> sendCreateMessage [
 	self model root adapter registerWidget: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTextInputField_RW >> tagName [
 
 	^ SpwInputField_WC tagName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTextInputField_RW >> value: aValue [
 
 	| msg |

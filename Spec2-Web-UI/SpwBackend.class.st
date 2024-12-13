@@ -1,40 +1,42 @@
 Class {
-	#name : #SpwBackend,
-	#superclass : #SpApplicationBackend,
-	#category : #'Spec2-Web-UI-specBackEnd'
+	#name : 'SpwBackend',
+	#superclass : 'SpApplicationBackend',
+	#category : 'Spec2-Web-UI-specBackEnd',
+	#package : 'Spec2-Web-UI',
+	#tag : 'specBackEnd'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBackend class >> backendName [
 
 	^ #WebUI
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBackend >> adapterBindingsClass [
 
 	^ SpwAdapterBindings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBackend >> defaultConfigurationFor: anApplication [
 
 	^ anApplication defaultConfigurationForPharoJs
 ]
 
-{ #category : #'deferred message' }
+{ #category : 'deferred message' }
 SpwBackend >> defer: aBlock [
 
 	UIManager default defer: aBlock
 ]
 
-{ #category : #'deferred message' }
+{ #category : 'deferred message' }
 SpwBackend >> forceDefer: aBlock [
 
 	UIManager default defer: aBlock
 ]
 
-{ #category : #'private - notifying' }
+{ #category : 'private - notifying' }
 SpwBackend >> notifyError: aSpecNotification [
 
 	GrowlMorph
@@ -44,7 +46,7 @@ SpwBackend >> notifyError: aSpecNotification [
 		labelColor: GrowlMorph theme textColor
 ]
 
-{ #category : #'private - notifying' }
+{ #category : 'private - notifying' }
 SpwBackend >> notifyInfo: aSpecNotification [
 
 	GrowlMorph 
@@ -52,13 +54,13 @@ SpwBackend >> notifyInfo: aSpecNotification [
 		contents: aSpecNotification message
 ]
 
-{ #category : #'ui dialogs' }
+{ #category : 'ui dialogs' }
 SpwBackend >> selectDirectoryTitle: aString [
 
 	^ UIManager default chooseDirectory: aString path: ''
 ]
 
-{ #category : #'ui dialogs' }
+{ #category : 'ui dialogs' }
 SpwBackend >> selectFileTitle: aString [
 
 	^ UIManager default
@@ -67,7 +69,7 @@ SpwBackend >> selectFileTitle: aString [
 		  path: ''
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 SpwBackend >> showWaitCursorWhile: aBlock inApplication: anApplication [
 
 	Cursor wait showWhile: aBlock

@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfSpec2WebUi }
+Package { #name : 'BaselineOfSpec2WebUi' }

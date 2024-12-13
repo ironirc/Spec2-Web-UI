@@ -1,29 +1,31 @@
 Class {
-	#name : #'SpwTable_A',
-	#superclass : #'SpwAbstractList_A',
-	#category : #'Spec2-Web-UI-Adapters-Table'
+	#name : 'SpwTable_A',
+	#superclass : 'SpwAbstractList_A',
+	#category : 'Spec2-Web-UI-Adapters-Table',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Table'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTable_A class >> intercellSpacing [
 
 	^ 2@0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTable_A class >> remoteWidgetClass [
 
 	^ SpwTable_RW
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTable_A >> addKeyBindingsTo: aWidget [
 
 	super addKeyBindingsTo: aWidget.
 	self addContextMenuKeyBindings: aWidget
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> addModelTo: tableMorph [
 
 	self model columns do: [ :each |
@@ -66,12 +68,12 @@ SpwTable_A >> addModelTo: tableMorph [
 	self updateItemFilterBlockWith: self itemFilter
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 SpwTable_A >> alternateRowsColor [
 	self widgetDo: [ :w | w alternateRowsColor: true ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> buildWidget [
 
 	"widget := SpFTTableMorph new
@@ -90,36 +92,36 @@ SpwTable_A >> buildWidget [
 	^ rw
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwTable_A >> clickOnColumnHeaderAt: anIndex [
 	self widgetDo: [ :tableWidget | tableWidget clickOnColumnHeaderAt: anIndex ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwTable_A >> columns [
 	^ widget columns
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwTable_A >> convertObjectToArrayForTabulator: anObject id: id [
 
 	^ model columns collect: [ :col | 
 		  col getValueFor: anObject id: id tableAdaptor: self ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> defaultColumn [
 
 	^ SpStringTableColumn new evaluated: #yourself
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> ensureAtLeastOneColumnIn: tableMorph [
 	self model columns ifNotEmpty: [ ^ self ].
 	tableMorph addColumn: (self newColumnFrom: self defaultColumn)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwTable_A >> ifSorted: sortedBlock ifNotSorted: notSortedBlock [ 
 	widget columns 
 		do: [ :column | | state | 
@@ -131,7 +133,7 @@ SpwTable_A >> ifSorted: sortedBlock ifNotSorted: notSortedBlock [
 	^ notSortedBlock value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwTable_A >> isNonEditableRow: aRow column: aColumn [
 
 	^ (self widget dataSource
@@ -139,23 +141,23 @@ SpwTable_A >> isNonEditableRow: aRow column: aColumn [
 		row: aRow) submorphs allSatisfy: [ :e | e asReadOnlyMorph == e ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwTable_A >> isResizable [
 	^ self model isResizable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwTable_A >> isShowColumnHeaders [
 
 	^ widget isShowColumnHeaders 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwTable_A >> isShowingColumnHeaders [
 	^ self model isShowingColumnHeaders
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 SpwTable_A >> newColumnFrom: aTableColumn [
 
 	^ (SpMorphicTableColumn on: aTableColumn)
@@ -163,7 +165,7 @@ SpwTable_A >> newColumnFrom: aTableColumn [
 		yourself
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 SpwTable_A >> newDataSource [ 
 
 	^ SpMorphicTableDataSource new
@@ -172,20 +174,20 @@ SpwTable_A >> newDataSource [
 
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> refreshColumnsInWidget [
 
 	widget columns: (self model columns collect: [ :each | self newColumnFrom: each ]).
 	self ensureAtLeastOneColumnIn: widget.
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 SpwTable_A >> refreshList [
 
 	^ self widget refresh
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 SpwTable_A >> refreshModel [
 
 	widget dataSource resetElements.
@@ -194,7 +196,7 @@ SpwTable_A >> refreshModel [
 		ifNotSorted: [ self refreshList ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> refreshShowColumnHeaders [
 	
 	self presenter isShowingColumnHeaders 
@@ -208,7 +210,7 @@ SpwTable_A >> refreshShowColumnHeaders [
 				refresh ]
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 SpwTable_A >> refreshWidgetSelection [
 
 	| rowIndexes msg |
@@ -220,7 +222,7 @@ SpwTable_A >> refreshWidgetSelection [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 SpwTable_A >> selectIndex: anInteger [ 
 
 "	(anInteger = 0 and: [ widget selectedIndexes isEmpty ]) ifTrue: [ ^ self ].	
@@ -229,7 +231,7 @@ SpwTable_A >> selectIndex: anInteger [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwTable_A >> selectedIndexes [
 
 	| msg envelope |
@@ -240,7 +242,7 @@ SpwTable_A >> selectedIndexes [
 	^ envelope msg results first value
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> selectionChanged: ann [
 	| diff selection |
 
@@ -260,7 +262,7 @@ SpwTable_A >> selectionChanged: ann [
 	ann newSelectedIndexes ifEmpty: [ selection unselectAll ]
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwTable_A >> sendRightClickEvent [
 	| evt |
 
@@ -275,14 +277,14 @@ SpwTable_A >> sendRightClickEvent [
 	self widget click: evt
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> strongSelectionChanged: aFTStrongSelectionChanged [
 
 	self presenter activatesOnDoubleClick ifFalse: [ ^ self ].	
 	self presenter doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwTable_A >> tabulatorColumns [
 
 	"Sp2F  (stands for spec to front) experimenting with coding fragments to designate intentions "
@@ -297,7 +299,7 @@ SpwTable_A >> tabulatorColumns [
 			  ('formatter' -> 'html') } asJsObject" ]
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwTable_A >> transferFrom: aTransferMorph event: anEvent [
 	| rowAndColumn |
 
@@ -309,7 +311,7 @@ SpwTable_A >> transferFrom: aTransferMorph event: anEvent [
 		yourself
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwTable_A >> updateMenu [
 	
 	"there is no need to updateMenu here because it will be resolved at the dataSource"

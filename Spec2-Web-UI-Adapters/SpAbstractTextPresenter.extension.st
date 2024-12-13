@@ -1,6 +1,6 @@
-Extension { #name : #SpAbstractTextPresenter }
+Extension { #name : 'SpAbstractTextPresenter' }
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpAbstractTextPresenter >> selection [
 	^ selection
 ]

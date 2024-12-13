@@ -1,6 +1,6 @@
-Extension { #name : #SpImageTableColumn }
+Extension { #name : 'SpImageTableColumn' }
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpImageTableColumn >> asTabulatorColumnWithIndex: i [
 
 	| col |
@@ -23,7 +23,7 @@ SpImageTableColumn >> asTabulatorColumnWithIndex: i [
 }}"
 ]
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpImageTableColumn >> getValueFor: anObject id: id tableAdaptor: tableAdaptor [
 	"^tableAdaptor getValueFor: anObject id: id stringColumn: self"
 

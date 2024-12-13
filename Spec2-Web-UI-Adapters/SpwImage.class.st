@@ -1,6 +1,6 @@
 Class {
-	#name : #SpwImage,
-	#superclass : #Object,
+	#name : 'SpwImage',
+	#superclass : 'Object',
 	#instVars : [
 		'b64Array',
 		'fileExtension',
@@ -9,59 +9,61 @@ Class {
 	#classInstVars : [
 		'cache'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Table'
+	#category : 'Spec2-Web-UI-Adapters-Table',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Table'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImage class >> cache [
 
 	cache ifNil: [ cache := Dictionary new ].
 	^cache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImage >> b64Array [
 
 	^ b64Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImage >> b64Array: anObject [
 
 	b64Array := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImage >> cacheKey [
 
 	^ cacheKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImage >> cacheKey: anObject [
 
 	cacheKey := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImage >> fileExtension [
 
 	^ fileExtension
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImage >> fileExtension: anObject [
 
 	fileExtension := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImage >> getB64Array [
 
 	^ self class cache at: self cacheKey ifAbsentPut: [self b64Array]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 SpwImage >> renderOn: x [
 
 	x img: [ :i | i src: 'data:image/png;base64,' , self getB64Array ]

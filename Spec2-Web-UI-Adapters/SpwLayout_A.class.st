@@ -1,19 +1,21 @@
 Class {
-	#name : #'SpwLayout_A',
-	#superclass : #SpwAbstractAdapter,
+	#name : 'SpwLayout_A',
+	#superclass : 'SpwAbstractAdapter',
 	#instVars : [
 		'layout'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Layout'
+	#category : 'Spec2-Web-UI-Adapters-Layout',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Layout'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwLayout_A >> adapter [
 	
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwLayout_A >> add: aPresenter constraints: constraints [
  
 	aPresenter owner: self model. 
@@ -24,20 +26,20 @@ SpwLayout_A >> add: aPresenter constraints: constraints [
 			to: aPanel ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwLayout_A >> addConstraints: constraints toChild: childMorph [
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwLayout_A >> addKeyBindingsTo: aMorph [
 	"This is called before the layout actually exists. 
 	 Skipping it."
 	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwLayout_A >> applyChildrenAlignmentTo: childMorph constraints: constraints [
 	"When it applies (like the case of SpGridLayout), widgets may want to configure alignment 
 	 here."
@@ -45,7 +47,7 @@ SpwLayout_A >> applyChildrenAlignmentTo: childMorph constraints: constraints [
 	^ childMorph
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwLayout_A >> applyStyle: aPresenter to: aMorph [
 	self flag: #TODO. "This is a HACK, to apply styles just when I'm using new layouts 
 	(otherwise, it interferes on how the old layout is displayed). 
@@ -56,19 +58,19 @@ SpwLayout_A >> applyStyle: aPresenter to: aMorph [
 	aPresenter adapter applyStyle: aMorph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwLayout_A >> basicAdd: aPresenter constraints: constraints to: aPanel [ 
 
 	self subclassResponsibility
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 SpwLayout_A >> build [
 	
 	^ self widget
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwLayout_A >> buildMorph: aPresenter constraints: constraints [
 
 	| childMorph |
@@ -84,49 +86,49 @@ SpwLayout_A >> buildMorph: aPresenter constraints: constraints [
 	^ childMorph
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 SpwLayout_A >> buildWidget [
 
 	^ nil
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 SpwLayout_A >> buildWithLayout: aSpecLayout [
 
 	^ self build
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 SpwLayout_A >> buildWithSelector: aSelector [
 
 	^ self build
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwLayout_A >> children [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwLayout_A >> isEmpty [
 
 	^ self children isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwLayout_A >> isSpLayout [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwLayout_A >> layout [
 
 	^ layout
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwLayout_A >> layout: aLayout [
 
 	"Basic apply visibility to the widget.
@@ -138,13 +140,13 @@ SpwLayout_A >> layout: aLayout [
 	self addEventsTo: self widget."
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwLayout_A >> newPanel [
 
 	^ self newPanelWith: TableLayout new
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwLayout_A >> newPanelWith: aBlock [
 
 	"^ Morph new
@@ -174,7 +176,7 @@ SpwLayout_A >> newPanelWith: aBlock [
 	^ rw
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwLayout_A >> replaceLayoutWith: aLayout [ 
 
 	| oldAdapter |
@@ -190,14 +192,14 @@ SpwLayout_A >> replaceLayoutWith: aLayout [
 		by: self model adapter widget
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwLayout_A >> takeKeyboardFocus [
 
 	self presenter presentersInFocusOrder 
 		ifNotEmpty: [ :presenters | presenters first takeKeyboardFocus ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwLayout_A >> updateBorderWidth [
 
 	widget borderWidth: layout borderWidth

@@ -1,6 +1,6 @@
 Class {
-	#name : #SpwTabulatorColumn,
-	#superclass : #PjDomController,
+	#name : 'SpwTabulatorColumn',
+	#superclass : 'PjDomController',
 	#instVars : [
 		'field',
 		'index',
@@ -10,34 +10,36 @@ Class {
 		'horizontalAlignment',
 		'formatter'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Table'
+	#category : 'Spec2-Web-UI-Adapters-Table',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Table'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> field [
 
 	^ field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> field: anObject [
 
 	field := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> formatter [
 
 	^ formatter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> formatter: anObject [
 
 	formatter := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> getFormatter [
 
 	type = #Base64Jpg ifTrue: [
@@ -45,76 +47,76 @@ SpwTabulatorColumn >> getFormatter [
 	^ formatter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> horizontalAlignment [
 
 	^ horizontalAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> horizontalAlignment: anObject [
 
 	horizontalAlignment := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> index [
 
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> index: anObject [
 
 	index := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> title [
 
 	^ title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> title: anObject [
 
 	title := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> type [
 
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> type: anObject [
 
 	type := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> unpackBase64Jpg: anSpwImage [
 
-	^ global Image new
+	^ globalThis Image new
 		  src: 'data:image/png;base64,' , anSpwImage getB64Array;
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> unpackTableColumnData: anObject [
 
 	type = #Base64Jpg ifTrue: [ ^self unpackBase64Jpg: anObject ].
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> width [
 
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwTabulatorColumn >> width: anObject [
 
 	width := anObject

@@ -1,6 +1,6 @@
 Class {
-	#name : #'SpwInputField_WC',
-	#superclass : #'SpwAbstract_WC',
+	#name : 'SpwInputField_WC',
+	#superclass : 'SpwAbstract_WC',
 	#instVars : [
 		'input',
 		'selectionStart',
@@ -8,48 +8,50 @@ Class {
 		'mouseDown',
 		'value'
 	],
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 SpwInputField_WC class >> tagName [
 
 	^ 'spw-input'
 ]
 
-{ #category : #'web component callbacks' }
+{ #category : 'web component callbacks' }
 SpwInputField_WC >> connected [
 
 	super connected.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> disabled: aValue [
 
 	input disabled: aValue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> focus [ 
 
 	input focus.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> isASelectionFrom: s and: e [.
 	s ifNil: [ ^false ].
 	e ifNil: [ ^false ].
 	^e - s >= 1 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> readOnly: aValue [
 
 	input readOnly: aValue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> renderInputOn: x [
 
 	x input: [ :el |
@@ -75,25 +77,25 @@ SpwInputField_WC >> renderInputOn: x [
 		self setSelectionStart: 0 end: 0 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> renderOn: x [
 
 	self renderInputOn: x
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> selectionEnd [
 
 	^selectionEnd
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> selectionStart [
 
 	^selectionStart
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> setSelectionStart: newS end: newE [
 
 	"towards front"
@@ -114,7 +116,7 @@ SpwInputField_WC >> setSelectionStart: newS end: newE [
 	input setSelectionRange: newS end: newE
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> updateSelection [
 	"towards back-end"
 	| s e newEvnt somethingWasSelected somethingToBeSelected |
@@ -129,17 +131,17 @@ SpwInputField_WC >> updateSelection [
 
 	selectionStart := s.
 	selectionEnd := e.
-	newEvnt := global CustomEvent new: 'select'.
+	newEvnt := globalThis CustomEvent new: 'select'.
 	self dispatchEvent: newEvnt
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> value [
 
 	^value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwInputField_WC >> value: aValue [
 
 	value := aValue.

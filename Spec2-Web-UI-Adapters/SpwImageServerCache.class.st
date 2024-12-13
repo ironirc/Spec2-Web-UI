@@ -1,34 +1,36 @@
 Class {
-	#name : #SpwImageServerCache,
-	#superclass : #Object,
+	#name : 'SpwImageServerCache',
+	#superclass : 'Object',
 	#classInstVars : [
 		'cacheByForm',
 		'cacheByKey'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Table'
+	#category : 'Spec2-Web-UI-Adapters-Table',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Table'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImageServerCache class >> cacheByForm [ 
 
 	cacheByForm ifNil: [ cacheByForm := Dictionary new ].
 	^cacheByForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImageServerCache class >> cacheByKey [
 
 	cacheByKey ifNil: [ cacheByKey := Dictionary new ].
 	^cacheByKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImageServerCache class >> imageAtKey: aKey [
 
 	^ self cacheByKey at: aKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImageServerCache class >> imageForForm: aForm [
 	^ self cacheByForm at: aForm ifAbsentPut: [
 		  | newInstance |
@@ -41,7 +43,7 @@ SpwImageServerCache class >> imageForForm: aForm [
 		  newInstance ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwImageServerCache class >> resetCache [
 
 	<script>

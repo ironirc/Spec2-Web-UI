@@ -1,6 +1,6 @@
-Extension { #name : #SpCheckBoxTableColumn }
+Extension { #name : 'SpCheckBoxTableColumn' }
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpCheckBoxTableColumn >> asTabulatorColumnWithIndex: i [
 
 	| col |
@@ -15,7 +15,7 @@ SpCheckBoxTableColumn >> asTabulatorColumnWithIndex: i [
 	^ col
 ]
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpCheckBoxTableColumn >> getValueFor: anObject id: id tableAdaptor: tableAdaptor [
 	"^tableAdaptor getValueFor: anObject id: id stringColumn: self"
 	^self evaluation value: anObject

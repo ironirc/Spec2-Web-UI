@@ -1,27 +1,29 @@
 Class {
-	#name : #'SpwMenuItemBase_WC',
-	#superclass : #'SpwAbstract_WC',
+	#name : 'SpwMenuItemBase_WC',
+	#superclass : 'SpwAbstract_WC',
 	#instVars : [
 		'container',
 		'label',
 		'icon'
 	],
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwMenuItemBase_WC class >> isAbstract [
 
 	^ self = SpwMenuItemBase_WC
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenuItemBase_WC >> activate [
 	PjDomController cssClassesAddAll: { 'active' } element: self.
 	self menu focus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> connectedForFirstTime [
 
 	super connectedForFirstTime.
@@ -29,7 +31,7 @@ SpwMenuItemBase_WC >> connectedForFirstTime [
 	self addEventListener: 'mouseenter' block: [ :evt | self menu activateItem: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> cssText [ 
 
 	^'
@@ -51,62 +53,62 @@ SpwMenuItemBase_WC >> cssText [
 '
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenuItemBase_WC >> deactivate [
 
 	| event |
 	PjDomController cssClassesRemoveAll: { 'active' } element: self.
-	event := global CustomEvent
+	event := globalThis CustomEvent
 		         new: 'deactivate'
 		         with:
 		         { ('detail' -> { ('itemId' -> self id) }) } asJsObject.
 	^ self dispatchEvent: event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> icon [
 
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> icon: anObject [
 
 	icon := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> label [
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> label: anObject [
 
 	label := anObject.
 	self render
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> menu [
 
 	^ self parentElement
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenuItemBase_WC >> nextItem [ 
 
 	^self menu itemAfter: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenuItemBase_WC >> previousItem [ 
 
 	^self menu itemBefore: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> renderOn: x [
 
 	x style: self cssText.
@@ -117,7 +119,7 @@ SpwMenuItemBase_WC >> renderOn: x [
 		self label ifNotNil: [ x << self label ] ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SpwMenuItemBase_WC >> select [
 
 	self menu
@@ -125,7 +127,7 @@ SpwMenuItemBase_WC >> select [
 		closeSelfAndOwners
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenuItemBase_WC >> subMenu [
 
 	^ nil

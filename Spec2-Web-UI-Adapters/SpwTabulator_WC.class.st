@@ -2,8 +2,8 @@
 I am a web component containing a Tabulator
 "
 Class {
-	#name : #'SpwTabulator_WC',
-	#superclass : #'SpwAbstract_WC',
+	#name : 'SpwTabulator_WC',
+	#superclass : 'SpwAbstract_WC',
 	#traits : 'PhxPjPromiseTrait',
 	#classTraits : 'PhxPjPromiseTrait classTrait',
 	#instVars : [
@@ -14,16 +14,18 @@ Class {
 		'tabulatorDiv',
 		'tabulatorColumnObjects'
 	],
-	#category : #'Spec2-Web-UI-Adapters-WebComponents'
+	#category : 'Spec2-Web-UI-Adapters-WebComponents',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'WebComponents'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 SpwTabulator_WC class >> tagName [
 
 	^ 'spw-table'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> addTabulatorCssTo: x [
 
 	x style:
@@ -31,7 +33,7 @@ SpwTabulator_WC >> addTabulatorCssTo: x [
 /*# sourceMappingURL=tabulator.min.css.map */'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> convertColumn: col columnIndex: idx [
 
 	| tabulatorColumn |
@@ -51,33 +53,33 @@ SpwTabulator_WC >> convertColumn: col columnIndex: idx [
 	^ tabulatorColumn
 ]
 
-{ #category : #'api - selection' }
+{ #category : 'api - selection' }
 SpwTabulator_WC >> deselectAll [
 	"https://tabulator.info/docs/5.5/select#manage"
 	^ tabulator deselectRow
 ]
 
-{ #category : #'api - selection' }
+{ #category : 'api - selection' }
 SpwTabulator_WC >> deselectIndexes: indexesOrNil [
 	"https://tabulator.info/docs/5.5/select#manage"
 	"nil means all"
 	^ tabulator deselectRow: indexesOrNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> focus [ 
 
 	tabulatorDiv focus.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> initialize [
 	super initialize. 
 	self tableBuiltPromise. "setup the promise before anything else"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> promiseDataFor: params [
 
 	| msg |
@@ -87,18 +89,15 @@ SpwTabulator_WC >> promiseDataFor: params [
 	msg pageSize: (params at: #size).
 	^ self promise: [ :resolve :reject |
 		  console time: 'fetch page'.
-		  SpwClientApp current messenger
-			  sendMessageToServer: msg
-			  onResponseDo: [ :resp |
-				  console log: resp msg.
-
-				  resp msg data: (self unpackTableData: resp msg data).
-				  resolve value: resp msg.
-				  console timeEnd: 'fetch page' ]
-			  isResponseToIncomingEnvelope: nil ]
+		  (SpwClientApp current messenger promiseResponseFor: msg) then: [
+			  :resp |
+			  console log: resp msg.
+			  resp msg data: (self unpackTableData: resp msg data).
+			  resolve value: resp msg.
+			  console timeEnd: 'fetch page' ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> renderOn: x [
 	"	(document contains: self) ifFalse: [
 		console log: 'skip render (not yet in document)' ]."
@@ -112,7 +111,7 @@ SpwTabulator_WC >> renderOn: x [
     box-sizing: border-box;'.
 	x div: [ :el | tabulatorDiv := el ].
 	console log: 'tabulatorColumnObjects:' with: tabulatorColumnObjects.
-	tabulator := global Tabulator new: tabulatorDiv with: {
+	tabulator := globalThis Tabulator new: tabulatorDiv with: {
 			             ('height' -> '100%').
 			             "('renderVertical' -> 'virtual')."
 			             ('columns' -> tabulatorColumnObjects).
@@ -161,7 +160,7 @@ SpwTabulator_WC >> renderOn: x [
 			console time: 'pageLoaded' ]
 ]
 
-{ #category : #'api - selection' }
+{ #category : 'api - selection' }
 SpwTabulator_WC >> selectIndexes: indexesOrNil [
 	"https://tabulator.info/docs/5.5/select#manage"
 	"nil means all"
@@ -169,13 +168,13 @@ SpwTabulator_WC >> selectIndexes: indexesOrNil [
 
 ]
 
-{ #category : #'api - selection' }
+{ #category : 'api - selection' }
 SpwTabulator_WC >> selectedIndexes [
 
 	^ (tabulator getSelectedRows collect: [ :e | e getPosition ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> setColumns: aCollection [
 
 	| convertedCols |
@@ -188,7 +187,7 @@ SpwTabulator_WC >> setColumns: aCollection [
 	tabulatorColumnObjects := convertedCols
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> tableBuiltPromise [
 
 	tableBuiltPromise ifNil: [ 
@@ -197,7 +196,7 @@ SpwTabulator_WC >> tableBuiltPromise [
 	^ tableBuiltPromise
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwTabulator_WC >> unpackTableData: array [
 
 	^ array collect: [ :rowArray |

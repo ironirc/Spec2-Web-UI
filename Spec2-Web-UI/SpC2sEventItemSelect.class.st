@@ -1,32 +1,34 @@
 Class {
-	#name : #SpC2sEventItemSelect,
-	#superclass : #SpC2sWidgetEvent,
+	#name : 'SpC2sEventItemSelect',
+	#superclass : 'SpC2sWidgetEvent',
 	#instVars : [
 		'itemId'
 	],
-	#category : #'Spec2-Web-UI-clientToServerMessages'
+	#category : 'Spec2-Web-UI-clientToServerMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'clientToServerMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventItemSelect class >> eventName [ 
 
 	^'itemselect'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventItemSelect >> initializeWithNativeEvent: e [
 
 	itemId := e detail itemId.
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventItemSelect >> itemId [
 
 	^ itemId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventItemSelect >> itemId: anObject [
 
 	itemId := anObject

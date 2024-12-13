@@ -1,14 +1,16 @@
 Class {
-	#name : #SpS2cUpdateTabulatorTable,
-	#superclass : #SpS2cMessageWithElementId,
+	#name : 'SpS2cUpdateTabulatorTable',
+	#superclass : 'SpS2cMessageWithElementId',
 	#instVars : [
 		'selections',
 		'deselections'
 	],
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateTabulatorTable >> executeInResponseContext: rc [
 
 	selections ifNotNil: [ 
@@ -17,13 +19,13 @@ SpS2cUpdateTabulatorTable >> executeInResponseContext: rc [
 	deselections ifNotNil: [ self element deselectIndexes: selections ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateTabulatorTable >> selections [
 
 	^ selections
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateTabulatorTable >> selections: anObject [
 
 	selections := anObject

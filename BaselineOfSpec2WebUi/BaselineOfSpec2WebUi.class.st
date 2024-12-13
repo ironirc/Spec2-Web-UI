@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfSpec2WebUi,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfSpec2WebUi
+	#name : 'BaselineOfSpec2WebUi',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfSpec2WebUi',
+	#package : 'BaselineOfSpec2WebUi'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfSpec2WebUi >> baseline: spec [
 	<baseline>
 
@@ -19,7 +20,7 @@ BaselineOfSpec2WebUi >> baseline: spec [
 	]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 BaselineOfSpec2WebUi >> compatibility: spec [
 
 	"Define a 'Compatibility' group that can be used as a dependency later to overcome differences in Pharo releases"
@@ -27,12 +28,12 @@ BaselineOfSpec2WebUi >> compatibility: spec [
 	
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 BaselineOfSpec2WebUi >> groups: spec [
 
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 BaselineOfSpec2WebUi >> packages: spec [
 
 	spec
@@ -44,14 +45,14 @@ BaselineOfSpec2WebUi >> packages: spec [
 	spec package: 'Spec2-Web-UI-AdHoc'
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfSpec2WebUi >> postload: aLoader package: aPackageSpec [
 
-	SpwClientApp ensureRegisteredAtPjServer
+	"SpwClientApp ensureRegisteredAtPjServer"
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 BaselineOfSpec2WebUi >> prerequisites: spec [
-	spec baseline: 'PharoXBasics' with: [ spec repository: 'github://ironirc/pharox-pj-basics:main' ].
+	spec baseline: 'PharoXBasics' with: [ spec repository: 'github://ironirc/pharox-pj-basics:pharo12' ].
 
 ]

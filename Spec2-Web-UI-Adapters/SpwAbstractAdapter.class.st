@@ -1,16 +1,18 @@
 Class {
-	#name : #SpwAbstractAdapter,
-	#superclass : #SpAbstractAdapter,
+	#name : 'SpwAbstractAdapter',
+	#superclass : 'SpAbstractAdapter',
 	#instVars : [
 		'mutedModelSubscriptions'
 	],
 	#classVars : [
 		'idCount'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Adaptors'
+	#category : 'Spec2-Web-UI-Adapters-Adaptors',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Adaptors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractAdapter class >> adaptingName [
 	"Override me if adapter will not follow the common pattern"
 
@@ -19,67 +21,67 @@ SpwAbstractAdapter class >> adaptingName [
 	^ (((self name withoutPrefix: 'Spw') withoutSuffix: '_A') , 'Adapter') asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractAdapter class >> allAdapters [
 
 	^ self allSubclasses
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpwAbstractAdapter class >> currentIdCount [
 
 	^ idCount
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpwAbstractAdapter class >> incrementIdCount [
 
 	idCount := idCount + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractAdapter class >> initialize [
 	idCount := 1.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwAbstractAdapter class >> isAbstract [ 
 
 	^self == SpwAbstractAdapter
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpwAbstractAdapter class >> nextIdNumber [
 
 	self incrementIdCount.
 	^ self currentIdCount
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpwAbstractAdapter class >> nextIdString [
 
 	^ 'el-' , self nextIdNumber printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractAdapter class >> remoteWidgetClass [ 
 
 	^SpwAbstractRemoteWidget
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractAdapter >> acceptDropBlock [
 
 	^ self model acceptDropBlock
 ]
 
-{ #category : #'drag and drop - private' }
+{ #category : 'drag and drop - private' }
 SpwAbstractAdapter >> acceptDroppingMorph: draggedMorph event: event inMorph: source [
 
 	^ self acceptDropBlock cull: draggedMorph model model cull: event cull: source model model
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractAdapter >> adapt: aPresenter [
 	
 	super adapt: aPresenter.
@@ -89,12 +91,12 @@ SpwAbstractAdapter >> adapt: aPresenter [
 	self addEventsTo: self widget"
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> add: anAdapter [
 	self widgetDo: [ :w | w spEnsureLayoutAndAddMorph: anAdapter widget ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractAdapter >> addContextMenuKeyBindings: aWidget [
 	
 	self flag: #TODO. "Take this from a configuration"
@@ -104,7 +106,7 @@ SpwAbstractAdapter >> addContextMenuKeyBindings: aWidget [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractAdapter >> addFocusRotationKeyBindings [
 
 	self presenter canTakeKeyboardFocus ifFalse: [ ^ self ].
@@ -117,7 +119,7 @@ SpwAbstractAdapter >> addFocusRotationKeyBindings [
 		toAction: [ self focusPrevious ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractAdapter >> addKeyBindingsTo: aMorph [
 
 	self addFocusRotationKeyBindings.
@@ -128,7 +130,7 @@ SpwAbstractAdapter >> addKeyBindingsTo: aMorph [
 				toAction: each action ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractAdapter >> addSettingsTo: aMorph [
 	
 	self widget ifNil: [ ^ self ].
@@ -140,32 +142,32 @@ SpwAbstractAdapter >> addSettingsTo: aMorph [
 	self applyVisibility
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwAbstractAdapter >> addStyle: aStyle [
 	"ignore style and just apply it again (the new style will not there)"
 	self applyStyle: self widget
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractAdapter >> application [ 
 
 	^ self presenter application
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwAbstractAdapter >> applyStyle [
 
 	self applyStyle: self widget
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwAbstractAdapter >> applyStyle: morph [
 	"this will apply general properties to the built morph"
 
 	self style applyTo: morph
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractAdapter >> applyVisibility [
 	
 	"It may happen that some presenters use generic adapters and they do not have an associated presenter.
@@ -179,7 +181,7 @@ SpwAbstractAdapter >> applyVisibility [
 			ifFalse: [ self widget hide ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractAdapter >> bind: sourceAspect with: targetAspect of: target read: readBlock [
 
 	self model property: sourceAspect whenChangedDo: [ :val | 
@@ -189,7 +191,7 @@ SpwAbstractAdapter >> bind: sourceAspect with: targetAspect of: target read: rea
 	self model observablePropertyNamed: sourceAspect
 ]
 
-{ #category : #'protocol - shortcuts' }
+{ #category : 'protocol - shortcuts' }
 SpwAbstractAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 
 	"self widgetDo: [ :w | 
@@ -198,31 +200,31 @@ SpwAbstractAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 			toAction: aBlock ]"
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> borderColor [
 
 	^ self model borderColor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> borderColor: color [
 
 	self widget ifNotNil: [ :w | w borderColor: color ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> borderWidth [
 
 	^ self model borderWidth
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> borderWidth: width [
 
 	self widget ifNotNil: [ :w | w borderWidth: width ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractAdapter >> buildMenu: aMenuPresenter [
 
 	^ aMenuPresenter 
@@ -230,84 +232,84 @@ SpwAbstractAdapter >> buildMenu: aMenuPresenter [
 		build
 ]
 
-{ #category : #'spec protocol' }
+{ #category : 'spec protocol' }
 SpwAbstractAdapter >> changed [
 
 	^ self widgetDo: [ :w | w changed ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> color [
 
 	^ self model color
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> color: color [
 
 	self widgetDo: [ :w | w color: color ]
 ]
 
-{ #category : #'spec protocol' }
+{ #category : 'spec protocol' }
 SpwAbstractAdapter >> delete [
 	
 	self widgetDo: [ :w | w delete ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> disable [
 	
 	self model enabled: false
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractAdapter >> dragEnabled [
 
 	^ self presenter dragEnabled
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractAdapter >> dragEnabled: aBoolean [
 
 	self widget ifNotNil: [ :w | w dragEnabled: aBoolean ]
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractAdapter >> dropEnabled [
 
 	^ self presenter dropEnabled
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractAdapter >> dropEnabled: aBoolean [
 
 	self widget ifNotNil: [ :w | w dropEnabled: aBoolean ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> enable [
 
 	self model enabled: true
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> enabled [
 	^ self presenter isEnabled
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> enabled: aBoolean [
 
 	"self widget ifNotNil: [ :w | w enabled: aBoolean ]"
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> extent [
 
 	^ self widget extent
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 SpwAbstractAdapter >> focusNext [
 	
 	self presenter withWindowDo: [ :window | | presenters |
@@ -318,7 +320,7 @@ SpwAbstractAdapter >> focusNext [
 			takeKeyboardFocus ]
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 SpwAbstractAdapter >> focusPrevious [
 	
 	self presenter withWindowDo: [ :window | | presenters |
@@ -329,25 +331,25 @@ SpwAbstractAdapter >> focusPrevious [
 			takeKeyboardFocus ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> hRigid [
 	
 	self widgetDo: [ :w | w hResizing: #rigid ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> hShrinkWrap [
 	
 	self widgetDo: [ :w | w hResizing: #shrinkWrap ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> hSpaceFill [
 	
 	self widgetDo: [ :w | w hResizing: #spaceFill ]
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> handleContextmenu: e [
 
 	self model contextMenu ifNotNil: [ :cm |
@@ -359,25 +361,25 @@ SpwAbstractAdapter >> handleContextmenu: e [
 		self sendMessageToClient: msg ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> help [
 
 	^ self model help
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractAdapter >> helpText [
 	
 	^ self widget balloonText 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwAbstractAdapter >> initialize [ 
 	super initialize.
 	mutedModelSubscriptions := Set new
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installEvent: anEvent [
 	"Used when installing events into presenters already built"
 
@@ -387,7 +389,7 @@ SpwAbstractAdapter >> installEvent: anEvent [
 			target: (self eventHandlerReceiver: w) ]
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installFocusLostEvent: anEvent to: aWidget [
 
 	aWidget announcer 
@@ -395,7 +397,7 @@ SpwAbstractAdapter >> installFocusLostEvent: anEvent to: aWidget [
 		do: [ anEvent action value ]
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installFocusReceivedEvent: anEvent to: aWidget [
 
 	aWidget announcer 
@@ -403,7 +405,7 @@ SpwAbstractAdapter >> installFocusReceivedEvent: anEvent to: aWidget [
 		do: [ anEvent action value ]
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installKeyDownEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -412,7 +414,7 @@ SpwAbstractAdapter >> installKeyDownEvent: anEvent to: aWidget [
 		to: anEvent action
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installKeyUpEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -421,7 +423,7 @@ SpwAbstractAdapter >> installKeyUpEvent: anEvent to: aWidget [
 		to: anEvent action
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installMouseDoubleClickEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -430,7 +432,7 @@ SpwAbstractAdapter >> installMouseDoubleClickEvent: anEvent to: aWidget [
 		to: anEvent action
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installMouseDownEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -439,7 +441,7 @@ SpwAbstractAdapter >> installMouseDownEvent: anEvent to: aWidget [
 		to: anEvent action
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installMouseEnterEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -448,7 +450,7 @@ SpwAbstractAdapter >> installMouseEnterEvent: anEvent to: aWidget [
 		to: anEvent action
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installMouseLeaveEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -457,7 +459,7 @@ SpwAbstractAdapter >> installMouseLeaveEvent: anEvent to: aWidget [
 		to: anEvent action
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installMouseMoveEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -466,7 +468,7 @@ SpwAbstractAdapter >> installMouseMoveEvent: anEvent to: aWidget [
 		to: anEvent action
 ]
 
-{ #category : #'event installing' }
+{ #category : 'event installing' }
 SpwAbstractAdapter >> installMouseUpEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -475,19 +477,19 @@ SpwAbstractAdapter >> installMouseUpEvent: anEvent to: aWidget [
 		to: anEvent action
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwAbstractAdapter >> isMorphicAdapter [
 
 	^ true
 ]
 
-{ #category : #visibility }
+{ #category : 'visibility' }
 SpwAbstractAdapter >> isVisible [
 	
 	^ widget isVisible
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractAdapter >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	
 	^ self 
@@ -499,7 +501,7 @@ SpwAbstractAdapter >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean con
 		option: optionBoolean
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractAdapter >> keyEvent: type code: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	| evt modifiers |
 	
@@ -530,7 +532,7 @@ SpwAbstractAdapter >> keyEvent: type code: keyCode shift: shiftBoolean meta: met
 	10 milliSeconds wait
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	
 	^ self 
@@ -542,21 +544,21 @@ SpwAbstractAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean 
 		option: optionBoolean
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> layout: aLayout [
 	| layout |
 	layout := aLayout asMorphicLayout.
 	self widgetDo: [ :w | w layoutFrame: layout ].
 ]
 
-{ #category : #'model subscriptions' }
+{ #category : 'model subscriptions' }
 SpwAbstractAdapter >> muteModelAspect: aspect while: aBlock [
 
 	mutedModelSubscriptions add: aspect.
 	aBlock ensure: [ mutedModelSubscriptions remove: aspect ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractAdapter >> newRemoteWidget [
 
 	| w |
@@ -566,39 +568,39 @@ SpwAbstractAdapter >> newRemoteWidget [
 	^ w
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwAbstractAdapter >> presenterStyles [
 	"The presenters in the style"
 
 	^ self presenter styles
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SpwAbstractAdapter >> printOn: ws [
 
 	ws << 'a ' << self class name
 ]
 
-{ #category : #'protocol - shortcuts' }
+{ #category : 'protocol - shortcuts' }
 SpwAbstractAdapter >> removeKeyCombination: aShortcut [
 
 	self widgetDo: [ :w | 
 		w removeKeyCombination: aShortcut ]
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwAbstractAdapter >> removeStyle: aStyle [
 	"ignore style and just apply it again (the removed style will not be there)"
 	self applyStyle: self widget
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> removeSubWidgets [
 	
 	self widgetDo: [ :w | w removeAllMorphs ]
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractAdapter >> sendClickEvent [
 
 	| msg |
@@ -607,13 +609,13 @@ SpwAbstractAdapter >> sendClickEvent [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #websocket }
+{ #category : 'websocket' }
 SpwAbstractAdapter >> sendMessageToClient: msg [
 
 	^ self webSocketSession sendMessage: msg
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractAdapter >> sendRightClickEvent [
 "	| evt |
 
@@ -637,7 +639,7 @@ SpwAbstractAdapter >> sendRightClickEvent [
 
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> setBalloonText: aString [
 
 	self widget ifNotNil: [ :w | 
@@ -646,20 +648,20 @@ SpwAbstractAdapter >> setBalloonText: aString [
 	
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> show [ 
 
 	self widgetDo: #show
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractAdapter >> showContextMenu [
 
 	self presenter contextMenu ifNil: [ ^ self ].
 	self showMenu: self presenter contextMenu
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractAdapter >> showMenu: aValuable [
 	| lastShownMenu |
 	
@@ -667,7 +669,7 @@ SpwAbstractAdapter >> showMenu: aValuable [
 	lastShownMenu open
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwAbstractAdapter >> style [
 
 	^ SpwStyle 
@@ -675,20 +677,20 @@ SpwAbstractAdapter >> style [
 		adapter: self
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwAbstractAdapter >> styleName [
 	"i.e. SpButtonAdapter = button"
 	
 	^ ((self className withoutPrefix: 'SpMorphic') allButLast: 7) uncapitalized
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SpwAbstractAdapter >> styleSheet [
 
 	^ self application styleSheet
 ]
 
-{ #category : #'model subscriptions' }
+{ #category : 'model subscriptions' }
 SpwAbstractAdapter >> subcribeTo: anAspect [
 
 	self model property: anAspect whenChangedDo: [ 
@@ -696,19 +698,19 @@ SpwAbstractAdapter >> subcribeTo: anAspect [
 			self perform: (anAspect , 'Changed') asSymbol ] ]
 ]
 
-{ #category : #'model subscriptions' }
+{ #category : 'model subscriptions' }
 SpwAbstractAdapter >> subcribeToAll: aspects [
 
 	aspects do: [ :each | self subcribeTo: each ]
 ]
 
-{ #category : #'model subscriptions' }
+{ #category : 'model subscriptions' }
 SpwAbstractAdapter >> subcribeToModel [
 
 	self subcribeToAll: #( visible )
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> takeKeyboardFocus [
 
 	| msg |
@@ -717,7 +719,7 @@ SpwAbstractAdapter >> takeKeyboardFocus [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 SpwAbstractAdapter >> transferFor: passenger from: source [
 
 	^ SpTransferPresenter new
@@ -726,7 +728,7 @@ SpwAbstractAdapter >> transferFor: passenger from: source [
 		yourself
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractAdapter >> type: aString [
 
 	aString do: [ :each | 
@@ -738,7 +740,7 @@ SpwAbstractAdapter >> type: aString [
 			option: false ]
 ]
 
-{ #category : #releasing }
+{ #category : 'releasing' }
 SpwAbstractAdapter >> unsubscribe [
 
 	super unsubscribe.
@@ -749,31 +751,31 @@ SpwAbstractAdapter >> unsubscribe [
 		unsubscribe: self
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> useProportionalLayout [
 
 	self widgetDo: [ :w | w changeProportionalLayout ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> vRigid [
 	
 	self widgetDo: [ :w | w vResizing: #rigid ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> vShrinkWrap [
 	
 	self widgetDo: [ :w | w vResizing: #shrinkWrap ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> vSpaceFill [
 	
 	self widgetDo: [ :w | w vResizing: #spaceFill ]
 ]
 
-{ #category : #'presenter events' }
+{ #category : 'presenter events' }
 SpwAbstractAdapter >> visibleChanged [
 
 	| msg |
@@ -783,21 +785,21 @@ SpwAbstractAdapter >> visibleChanged [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractAdapter >> webSocketSession [
 
 	^ CurrentWebSocketSession value ifNil: [
 		  self owner root adapter webSocketSession ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwAbstractAdapter >> when: anAnnouncement do: aBlock [
 
 	self widgetDo: [ :w | w announcer
 		when: anAnnouncement do: aBlock ]
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwAbstractAdapter >> widgetEventReceiver [
 	
 	^ self eventHandlerReceiver: widget

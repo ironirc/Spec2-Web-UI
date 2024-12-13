@@ -1,6 +1,6 @@
 Class {
-	#name : #'SpwBox_A',
-	#superclass : #'SpwLayout_A',
+	#name : 'SpwBox_A',
+	#superclass : 'SpwLayout_A',
 	#instVars : [
 		'startPanel',
 		'endPanel'
@@ -8,29 +8,31 @@ Class {
 	#classVars : [
 		'Experimental'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Layout'
+	#category : 'Spec2-Web-UI-Adapters-Layout',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Layout'
 }
 
-{ #category : #'experiment-toggle' }
+{ #category : 'experiment-toggle' }
 SpwBox_A class >> useExperimentalWhile: aBlock [
 
 	Experimental := true.
 	aBlock ensure: [ Experimental := false ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwBox_A >> add: aPresenter [
  
 	self add: aPresenter constraints: SpBoxConstraints new
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 SpwBox_A >> add: aPresenter constraints: constraints [
 
 	super add: aPresenter constraints: constraints
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> addConstraints: constraints toChild: childMorph [
 	"Adds constraits by child"
 	| theMorph |
@@ -60,7 +62,7 @@ SpwBox_A >> addConstraints: constraints toChild: childMorph [
 	^ theMorph 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> addHorizontalPadding: aNumber toMorph: aMorph [
 
 	^ self newWrapMorph
@@ -78,7 +80,7 @@ SpwBox_A >> addHorizontalPadding: aNumber toMorph: aMorph [
 		  yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> addPadding: aNumber toMorph: aMorph [
 	
 	aNumber = 0 ifTrue: [ ^ aMorph ].
@@ -89,7 +91,7 @@ SpwBox_A >> addPadding: aNumber toMorph: aMorph [
 		into: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> addVerticalPadding: aNumber toMorph: aMorph [
 
 	^ self newWrapMorph
@@ -107,7 +109,7 @@ SpwBox_A >> addVerticalPadding: aNumber toMorph: aMorph [
 		  yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> applyAlignmentTo: aWidget [
 
 	layout isVertical
@@ -131,7 +133,7 @@ SpwBox_A >> applyAlignmentTo: aWidget [
 	^ aWidget
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> applyAlignmentToChild: aWidget [
 
 	layout vAlign 
@@ -141,7 +143,7 @@ SpwBox_A >> applyAlignmentToChild: aWidget [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> basicAdd: aPresenter constraints: constraints to: aPanel [
 
 	| childMorph msg |
@@ -164,19 +166,19 @@ SpwBox_A >> basicAdd: aPresenter constraints: constraints to: aPanel [
 	^ childMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBox_A >> children [
 
 	^ startPanel submorphs, endPanel submorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBox_A >> childrenWidgets [
 	
 	^ self children
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwBox_A >> layout: aLayout [
 
 	layout := aLayout.
@@ -204,7 +206,7 @@ SpwBox_A >> layout: aLayout [
 	super layout: aLayout
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwBox_A >> newHorizontal [
 
 	^ self newPanelWith: [ :msg | 
@@ -219,7 +221,7 @@ SpwBox_A >> newHorizontal [
 		  msg addStyle: 'height' value: '100%' ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwBox_A >> newPanelLayout [
 
 	"^ SpMorphicBoxLayout new
@@ -236,7 +238,7 @@ SpwBox_A >> newPanelLayout [
 	
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwBox_A >> newVertical [
 
 	^ self newPanelWith: [ :msg | 
@@ -250,7 +252,7 @@ SpwBox_A >> newVertical [
 		  msg addStyle: 'height' value: '100%' ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwBox_A >> newWrapMorph [
 
 	"^ Morph new
@@ -260,7 +262,7 @@ SpwBox_A >> newWrapMorph [
 		self halt.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBox_A >> remove: aPresenter [
 
 	| morph |
@@ -271,7 +273,7 @@ SpwBox_A >> remove: aPresenter [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBox_A >> removeAll [
 
 	startPanel removeAllMorphs.
@@ -279,14 +281,14 @@ SpwBox_A >> removeAll [
 	self verifyBoxExtent
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwBox_A >> removeSubWidgets [
 
 	startPanel removeAllMorphs.
 	endPanel removeAllMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBox_A >> replace: aPresenter with: otherPresenter [
 
 	| panel oldMorph newMorph |	
@@ -302,7 +304,7 @@ SpwBox_A >> replace: aPresenter with: otherPresenter [
 	panel replaceSubmorph: oldMorph by: newMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBox_A >> replace: aPresenter with: otherPresenter withConstraints: constraints [
 
 	| panel oldMorph newMorph |	
@@ -318,21 +320,21 @@ SpwBox_A >> replace: aPresenter with: otherPresenter withConstraints: constraint
 	panel replaceSubmorph: oldMorph by: newMorph
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwBox_A >> updateSpacing [
 
 	{ startPanel. endPanel } 
 			do: [ :each | each cellInset: layout spacing ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> verifyBoxExtent [
 
 	(startPanel hasSubmorphs not and: [ endPanel hasSubmorphs not ])
 		ifTrue: [ widget extent: 0@0 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwBox_A >> verifyBoxExtentOf: aPanel withChild: childMorph [
 	"| width height |
 

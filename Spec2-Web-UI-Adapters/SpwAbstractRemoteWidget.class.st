@@ -6,40 +6,42 @@ I accomodate existing tests (and maybe others), that need to access widget prope
 
 "
 Class {
-	#name : #SpwAbstractRemoteWidget,
-	#superclass : #Object,
+	#name : 'SpwAbstractRemoteWidget',
+	#superclass : 'Object',
 	#instVars : [
 		'id',
 		'adaptor'
 	],
-	#category : #'Spec2-Web-UI-Adapters-RemoteWidget'
+	#category : 'Spec2-Web-UI-Adapters-RemoteWidget',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'RemoteWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractRemoteWidget >> adaptor [
 
 	^ adaptor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractRemoteWidget >> adaptor: anObject [
 
 	adaptor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractRemoteWidget >> id [
 
 	^ id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractRemoteWidget >> id: anObject [
 
 	id := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwAbstractRemoteWidget >> isVisible [
 
 	| msg envelope |
@@ -50,12 +52,12 @@ SpwAbstractRemoteWidget >> isVisible [
 	^ envelope msg results first value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractRemoteWidget >> model [
 	^self adaptor model
 ]
 
-{ #category : #websocket }
+{ #category : 'websocket' }
 SpwAbstractRemoteWidget >> sendMessageToClient: msg [
 
 	^self adaptor sendMessageToClient: msg

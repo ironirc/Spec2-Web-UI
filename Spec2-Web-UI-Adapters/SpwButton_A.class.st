@@ -1,20 +1,22 @@
 Class {
-	#name : #'SpwButton_A',
-	#superclass : #SpwAbstractAdapter,
+	#name : 'SpwButton_A',
+	#superclass : 'SpwAbstractAdapter',
 	#instVars : [
 		'subMenuWidget',
 		'styleName'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Adaptors'
+	#category : 'Spec2-Web-UI-Adapters-Adaptors',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Adaptors'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 SpwButton_A class >> remoteWidgetClass [ 
 
 	^SpwButton_RW
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwButton_A >> action [
 
 	self showSubMenuIfPresent.
@@ -23,13 +25,13 @@ SpwButton_A >> action [
 	self model performAction.
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SpwButton_A >> askBeforeChanging [
 
 	^ self model askBeforeChanging
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwButton_A >> buildLabel: text withIcon: icon [
 	| iconLabel |
 
@@ -48,7 +50,7 @@ SpwButton_A >> buildLabel: text withIcon: icon [
 	^ iconLabel
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwButton_A >> buildWidget [
 
 	| rw |
@@ -73,13 +75,13 @@ SpwButton_A >> buildWidget [
 	^ rw
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwButton_A >> clicked [
 
 	self sendClickEvent 
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwButton_A >> colorChanged [
 
 	| msg |
@@ -91,63 +93,63 @@ SpwButton_A >> colorChanged [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #'menus support' }
+{ #category : 'menus support' }
 SpwButton_A >> deleteIfPopUp: evt [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_A >> enabled: aBoolean [
 
 	super enabled: aBoolean.
 	self widgetDo: [ :w | w label: self label ]
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwButton_A >> font [
 
 	^ self model font
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwButton_A >> getHelpText [
 
 	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwButton_A >> getLabelText [
 
 	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SpwButton_A >> handleClick: e [
 
 
 	self model performAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_A >> helpText [
 
 	^ self widget helpText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_A >> icon [
 
 	^ widget icon
 ]
 
-{ #category : #'menus support' }
+{ #category : 'menus support' }
 SpwButton_A >> isSelected: aBooolean [
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwButton_A >> keyStroke: anEvent fromMorph: aMorph [
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwButton_A >> label [
 	self halt.
 	^ self 
@@ -155,7 +157,7 @@ SpwButton_A >> label [
 		withIcon: self presenter icon
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwButton_A >> labelChanged [
 
 
@@ -163,7 +165,7 @@ SpwButton_A >> labelChanged [
 
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwButton_A >> menu: aMenu [
 
 	| menuPresenter |
@@ -174,7 +176,7 @@ SpwButton_A >> menu: aMenu [
 		  during: [ menuPresenter build ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwButton_A >> newButton [
 
 	"Ivo Do we really need SpjButton? Isn't adapter enough?"
@@ -188,7 +190,7 @@ self halt.
 		  menu: #menu:"
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpwButton_A >> setWidgetColor: button [
 
 	| normalColorBlock clickedColorBlock |
@@ -206,7 +208,7 @@ SpwButton_A >> setWidgetColor: button [
 							yourself)
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwButton_A >> showSubMenu: aMenu [
 
 	aMenu menuGroups ifNil: [ ^ self ].
@@ -224,7 +226,7 @@ SpwButton_A >> showSubMenu: aMenu [
 	subMenuWidget popUpOwner: self
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwButton_A >> showSubMenuIfPresent [
 
 	self model contextMenu ifNil: [ ^ self ].
@@ -232,32 +234,32 @@ SpwButton_A >> showSubMenuIfPresent [
 	
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 SpwButton_A >> state [
 
 	^ self model state
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_A >> styleName [
 
 	^ styleName ifNil: [ super styleName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_A >> styleName: aString [ 
 
 	styleName := aString
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwButton_A >> subcribeToModel [
 	"how else to hook up to all possible change events of the presenter?"
 	super subcribeToModel.
 	self subcribeToAll:  #(color label)
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpwButton_A >> updateMenu [	
 	"There is no need to updateMenu here because it will be resolved at #menu:"
 ]

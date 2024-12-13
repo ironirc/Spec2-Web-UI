@@ -1,1 +1,1 @@
-Package { #name : #'Spec2-Web-UI' }
+Package { #name : 'Spec2-Web-UI' }

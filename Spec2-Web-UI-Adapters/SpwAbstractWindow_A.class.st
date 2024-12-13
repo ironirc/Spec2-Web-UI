@@ -1,22 +1,24 @@
 Class {
-	#name : #'SpwAbstractWindow_A',
-	#superclass : #SpwAbstractAdapter,
+	#name : 'SpwAbstractWindow_A',
+	#superclass : 'SpwAbstractAdapter',
 	#instVars : [
 		'toolbarMorph',
 		'menuMorph',
 		'webSocketSession',
 		'widgetRegistry'
 	],
-	#category : #'Spec2-Web-UI-Adapters-Adaptors'
+	#category : 'Spec2-Web-UI-Adapters-Adaptors',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Adaptors'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwAbstractWindow_A class >> isAbstract [ 
 
 	^self == SpwAbstractWindow_A
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> adapt: aPresenter [
 
 	self webSocketSession ifNil: [self openNewBrowserWindow].
@@ -26,7 +28,7 @@ SpwAbstractWindow_A >> adapt: aPresenter [
 	self registerWidget: self widget.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> add: containerMorph toWindow: aSpecWindow [
 
 	"aSpecWindow 
@@ -40,7 +42,7 @@ SpwAbstractWindow_A >> add: containerMorph toWindow: aSpecWindow [
 	self sendMessageToClient: msg.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> addContent: aMorph toWindow: aSpecWindow [
 	| containerMorph msg |
 	
@@ -70,7 +72,7 @@ SpwAbstractWindow_A >> addContent: aMorph toWindow: aSpecWindow [
 	"aSpecWindow children add: containerMorph"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> addMenuTo: aMorph [
 	
 	menuMorph := self model menu build.
@@ -80,7 +82,7 @@ SpwAbstractWindow_A >> addMenuTo: aMorph [
 		vResizing: #rigid
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> addStatusBarTo: aMorph [
 
 	| statusBarMorph |
@@ -91,7 +93,7 @@ SpwAbstractWindow_A >> addStatusBarTo: aMorph [
 		vResizing: #rigid
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> newContainerMorph [
 
 	"	^ Morph new
@@ -116,7 +118,7 @@ SpwAbstractWindow_A >> newContainerMorph [
 	^ rw
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> openNewBrowserWindow [
 
 	CurrentWebSocketSession value:
@@ -125,13 +127,13 @@ SpwAbstractWindow_A >> openNewBrowserWindow [
 	self webSocketSession: CurrentWebSocketSession value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> registerWidget: w [
 
 	self widgetRegistry at: w id put: w
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwAbstractWindow_A >> setToolbarTo: aMorph [
 	| newToolbarMorph toolbarPresenter |
 	
@@ -161,19 +163,19 @@ SpwAbstractWindow_A >> setToolbarTo: aMorph [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractWindow_A >> webSocketSession [
 
 	^webSocketSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractWindow_A >> webSocketSession: anObject [
 
 	webSocketSession := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwAbstractWindow_A >> widgetRegistry [
 	widgetRegistry ifNil: [ widgetRegistry := Dictionary new ].
 	^ widgetRegistry

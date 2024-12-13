@@ -1,6 +1,6 @@
 Class {
-	#name : #SpwClientApp,
-	#superclass : #PjDomController,
+	#name : 'SpwClientApp',
+	#superclass : 'PjDomController',
 	#traits : 'PhxPjPromiseTrait + PhxPjLoggingTrait',
 	#classTraits : 'PhxPjPromiseTrait classTrait + PhxPjLoggingTrait classTrait',
 	#instVars : [
@@ -13,10 +13,12 @@ Class {
 		'current',
 		'initialScript'
 	],
-	#category : #'Spec2-Web-UI-client'
+	#category : 'Spec2-Web-UI-client',
+	#package : 'Spec2-Web-UI',
+	#tag : 'client'
 }
 
-{ #category : #css }
+{ #category : 'css' }
 SpwClientApp class >> addCssReset [
 
 	<phxCss>
@@ -108,27 +110,27 @@ select {
 }'
 ]
 
-{ #category : #css }
+{ #category : 'css' }
 SpwClientApp class >> addCssSnackBar [
 
 	<phxCss>
 	self appendStyleElementToHeadWith: self snackBarCss
 ]
 
-{ #category : #css }
+{ #category : 'css' }
 SpwClientApp class >> addJsSnackBar [
 
 	
-	global eval:  self snackBarJs 
+	globalThis eval:  self snackBarJs 
 	
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientApp class >> afterExportApp [
 ]
 
-{ #category : #pharojs }
+{ #category : 'pharojs' }
 SpwClientApp class >> appClasses [
 
 	<pharoJsSkip>
@@ -139,7 +141,7 @@ SpwClientApp class >> appClasses [
 		  SpwImage }
 ]
 
-{ #category : #pharojs }
+{ #category : 'pharojs' }
 SpwClientApp class >> appLaunchBlock [
 
 	| appClass |
@@ -147,13 +149,13 @@ SpwClientApp class >> appLaunchBlock [
 	^ [ appClass yourself ] asClosedBlock
 ]
 
-{ #category : #pharojs }
+{ #category : 'pharojs' }
 SpwClientApp class >> appPackages [
 	<pharoJsSkip>
 	^ #()
 ]
 
-{ #category : #css }
+{ #category : 'css' }
 SpwClientApp class >> appendStyleElementToHeadWith: aString [
 	| style |
 	style := self createElement: 'style'.
@@ -162,16 +164,16 @@ SpwClientApp class >> appendStyleElementToHeadWith: aString [
 	^ style
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SpwClientApp class >> applicationName [
 	^'spec'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientApp class >> beforeExportApp [
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientApp class >> boot [
 
 	window addEventListener: #load block: [ 
@@ -184,57 +186,72 @@ SpwClientApp class >> boot [
 			self current messenger setupConnectionWithServer ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwClientApp class >> clientId [
 
 	^ PhxBrowserPersistentClientId value
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpwClientApp class >> current [
 	current ifNil: [ current := self new ].
 	^current
 ]
 
-{ #category : #server }
+{ #category : 'server' }
 SpwClientApp class >> currentUrl [
 
 	<pharoJsSkip>
 	^ String streamContents: [ :ws |
-		  ws << 'http://localhost:' << ZnServer default port printString << self httpPath ].
+		  ws << 'http://localhost:' << self port printString << self httpPath ].
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpwClientApp class >> ensureRegisteredAtPjServer [
 
 	<pharoJsSkip>
 	<script>
-	[ PhxPjServer registerApplication: self ]
-		on: Error
-		do: [ :ex |
-			PhxPjServer startDefaultZnServer.
-			PhxPjServer registerApplication: self ]
+	| srv deleg httpPath |
+	srv := PhxPjServer startServerOn: self port.
+	deleg := srv delegate.
+	httpPath := self applicationName.
+	deleg map: httpPath to: [ :request :response |
+		response entity: (ZnEntity html: self htmlPageWithInitialScript) ].
+	deleg map: httpPath , '.js' to: [ :request :response |
+		response entity: (ZnEntity text: self initialScript) ].
+	deleg
+		map: httpPath , '-ws'
+		to:
+		(ZnWebSocketDelegate map: '/' to: self newServerWebSocketHandler).
+
+
+	deleg map: 'files' to: (ZnStaticFileServerDelegate new
+			 directory:
+				 PhxGitBridge root / 'Phx-Pj-Web-Components-Reactive-resources';
+			 mimeTypeExpirations:
+				 ZnStaticFileServerDelegate defaultMimeTypeExpirations;
+			 yourself)
 ]
 
-{ #category : #server }
+{ #category : 'server' }
 SpwClientApp class >> exporterClass [
 	<pharoJsSkip>
 	^ PjExporter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientApp class >> handleSystemAnnouncement: ann [
 	<pharoJsSkip>
 	initialScript := nil
 ]
 
-{ #category : #pharojs }
+{ #category : 'pharojs' }
 SpwClientApp class >> headerLine [
 	^ nil
 ]
 
-{ #category : #server }
+{ #category : 'server' }
 SpwClientApp class >> htmlPageWithInitialScript [
 	<pharoJsSkip>
 	"self incrementalExporter reset."
@@ -242,7 +259,7 @@ SpwClientApp class >> htmlPageWithInitialScript [
 	^ self htmlPageWithJsScript:  nil 
 ]
 
-{ #category : #pharojs }
+{ #category : 'pharojs' }
 SpwClientApp class >> htmlPageWithJsScript: aScript [
 	<pharoJsSkip>
 	^ String streamContents: [ :ws | 
@@ -269,12 +286,12 @@ SpwClientApp class >> htmlPageWithJsScript: aScript [
 </html>' ]
 ]
 
-{ #category : #server }
+{ #category : 'server' }
 SpwClientApp class >> httpPath [ 
 	^'/' , self applicationName
 ]
 
-{ #category : #server }
+{ #category : 'server' }
 SpwClientApp class >> initialScript [
 <script>
 	<pharoJsSkip>
@@ -284,13 +301,13 @@ SpwClientApp class >> initialScript [
 	^ initialScript
 ]
 
-{ #category : #server }
+{ #category : 'server' }
 SpwClientApp class >> newAppContext [
 	<pharoJsSkip>
 	^nil
 ]
 
-{ #category : #server }
+{ #category : 'server' }
 SpwClientApp class >> newServerWebSocketHandler [
 
 	<pharoJsSkip>
@@ -301,7 +318,7 @@ SpwClientApp class >> newServerWebSocketHandler [
 	^ wsh
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpwClientApp class >> openBrowserWithStartId: startId [
 
 	WebBrowser
@@ -310,23 +327,29 @@ SpwClientApp class >> openBrowserWithStartId: startId [
 		inBackground: false
 ]
 
-{ #category : #pharojs }
+{ #category : 'pharojs' }
 SpwClientApp class >> pharoJsSelectorPrefix [
 	^ 'pj_'
 ]
 
-{ #category : #pharojs }
+{ #category : 'pharojs' }
 SpwClientApp class >> polyfill: aClass withTranspiler: aPjDependentTranspiler unlessIn: aCollection [ 
 	
 ]
 
-{ #category : #private }
+{ #category : 'instance creation' }
+SpwClientApp class >> port [
+
+	^ 11011
+]
+
+{ #category : 'private' }
 SpwClientApp class >> promiseAllExternalResourcesLoaded [
 
 	^ self promiseResolve: nil
 ]
 
-{ #category : #css }
+{ #category : 'css' }
 SpwClientApp class >> promiseCssReset [
 
 	^self promise: [ :resolve :reject | 
@@ -334,13 +357,13 @@ SpwClientApp class >> promiseCssReset [
 		resolve value ]
 ]
 
-{ #category : #pharojs }
+{ #category : 'pharojs' }
 SpwClientApp class >> setupCode [
 	<pharoJsSkip>
 	^ '	var global=global ?? this'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientApp class >> showSplashScreen [
 
 	| x |
@@ -348,14 +371,14 @@ SpwClientApp class >> showSplashScreen [
 	x div: self applicationName , ' is loading...'
 ]
 
-{ #category : #css }
+{ #category : 'css' }
 SpwClientApp class >> snackBarCss [
 
 ^'.js-snackbar-container{position:absolute;bottom:0;right:0;display:flex;flex-direction:column;align-items:flex-end;max-width:100%;z-index:999;overflow:hidden}.js-snackbar-container--top-left{bottom:unset;right:unset;top:0;left:0}.js-snackbar-container--top-center{top:0;bottom:unset;left:50%;right:unset;transform:translateX(-50%)}.js-snackbar-container--top-right{bottom:unset;right:0;left:unset;top:0}.js-snackbar-container--bottom-left{bottom:0;right:unset;left:0;top:unset}.js-snackbar-container--bottom-center{bottom:0;right:unset;left:50%;top:unset;transform:translateX(-50%)}.js-snackbar-container--fixed{position:fixed}.js-snackbar-container *{box-sizing:border-box}.js-snackbar__wrapper{overflow:hidden;height:auto;margin:0;border-radius:3px;display:flex;min-width:auto;transition-property:all;transition-timing-function:ease;transition-duration:.5s}.js-snackbar{display:inline-flex;box-sizing:border-box;border-radius:3px;color:#eee;font-size:16px;background-color:#262626;vertical-align:bottom;box-shadow:0 0 4px 0 #000;margin:0 10px;flex-grow:1}.js-snackbar__close,.js-snackbar__message-wrapper,.js-snackbar__status{position:relative}.js-snackbar__message-wrapper{flex:1;padding:12px}.js-snackbar__message{display:inline-block}.js-snackbar__status{display:none;min-width:15px;margin-right:5px;border-radius:3px 0 0 3px;background-color:transparent}.js-snackbar__status.js-snackbar--danger,.js-snackbar__status.js-snackbar--info,.js-snackbar__status.js-snackbar--success,.js-snackbar__status.js-snackbar--warning{display:flex;justify-content:center;align-items:center}.js-snackbar__status.js-snackbar--success{background-color:#4caf50}.js-snackbar__status.js-snackbar--warning{background-color:#ff9800}.js-snackbar__status.js-snackbar--danger{background-color:#b90909}.js-snackbar__status.js-snackbar--info{background-color:#2196f3}.js-snackbar__icon{display:flex;justify-content:center;align-items:center;border:2px solid #fff;font-weight:700;border-radius:20px;height:20px;width:20px;text-align:center;margin:0 5px;font-family:monospace}.js-snackbar__action{display:flex;align-items:center;padding:0 10px;color:#838cff;cursor:pointer}.js-snackbar__action:hover{background-color:#333}.js-snackbar__close{cursor:pointer;display:flex;align-items:center;padding:0 10px;user-select:none;color:#bbb}.js-snackbar__close:hover{background-color:#444}
 /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9qcy1zbmFja2Jhci5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsdUJBQ0ksaUJBQWtCLENBQ2xCLFFBQVMsQ0FDVCxPQUFRLENBQ1IsWUFBYSxDQUNiLHFCQUFzQixDQUN0QixvQkFBcUIsQ0FDckIsY0FBZSxDQUNmLFdBQVksQ0FDWixlQUNKLENBRUEsaUNBQ0ksWUFBYSxDQUNiLFdBQVksQ0FDWixLQUFNLENBQ04sTUFDSixDQUVBLG1DQUNJLEtBQU0sQ0FDTixZQUFhLENBQ2IsUUFBUyxDQUNULFdBQVksQ0FDWiwwQkFDSixDQUVBLGtDQUNJLFlBQWEsQ0FDYixPQUFRLENBQ1IsVUFBVyxDQUNYLEtBQ0osQ0FFQSxvQ0FDSSxRQUFTLENBQ1QsV0FBWSxDQUNaLE1BQU8sQ0FDUCxTQUNKLENBRUEsc0NBQ0ksUUFBUyxDQUNULFdBQVksQ0FDWixRQUFTLENBQ1QsU0FBVSxDQUNWLDBCQUNKLENBRUEsOEJBQ0ksY0FDSixDQUVBLHlCQUNJLHFCQUNKLENBRUEsc0JBQ0ksZUFBZ0IsQ0FDaEIsV0FBWSxDQUNaLFFBQVMsQ0FDVCxpQkFBa0IsQ0FDbEIsWUFBYSxDQUNiLGNBQWUsQ0FDZix1QkFBd0IsQ0FDeEIsK0JBQWdDLENBQ2hDLHVCQUNKLENBRUEsYUFDSSxtQkFBb0IsQ0FDcEIscUJBQXNCLENBQ3RCLGlCQUFrQixDQUNsQixVQUFXLENBQ1gsY0FBZSxDQUNmLHdCQUF5QixDQUN6QixxQkFBc0IsQ0FDdEIseUJBQTJCLENBQzNCLGFBQWMsQ0FDZCxXQUNKLENBRUEsdUVBR0ksaUJBQ0osQ0FFQSw4QkFDSSxNQUFPLENBQ1AsWUFDSixDQUVBLHNCQUNJLG9CQUNKLENBRUEscUJBQ0ksWUFBYSxDQUNiLGNBQWUsQ0FDZixnQkFBaUIsQ0FDakIseUJBQTBCLENBQzFCLDRCQUNKLENBRUMsb0tBSUcsWUFBYSxDQUNiLHNCQUF1QixDQUN2QixrQkFDSixDQUVBLDBDQUNJLHdCQUNKLENBRUEsMENBQ0ksd0JBQ0osQ0FFQyx5Q0FDRyx3QkFDSixDQUVDLHVDQUNHLHdCQUNKLENBRUEsbUJBQ0ksWUFBYSxDQUNiLHNCQUF1QixDQUN2QixrQkFBbUIsQ0FDbkIscUJBQXVCLENBQ3ZCLGVBQWlCLENBQ2pCLGtCQUFtQixDQUNuQixXQUFZLENBQ1osVUFBVyxDQUNYLGlCQUFrQixDQUNsQixZQUFhLENBQ2IscUJBQ0osQ0FFQSxxQkFDSSxZQUFhLENBQ2Isa0JBQW1CLENBQ25CLGNBQWUsQ0FDZixhQUFjLENBQ2QsY0FDSixDQUVBLDJCQUNJLHFCQUNKLENBRUEsb0JBQ0ksY0FBZSxDQUNmLFlBQWEsQ0FDYixrQkFBbUIsQ0FDbkIsY0FBZSxDQUNmLGdCQUFpQixDQUNqQixVQUNKLENBRUEsMEJBQ0kscUJBQ0oiLCJmaWxlIjoianMtc25hY2tiYXIubWluLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5qcy1zbmFja2Jhci1jb250YWluZXIge1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgYm90dG9tOiAwO1xyXG4gICAgcmlnaHQ6IDA7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICAgIGFsaWduLWl0ZW1zOiBmbGV4LWVuZDtcclxuICAgIG1heC13aWR0aDogMTAwJTtcclxuICAgIHotaW5kZXg6IDk5OTtcclxuICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbn1cclxuXHJcbi5qcy1zbmFja2Jhci1jb250YWluZXItLXRvcC1sZWZ0IHtcclxuICAgIGJvdHRvbTogdW5zZXQ7XHJcbiAgICByaWdodDogdW5zZXQ7XHJcbiAgICB0b3A6IDA7XHJcbiAgICBsZWZ0OiAwO1xyXG59XHJcblxyXG4uanMtc25hY2tiYXItY29udGFpbmVyLS10b3AtY2VudGVyIHtcclxuICAgIHRvcDogMDtcclxuICAgIGJvdHRvbTogdW5zZXQ7XHJcbiAgICBsZWZ0OiA1MCU7XHJcbiAgICByaWdodDogdW5zZXQ7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoLTUwJSk7XHJcbn1cclxuXHJcbi5qcy1zbmFja2Jhci1jb250YWluZXItLXRvcC1yaWdodCB7XHJcbiAgICBib3R0b206IHVuc2V0O1xyXG4gICAgcmlnaHQ6IDA7XHJcbiAgICBsZWZ0OiB1bnNldDtcclxuICAgIHRvcDogMDtcclxufVxyXG5cclxuLmpzLXNuYWNrYmFyLWNvbnRhaW5lci0tYm90dG9tLWxlZnQge1xyXG4gICAgYm90dG9tOiAwO1xyXG4gICAgcmlnaHQ6IHVuc2V0O1xyXG4gICAgbGVmdDogMDtcclxuICAgIHRvcDogdW5zZXQ7XHJcbn1cclxuXHJcbi5qcy1zbmFja2Jhci1jb250YWluZXItLWJvdHRvbS1jZW50ZXIge1xyXG4gICAgYm90dG9tOiAwO1xyXG4gICAgcmlnaHQ6IHVuc2V0O1xyXG4gICAgbGVmdDogNTAlO1xyXG4gICAgdG9wOiB1bnNldDtcclxuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWCgtNTAlKTtcclxufVxyXG5cclxuLmpzLXNuYWNrYmFyLWNvbnRhaW5lci0tZml4ZWQge1xyXG4gICAgcG9zaXRpb246IGZpeGVkO1xyXG59XHJcblxyXG4uanMtc25hY2tiYXItY29udGFpbmVyICoge1xyXG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcclxufVxyXG5cclxuLmpzLXNuYWNrYmFyX193cmFwcGVyIHtcclxuICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICBoZWlnaHQ6IGF1dG87XHJcbiAgICBtYXJnaW46IDA7XHJcbiAgICBib3JkZXItcmFkaXVzOiAzcHg7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgbWluLXdpZHRoOiBhdXRvO1xyXG4gICAgdHJhbnNpdGlvbi1wcm9wZXJ0eTogYWxsO1xyXG4gICAgdHJhbnNpdGlvbi10aW1pbmctZnVuY3Rpb246IGVhc2U7XHJcbiAgICB0cmFuc2l0aW9uLWR1cmF0aW9uOiAwLjVzO1xyXG59XHJcblxyXG4uanMtc25hY2tiYXIge1xyXG4gICAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbiAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xyXG4gICAgYm9yZGVyLXJhZGl1czogM3B4O1xyXG4gICAgY29sb3I6ICNlZWU7XHJcbiAgICBmb250LXNpemU6IDE2cHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjYyNjI2O1xyXG4gICAgdmVydGljYWwtYWxpZ246IGJvdHRvbTtcclxuICAgIGJveC1zaGFkb3c6IDAgMCA0cHggMCBibGFjaztcclxuICAgIG1hcmdpbjogMCAxMHB4O1xyXG4gICAgZmxleC1ncm93OiAxO1xyXG59XHJcblxyXG4uanMtc25hY2tiYXJfX2Nsb3NlLFxyXG4uanMtc25hY2tiYXJfX3N0YXR1cyxcclxuLmpzLXNuYWNrYmFyX19tZXNzYWdlLXdyYXBwZXIge1xyXG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG59XHJcblxyXG4uanMtc25hY2tiYXJfX21lc3NhZ2Utd3JhcHBlciB7XHJcbiAgICBmbGV4OiAxO1xyXG4gICAgcGFkZGluZzogMTJweDtcclxufVxyXG5cclxuLmpzLXNuYWNrYmFyX19tZXNzYWdlIHtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxufVxyXG5cclxuLmpzLXNuYWNrYmFyX19zdGF0dXMge1xyXG4gICAgZGlzcGxheTogbm9uZTtcclxuICAgIG1pbi13aWR0aDogMTVweDtcclxuICAgIG1hcmdpbi1yaWdodDogNXB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogM3B4IDAgMCAzcHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcclxufVxyXG5cclxuIC5qcy1zbmFja2Jhcl9fc3RhdHVzLmpzLXNuYWNrYmFyLS1zdWNjZXNzLFxyXG4gLmpzLXNuYWNrYmFyX19zdGF0dXMuanMtc25hY2tiYXItLXdhcm5pbmcsXHJcbiAuanMtc25hY2tiYXJfX3N0YXR1cy5qcy1zbmFja2Jhci0tZGFuZ2VyLFxyXG4gLmpzLXNuYWNrYmFyX19zdGF0dXMuanMtc25hY2tiYXItLWluZm8ge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5cclxuLmpzLXNuYWNrYmFyX19zdGF0dXMuanMtc25hY2tiYXItLXN1Y2Nlc3MgIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICM0Y2FmNTA7XHJcbn1cclxuXHJcbi5qcy1zbmFja2Jhcl9fc3RhdHVzLmpzLXNuYWNrYmFyLS13YXJuaW5nICB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmY5ODAwO1xyXG59XHJcblxyXG4gLmpzLXNuYWNrYmFyX19zdGF0dXMuanMtc25hY2tiYXItLWRhbmdlciB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjYjkwOTA5O1xyXG59XHJcblxyXG4gLmpzLXNuYWNrYmFyX19zdGF0dXMuanMtc25hY2tiYXItLWluZm8ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzIxOTZmMztcclxufVxyXG5cclxuLmpzLXNuYWNrYmFyX19pY29uIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBib3JkZXI6IDJweCBzb2xpZCB3aGl0ZTtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMjBweDtcclxuICAgIGhlaWdodDogMjBweDtcclxuICAgIHdpZHRoOiAyMHB4O1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgbWFyZ2luOiAwIDVweDtcclxuICAgIGZvbnQtZmFtaWx5OiBtb25vc3BhY2U7XHJcbn1cclxuXHJcbi5qcy1zbmFja2Jhcl9fYWN0aW9uIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgcGFkZGluZzogMCAxMHB4O1xyXG4gICAgY29sb3I6ICM4MzhjZmY7XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuXHJcbi5qcy1zbmFja2Jhcl9fYWN0aW9uOmhvdmVyIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICMzMzM7XHJcbn1cclxuXHJcbi5qcy1zbmFja2Jhcl9fY2xvc2Uge1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBwYWRkaW5nOiAwIDEwcHg7XHJcbiAgICB1c2VyLXNlbGVjdDogbm9uZTtcclxuICAgIGNvbG9yOiAjQkJCO1xyXG59XHJcblxyXG4uanMtc25hY2tiYXJfX2Nsb3NlOmhvdmVyIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICM0NDQ7XHJcbn0iXX0= */'
 ]
 
-{ #category : #css }
+{ #category : 'css' }
 SpwClientApp class >> snackBarJs [
 
 ^'function SnackBar(userOptions){var _This=this;var _Interval;var _Element;var _Container;var _Message;var _MessageWrapper;function _create(){_applyUserOptions();_setContainer();_applyPositionClasses();_Element=_createMessage();_Container.appendChild(_Element);if(_Options.timeout!==false&&_Options.timeout>0){_Interval=setTimeout(_This.Close,_Options.timeout)}}function _applyUserOptions(){_Options={message:userOptions?.message??"Operation performed successfully.",dismissible:userOptions?.dismissible??true,timeout:userOptions?.timeout??5000,status:userOptions?.status?userOptions.status.toLowerCase().trim():"",actions:userOptions?.actions??[],fixed:userOptions?.fixed??false,position:userOptions?.position??"br",container:userOptions?.container??document.body,width:userOptions?.width,speed:userOptions?.speed,icon:userOptions?.icon}}function _setContainer(){var target=getOrFindContainer();if(target===undefined){console.warn("SnackBar: Could not find target container "+_Options.container);target=document.body;// default to the body as the container
@@ -364,7 +387,7 @@ var snackbarTransitions=_Element.style.transition;_Element.style.transition="";r
 _Element.style.opacity=1;_Element.style.marginTop="0px";_Element.style.marginBottom="0px";_Element.style.transition=snackbarTransitions;requestAnimationFrame(function(){_Element.style.height="0px";_Element.style.opacity=0})});setTimeout(function(){_Container.removeChild(_Element)},1000)};_create();_This.Open()}if(typeof module!=="undefined"){module.exports=SnackBar}'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientApp class >> subscribeToSystemAnnouncer [
 
 	<script>
@@ -377,7 +400,7 @@ SpwClientApp class >> subscribeToSystemAnnouncer [
 		to: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientApp class >> unsubscribeFromSystemAnnouncer [
 
 	<script>
@@ -385,18 +408,18 @@ SpwClientApp class >> unsubscribeFromSystemAnnouncer [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwClientApp class >> webSocketPath [ 
 	^self httpPath , '-ws'
 ]
 
-{ #category : #'accessing derived' }
+{ #category : 'accessing derived' }
 SpwClientApp >> dialogManager [
 
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwClientApp >> initialize [
 
 	super initialize.
@@ -404,7 +427,7 @@ SpwClientApp >> initialize [
 	nodeCache := Dictionary new
 ]
 
-{ #category : #components }
+{ #category : 'components' }
 SpwClientApp >> messenger [
 
 	messenger ifNil: [
@@ -422,25 +445,25 @@ SpwClientApp >> messenger [
 	^ messenger
 ]
 
-{ #category : #'accessing derived' }
+{ #category : 'accessing derived' }
 SpwClientApp >> nodeAt: key put: node [
 
 	^ nodeCache at: key put: node
 ]
 
-{ #category : #'accessing derived' }
+{ #category : 'accessing derived' }
 SpwClientApp >> nodeCache [
 
 	^ nodeCache
 ]
 
-{ #category : #'accessing derived' }
+{ #category : 'accessing derived' }
 SpwClientApp >> nodeOrNilAt: key [
 
 	^ nodeCache at: key ifAbsent: [ nil ]
 ]
 
-{ #category : #components }
+{ #category : 'components' }
 SpwClientApp >> onWebSocketOpen: ev [
 
 	| msg |
@@ -452,49 +475,49 @@ SpwClientApp >> onWebSocketOpen: ev [
 			ifFalse: [ self snackBarError: rc msg message ] ]
 ]
 
-{ #category : #'accessing derived' }
+{ #category : 'accessing derived' }
 SpwClientApp >> removeKey: key [
 
 	nodeCache removeKey: key
 ]
 
-{ #category : #components }
+{ #category : 'components' }
 SpwClientApp >> snackBarError: msg [
 
 	self snackBarMessage: msg status: 'error'
 ]
 
-{ #category : #components }
+{ #category : 'components' }
 SpwClientApp >> snackBarMessage: msg [
 
 	self snackBarMessage: msg status: nil
 ]
 
-{ #category : #components }
+{ #category : 'components' }
 SpwClientApp >> snackBarMessage: msg status: status [
 
-	global SnackBar new: {
+	globalThis SnackBar new: {
 			('message' -> msg).
 			('position' -> 'bl').
 			('status' -> status) } asJsObject
 ]
 
-{ #category : #components }
+{ #category : 'components' }
 SpwClientApp >> snackBarSuccess: msg [
 
 	self snackBarMessage: msg status: 'success'
 ]
 
-{ #category : #'server messaging' }
+{ #category : 'server messaging' }
 SpwClientApp >> urlParameterStartId [ 
 
 	| url |
-	url := global URL new: document location.
+	url := globalThis URL new: document location.
 	^url searchParams get: 'startId'
 
 ]
 
-{ #category : #'server messaging' }
+{ #category : 'server messaging' }
 SpwClientApp >> webSocketUrl [
 	| protocol |
 	protocol := window location protocol = 'https:'

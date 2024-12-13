@@ -1,10 +1,12 @@
 Class {
-	#name : #'SpwMenu_RW',
-	#superclass : #SpwAbstractRemoteWidget,
-	#category : #'Spec2-Web-UI-Adapters-RemoteWidget'
+	#name : 'SpwMenu_RW',
+	#superclass : 'SpwAbstractRemoteWidget',
+	#category : 'Spec2-Web-UI-Adapters-RemoteWidget',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'RemoteWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenu_RW >> label [
 
 	| msg envelope |
@@ -15,7 +17,7 @@ SpwMenu_RW >> label [
 	^ envelope msg results first value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenu_RW >> sendCreateMessage [
 
 	| msg |

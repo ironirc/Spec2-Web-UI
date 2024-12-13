@@ -1,16 +1,18 @@
 Class {
-	#name : #'SpwMenu_A',
-	#superclass : #'SpwBaseMenu_A',
-	#category : #'Spec2-Web-UI-Adapters-Adaptors'
+	#name : 'SpwMenu_A',
+	#superclass : 'SpwBaseMenu_A',
+	#category : 'Spec2-Web-UI-Adapters-Adaptors',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'Adaptors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwMenu_A class >> remoteWidgetClass [ 
 
 	^SpwMenu_RW
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SpwMenu_A >> handleItemselect: e [
 
 	self model menuGroups do: [ :mg |
@@ -19,7 +21,7 @@ SpwMenu_A >> handleItemselect: e [
 				mi subMenu ifNotNil: [self launchSubMenuOnMenuItem: mi] ifNil: [ mi action value ] ] ] ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SpwMenu_A >> launchSubMenuOnMenuItem: mi [
 
 	| subMenuWidget msg |

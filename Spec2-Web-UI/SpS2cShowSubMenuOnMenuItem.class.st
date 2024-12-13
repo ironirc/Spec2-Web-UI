@@ -1,13 +1,15 @@
 Class {
-	#name : #SpS2cShowSubMenuOnMenuItem,
-	#superclass : #SpS2cMessageWithElementId,
+	#name : 'SpS2cShowSubMenuOnMenuItem',
+	#superclass : 'SpS2cMessageWithElementId',
 	#instVars : [
 		'targetId'
 	],
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowSubMenuOnMenuItem >> executeInResponseContext: rc [
 
 	| menuEl menuItemEl rect x |
@@ -31,7 +33,7 @@ SpS2cShowSubMenuOnMenuItem >> executeInResponseContext: rc [
 		menuItemEl subMenu: menuEl. ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowSubMenuOnMenuItem >> executeInResponseContext_ALT: rc [
 
 	| menuEl menuItemEl rect  mpu |
@@ -47,19 +49,19 @@ SpS2cShowSubMenuOnMenuItem >> executeInResponseContext_ALT: rc [
 	menuItemEl appendChild: mpu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowSubMenuOnMenuItem >> targetId [
 
 	^ targetId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowSubMenuOnMenuItem >> targetId: anObject [
 
 	targetId := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowSubMenuOnMenuItem >> tippyShowElement: el forRefElement: targetEl [
 
 	| tippy |
@@ -68,7 +70,7 @@ SpS2cShowSubMenuOnMenuItem >> tippyShowElement: el forRefElement: targetEl [
 		with: el
 		with: ' target:'
 		with: targetEl.
-	tippy := global tippy new: targetEl with: {
+	tippy := globalThis tippy new: targetEl with: {
 			         ('placement' -> 'auto-end').
 			         ('arrow' -> false).
 			         ('interactive' -> true).

@@ -1,17 +1,19 @@
 Class {
-	#name : #SpS2cElementRightClick,
-	#superclass : #SpS2cMessageWithElementId,
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#name : 'SpS2cElementRightClick',
+	#superclass : 'SpS2cMessageWithElementId',
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cElementRightClick >> executeInResponseContext: rc [
 
 	| listener rightClick |
 	listener := [ :event |
 	            rc sendResponseMessage: SpS2cSimpleResponse new ].
 	self element addEventListener: #contextmenu block: listener.
-	rightClick := global MouseEvent new: 'contextmenu' with: {
+	rightClick := globalThis MouseEvent new: 'contextmenu' with: {
 			              ('bubbles' -> true).
 			              ('cancelable' -> true).
 			              ('view' -> window).
@@ -21,8 +23,8 @@ SpS2cElementRightClick >> executeInResponseContext: rc [
 	self element removeEventListener: 'contextmenu' with: listener
 ]
 
-{ #category : #private }
-SpS2cElementRightClick >> expectsResponse [
+{ #category : 'private' }
+SpS2cElementRightClick >> expectsResponseFromClient [
 
 	^ true
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #'SpwButton_RW',
-	#superclass : #SpwAbstractRemoteWidget,
-	#category : #'Spec2-Web-UI-Adapters-RemoteWidget'
+	#name : 'SpwButton_RW',
+	#superclass : 'SpwAbstractRemoteWidget',
+	#category : 'Spec2-Web-UI-Adapters-RemoteWidget',
+	#package : 'Spec2-Web-UI-Adapters',
+	#tag : 'RemoteWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_RW >> helpText [
 
 	| msg envelope  |
@@ -15,7 +17,7 @@ SpwButton_RW >> helpText [
 	^ envelope msg results first value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_RW >> icon [
 
 	| msg envelope |
@@ -27,7 +29,7 @@ SpwButton_RW >> icon [
 		  SpwImageServerCache imageAtKey: spwImage cacheKey ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_RW >> label [
 
 	| msg envelope  |
@@ -38,7 +40,7 @@ SpwButton_RW >> label [
 	^ envelope msg results first value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_RW >> label: aLabel [
 
 	| msg |
@@ -48,7 +50,7 @@ SpwButton_RW >> label: aLabel [
 	self sendMessageToClient: msg
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwButton_RW >> sendCreateMessage [
 
 	| msg |

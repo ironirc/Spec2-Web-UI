@@ -1,14 +1,16 @@
 Class {
-	#name : #SpwClientStarter,
-	#superclass : #Object,
+	#name : 'SpwClientStarter',
+	#superclass : 'Object',
 	#classInstVars : [
 		'pendingBrowserSessions',
 		'monitor'
 	],
-	#category : #'Spec2-Web-UI-client'
+	#category : 'Spec2-Web-UI-client',
+	#package : 'Spec2-Web-UI',
+	#tag : 'client'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientStarter class >> addPendingBrowserSessionAt: aStartId [
 
 	| ps |
@@ -19,24 +21,24 @@ SpwClientStarter class >> addPendingBrowserSessionAt: aStartId [
 	self removeExpiredSessions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientStarter class >> monitor [
 	monitor ifNil: [ monitor := Monitor new ].
 	^ monitor
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 SpwClientStarter class >> openBrowserAndAwaitWebSocketSession [
 
 	^ self openBrowserAndAwaitWebsocketSessionForApp:
 		  SpwClientApp
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientStarter class >> openBrowserAndAwaitWebsocketSessionForApp: app [
 
 	| startId m pbs |
-	startId := UUIDGenerator next asString.
+	startId := UUID new asString.
 	m := self monitor.
 	m critical: [
 		self addPendingBrowserSessionAt: startId.
@@ -52,7 +54,7 @@ SpwClientStarter class >> openBrowserAndAwaitWebsocketSessionForApp: app [
 	^ pbs session
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientStarter class >> pendingBrowserSessionAt: aStartId [
 
 	self pendingBrowserSessions do: [ :pbs |
@@ -60,7 +62,7 @@ SpwClientStarter class >> pendingBrowserSessionAt: aStartId [
 	self error: 'there''s no pending session for given id'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientStarter class >> pendingBrowserSessions [
 
 	pendingBrowserSessions ifNil: [
@@ -68,21 +70,21 @@ SpwClientStarter class >> pendingBrowserSessions [
 	^ pendingBrowserSessions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientStarter class >> removeExpiredSessions [
 
 	pendingBrowserSessions := pendingBrowserSessions reject: [ :e |
 		                          e isExpired ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 SpwClientStarter class >> resetSessions [
 	"Should not be needed. Might be usefull during development"
 	<script>
 	pendingBrowserSessions := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwClientStarter class >> resolvePendingBrowserSessionAt: startId inRequestContext: aRequestContext [
 	self monitor critical: [
 		self pendingBrowserSessions

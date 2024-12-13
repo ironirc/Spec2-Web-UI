@@ -1,6 +1,6 @@
-Extension { #name : #SpIndexTableColumn }
+Extension { #name : 'SpIndexTableColumn' }
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpIndexTableColumn >> asTabulatorColumnWithIndex: i [
 
 	| col |
@@ -12,7 +12,7 @@ SpIndexTableColumn >> asTabulatorColumnWithIndex: i [
 	^col
 ]
 
-{ #category : #'*Spec2-Web-UI-Adapters' }
+{ #category : '*Spec2-Web-UI-Adapters' }
 SpIndexTableColumn >> getValueFor: anObject id: id tableAdaptor: tableAdaptor [
 	"id is just the index of the object in the original datasource collection of the presenter"
 	"in the future other possibilities might be usefull"
