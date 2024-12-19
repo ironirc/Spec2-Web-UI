@@ -1,15 +1,16 @@
 Class {
-	#name : #SpwDemoPresenter4ButtonWithHelpText,
-	#superclass : #SpPresenter,
+	#name : 'SpwDemoPresenter4ButtonWithHelpText',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'button1',
 		'label1',
 		'menu'
 	],
-	#category : #'Spec2-Web-UI-AdHoc'
+	#category : 'Spec2-Web-UI-AdHoc',
+	#package : 'Spec2-Web-UI-AdHoc'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 SpwDemoPresenter4ButtonWithHelpText class >> defaultLayout [
 
 	| main |
@@ -19,20 +20,20 @@ SpwDemoPresenter4ButtonWithHelpText class >> defaultLayout [
 	^ main
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter4ButtonWithHelpText >> button1Clicked [
 
 	self inspect.
 	"input adapter inspect"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter4ButtonWithHelpText >> connectPresenters [
 
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter4ButtonWithHelpText >> initializePresenters [
 
 	menu := self newMenu.
@@ -63,7 +64,7 @@ SpwDemoPresenter4ButtonWithHelpText >> initializePresenters [
 	label1 label: 'label1'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter4ButtonWithHelpText >> subMenu [
 
 	| aSubMenu |

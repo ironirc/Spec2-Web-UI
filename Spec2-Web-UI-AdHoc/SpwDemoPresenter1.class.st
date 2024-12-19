@@ -1,6 +1,6 @@
 Class {
-	#name : #SpwDemoPresenter1,
-	#superclass : #SpPresenter,
+	#name : 'SpwDemoPresenter1',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'button2',
 		'input1',
@@ -13,10 +13,11 @@ Class {
 		'numberInput1',
 		'numberInput2'
 	],
-	#category : #'Spec2-Web-UI-AdHoc'
+	#category : 'Spec2-Web-UI-AdHoc',
+	#package : 'Spec2-Web-UI-AdHoc'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 SpwDemoPresenter1 class >> defaultLayout [
 
 	| main row bottomRow tableControls |
@@ -42,14 +43,14 @@ SpwDemoPresenter1 class >> defaultLayout [
 	^ main
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> button1Clicked [
 
 	self inspect.
 	"input adapter inspect"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> button2Clicked [
 
 	"Color random ifNotNil: [ :clr |"
@@ -71,7 +72,7 @@ SpwDemoPresenter1 >> button2Clicked [
 	input2 color: Color random muchLighter 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> connectPresenters [
 
 	button1 action: [ self button1Clicked ].
@@ -84,7 +85,7 @@ SpwDemoPresenter1 >> connectPresenters [
 		self numberInput1ChangedToNumber: n ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> initializePresenters [
 
 	button1 := self newButton.
@@ -121,7 +122,7 @@ SpwDemoPresenter1 >> initializePresenters [
 		color: Color orange lighter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> initializeTable [
 
 	table := self newTable.
@@ -153,40 +154,40 @@ SpwDemoPresenter1 >> initializeTable [
 		beMultipleSelection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> input1SelectionChanged [
 	button2 label: input1 selectedText.
 
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> input1TextChangedTo: t [
 
 	input2 text: t.
 	"input2 takeKeyboardFocus "
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> input2TextChangedTo: t [
 
 	input1 text: t.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> numberInput1ChangedToNumber: n [
 
 	numberInput2 number: n squared
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> tableButton1Clicked [
 
 	table selectIndexes: ((1 to: 20) collect: [ :e | self tableData size atRandom ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter1 >> tableData [
 
 	tableData ifNil: [ tableData := Object withAllSubclasses first: 100 ].

@@ -1,14 +1,15 @@
 Class {
-	#name : #SpwDemoPresenter3Menu,
-	#superclass : #SpPresenter,
+	#name : 'SpwDemoPresenter3Menu',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'menu',
 		'label'
 	],
-	#category : #'Spec2-Web-UI-AdHoc'
+	#category : 'Spec2-Web-UI-AdHoc',
+	#package : 'Spec2-Web-UI-AdHoc'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 SpwDemoPresenter3Menu class >> defaultLayout [
 
 	| main  |
@@ -18,7 +19,7 @@ SpwDemoPresenter3Menu class >> defaultLayout [
 	^ main
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter3Menu >> initializePresenters [
 
 	menu := self newMenu.
@@ -40,7 +41,7 @@ SpwDemoPresenter3Menu >> initializePresenters [
 	label label: 'label1'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpwDemoPresenter3Menu >> subMenu [
 
 	| aSubMenu |

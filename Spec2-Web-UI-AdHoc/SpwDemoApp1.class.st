@@ -1,44 +1,45 @@
 Class {
-	#name : #SpwDemoApp1,
-	#superclass : #SpApplication,
+	#name : 'SpwDemoApp1',
+	#superclass : 'SpApplication',
 	#instVars : [
 		'context'
 	],
-	#category : #'Spec2-Web-UI-AdHoc'
+	#category : 'Spec2-Web-UI-AdHoc',
+	#package : 'Spec2-Web-UI-AdHoc'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 SpwDemoApp1 class >> applicationName [
 
 	^ self name asString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpwDemoApp1 class >> defaultBackendName [
 
 	^ #WebUI "#Morphic"
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpwDemoApp1 class >> open [
 
 	<script>
 	self new run
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwDemoApp1 >> context [
 
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwDemoApp1 >> context: anObject [
 
 	context := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwDemoApp1 >> start [
 
 	"self windows do: [ :win | 
