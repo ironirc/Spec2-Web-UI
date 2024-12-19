@@ -38,10 +38,10 @@ BaselineOfSpec2WebUi >> packages: spec [
 
 	spec
 		package: 'Spec2-Web-UI-Adapters'
-		with: [ spec requires: #( 'PharoXBasics' ) ].
+		with: [ spec requires: #( 'PharoXPjBasics' ) ].
 	spec
 		package: 'Spec2-Web-UI'
-		with: [ spec requires: #( 'PharoXBasics' ) ].
+		with: [ spec requires: #( 'PharoXPjBasics' ) ].
 	spec package: 'Spec2-Web-UI-AdHoc'
 ]
 
@@ -53,6 +53,6 @@ BaselineOfSpec2WebUi >> postload: aLoader package: aPackageSpec [
 
 { #category : 'private - accessing' }
 BaselineOfSpec2WebUi >> prerequisites: spec [
-	spec baseline: 'PharoXBasics' with: [ spec repository: 'github://ironirc/pharox-pj-basics:pharo12' ].
+	spec baseline: 'PharoXPjBasics' with: [ spec repository: 'github://ironirc/pharox-pj-basics:pharo12' ].
 
 ]
