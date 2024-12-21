@@ -9,16 +9,6 @@ Class {
 	#package : 'Spec2-Web-UI-AdHoc'
 }
 
-{ #category : 'layout' }
-SpwDemoPresenter3Menu class >> defaultLayout [
-
-	| main  |
-	main := SpBoxLayout newLeftToRight.
-	main add: #menu.
-	main add: #label.
-	^ main
-]
-
 { #category : 'initialization' }
 SpwDemoPresenter3Menu >> initializePresenters [
 

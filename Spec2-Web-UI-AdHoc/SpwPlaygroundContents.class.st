@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'plagrounds' }
-SpwPlaygroundContents class >> stuff20230516 [
+SpwPlaygroundContents class >> main [
 
 	<playground>
 	| app |
