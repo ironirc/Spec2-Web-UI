@@ -10,25 +10,49 @@ Class {
 }
 
 { #category : 'initialization' }
+SpwDemoPresenter3Menu >> defaultLayout [
+
+	| main  |
+	main := SpBoxLayout newLeftToRight.
+	main add: menu.
+	main add: label.
+	^ main
+]
+
+{ #category : 'initialization' }
 SpwDemoPresenter3Menu >> initializePresenters [
 
-	menu := self newMenu.
-	menu
-		addItem: [ :item |
-			item
-				name: 'Action 1';
-				"icon: (self iconNamed: #smallExpertIcon);"action: [
-					MorphicUIManager new inform: 'Action 1 clicked' ] ];
-		addItem: [ :item |
-			item
-				name: 'Action 2';
-				action: [ MorphicUIManager new inform: 'Action 2 clicked' ] ];
-		addItem: [ :item |
-			item
-				name: 'Other actions';
-				subMenu: self subMenu ].
+	"icon: (self iconNamed: #smallExpertIcon);"
+	self menu.
 	label := self newLabel.
-	label label: 'label1'
+	label label: 'label' , PhxRandom randomABC123 
+]
+
+{ #category : 'initialization' }
+SpwDemoPresenter3Menu >> label: aString [
+	label label: aString
+]
+
+{ #category : 'initialization' }
+SpwDemoPresenter3Menu >> menu [
+
+	menu ifNil: [
+		menu := self newMenu.
+		menu
+			addItem: [ :item |
+				item
+					name: 'Action 1';
+					"icon: (self iconNamed: #smallExpertIcon);"action: [
+						MorphicUIManager new inform: 'Action 1 clicked' ] ];
+			addItem: [ :item |
+				item
+					name: 'Action 2';
+					action: [ MorphicUIManager new inform: 'Action 2 clicked' ] ];
+			addItem: [ :item |
+				item
+					name: 'Other actions';
+					subMenu: self subMenu ] ].
+	^ menu
 ]
 
 { #category : 'initialization' }
