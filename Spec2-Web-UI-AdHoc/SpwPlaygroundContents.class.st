@@ -9,10 +9,12 @@ Class {
 SpwPlaygroundContents class >> main [
 
 	<playground>
-	| app |
+	| app pres |
 	SpwClientApp ensureRegisteredAtPjServer.
 	app := SpwDemoApp1 new.
-	(app new: SpwDemoPresenter1) open.
+	pres := app new: SpwDemoPresenter1.
+	pres open.
 	SpwDemoPresenter1 new open.
-	SpButtonPresenter new open
+	SpButtonPresenter new open.
+	100 timesRepeat: [ pres tableButton1Clicked ]
 ]
