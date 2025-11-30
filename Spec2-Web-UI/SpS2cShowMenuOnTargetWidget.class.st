@@ -1,13 +1,15 @@
 Class {
-	#name : #SpS2cShowMenuOnTargetWidget,
-	#superclass : #SpS2cMessageWithElementId,
+	#name : 'SpS2cShowMenuOnTargetWidget',
+	#superclass : 'SpS2cMessageWithElementId',
 	#instVars : [
 		'targetId'
 	],
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowMenuOnTargetWidget >> executeInResponseContext: rc [
 
 	| menuEl targetEl rect x |
@@ -30,7 +32,7 @@ SpS2cShowMenuOnTargetWidget >> executeInResponseContext: rc [
 		 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowMenuOnTargetWidget >> executeInResponseContext_ALT: rc [
 
 	| menuEl menuItemEl rect  mpu |
@@ -46,19 +48,19 @@ SpS2cShowMenuOnTargetWidget >> executeInResponseContext_ALT: rc [
 	menuItemEl appendChild: mpu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowMenuOnTargetWidget >> targetId [
 
 	^ targetId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowMenuOnTargetWidget >> targetId: anObject [
 
 	targetId := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cShowMenuOnTargetWidget >> tippyShowElement: el forRefElement: targetEl [
 
 	| tippy |

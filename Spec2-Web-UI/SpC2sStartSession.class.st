@@ -1,13 +1,15 @@
 Class {
-	#name : #SpC2sStartSession,
-	#superclass : #SpC2sMessage,
+	#name : 'SpC2sStartSession',
+	#superclass : 'SpC2sMessage',
 	#instVars : [
 		'sessionId'
 	],
-	#category : #'Spec2-Web-UI-clientToServerMessages'
+	#category : 'Spec2-Web-UI-clientToServerMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'clientToServerMessages'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SpC2sStartSession >> respondForRequestContext: rc [
 
 	<pharoJsSkip>
@@ -19,13 +21,13 @@ SpC2sStartSession >> respondForRequestContext: rc [
 				inRequestContext: rc ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sStartSession >> sessionId [
 
 	^ sessionId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sStartSession >> sessionId: anObject [
 
 	sessionId := anObject

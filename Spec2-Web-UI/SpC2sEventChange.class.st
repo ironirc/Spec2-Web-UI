@@ -1,19 +1,21 @@
 Class {
-	#name : #SpC2sEventChange,
-	#superclass : #SpC2sWidgetEvent,
+	#name : 'SpC2sEventChange',
+	#superclass : 'SpC2sWidgetEvent',
 	#instVars : [
 		'newValue'
 	],
-	#category : #'Spec2-Web-UI-clientToServerMessages'
+	#category : 'Spec2-Web-UI-clientToServerMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'clientToServerMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventChange class >> eventName [ 
 
 	^'change'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpC2sEventChange >> initializeWithNativeEvent: e [
 	super initializeWithNativeEvent: e.
 	
@@ -22,13 +24,13 @@ SpC2sEventChange >> initializeWithNativeEvent: e [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventChange >> newValue [
 
 	^ newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventChange >> newValue: anObject [
 
 	newValue := anObject

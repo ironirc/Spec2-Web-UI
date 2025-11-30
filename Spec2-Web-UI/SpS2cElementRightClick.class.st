@@ -1,10 +1,12 @@
 Class {
-	#name : #SpS2cElementRightClick,
-	#superclass : #SpS2cMessageWithElementId,
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#name : 'SpS2cElementRightClick',
+	#superclass : 'SpS2cMessageWithElementId',
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cElementRightClick >> executeInResponseContext: rc [
 
 	| listener rightClick |
@@ -21,7 +23,7 @@ SpS2cElementRightClick >> executeInResponseContext: rc [
 	self element removeEventListener: 'contextmenu' with: listener
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpS2cElementRightClick >> expectsResponse [
 
 	^ true

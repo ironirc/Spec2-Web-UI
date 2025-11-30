@@ -1,102 +1,103 @@
 Class {
-	#name : #SpS2cUpdateInputElement,
-	#superclass : #SpS2cUpdateElement,
+	#name : 'SpS2cUpdateInputElement',
+	#superclass : 'SpS2cUpdateElement',
 	#instVars : [
 		'readOnly',
 		'selectAll',
-		'type',
 		'disabled',
 		'selectionStart',
 		'selectionEnd',
 		'tag'
 	],
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> disabled [
 
 	^ disabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> disabled: anObject [
 
 	disabled := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> readOnly [
 
 	^ readOnly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> readOnly: anObject [
 
 	readOnly := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> selectAll [
 
 	^ selectAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> selectAll: anObject [
 
 	selectAll := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> selectionEnd [
 
 	^ selectionEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> selectionEnd: anObject [
 
 	selectionEnd := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> selectionStart [
 
 	^ selectionStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> selectionStart: anObject [
 
 	selectionStart := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> tag [
 	^tag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> tag: anObject [
 
 	tag := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> type [
 
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cUpdateInputElement >> type: anObject [
 
 	type := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpS2cUpdateInputElement >> updateElement: el builder: x [
 
 	super updateElement: el builder: x.

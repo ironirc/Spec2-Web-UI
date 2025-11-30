@@ -1,13 +1,15 @@
 Class {
-	#name : #SpS2cAddElementToParent,
-	#superclass : #SpS2cMessageWithElementId,
+	#name : 'SpS2cAddElementToParent',
+	#superclass : 'SpS2cMessageWithElementId',
 	#instVars : [
 		'parentId'
 	],
-	#category : #'Spec2-Web-UI-serverToClientMessages'
+	#category : 'Spec2-Web-UI-serverToClientMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'serverToClientMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cAddElementToParent >> executeInResponseContext: rc [
 
 	| el |
@@ -16,13 +18,13 @@ SpS2cAddElementToParent >> executeInResponseContext: rc [
 	SpwClientApp current removeKey: elementId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cAddElementToParent >> parentId [
 
 	^ parentId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpS2cAddElementToParent >> parentId: anObject [
 
 	parentId := anObject

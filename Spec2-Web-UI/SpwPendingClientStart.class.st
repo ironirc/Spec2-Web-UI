@@ -1,48 +1,50 @@
 Class {
-	#name : #SpwPendingClientStart,
-	#superclass : #Object,
+	#name : 'SpwPendingClientStart',
+	#superclass : 'Object',
 	#instVars : [
 		'startId',
 		'session',
 		'incomingEnvelope',
 		'startedAt'
 	],
-	#category : #'Spec2-Web-UI-server-support'
+	#category : 'Spec2-Web-UI-server-support',
+	#package : 'Spec2-Web-UI',
+	#tag : 'server-support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwPendingClientStart >> incomingEnvelope [
 
 	^ incomingEnvelope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwPendingClientStart >> incomingEnvelope: anObject [
 
 	incomingEnvelope := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 SpwPendingClientStart >> initialize [
 
 	super initialize.
 	startedAt := DateAndTime now
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwPendingClientStart >> isExpired [
 
 	startedAt ifNil: [ ^ true ].
 	^ DateAndTime now - startedAt > (Duration milliSeconds: 5000 )
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwPendingClientStart >> isPending [ 
 
 	^session isNil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpwPendingClientStart >> sendAcknowledgeMessage [
 
 	| msg |
@@ -55,37 +57,37 @@ SpwPendingClientStart >> sendAcknowledgeMessage [
 		isResponseToIncoming: self incomingEnvelope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwPendingClientStart >> session [
 
 	^ session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwPendingClientStart >> session: anObject [
 
 	session := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwPendingClientStart >> startId [
 
 	^ startId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwPendingClientStart >> startId: anObject [
 
 	startId := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwPendingClientStart >> startedAt [
 
 	^ startedAt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwPendingClientStart >> startedAt: anObject [
 
 	startedAt := anObject

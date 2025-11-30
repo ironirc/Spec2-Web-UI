@@ -1,6 +1,6 @@
 Class {
-	#name : #SpC2sEventKeyDown,
-	#superclass : #SpC2sWidgetEvent,
+	#name : 'SpC2sEventKeyDown',
+	#superclass : 'SpC2sWidgetEvent',
 	#instVars : [
 		'key',
 		'code',
@@ -10,52 +10,54 @@ Class {
 		'metaKey',
 		'repeat'
 	],
-	#category : #'Spec2-Web-UI-clientToServerMessages'
+	#category : 'Spec2-Web-UI-clientToServerMessages',
+	#package : 'Spec2-Web-UI',
+	#tag : 'clientToServerMessages'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown class >> eventName [ 
 
 	^'keydown'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> altKey [
 
 	^ altKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> altKey: anObject [
 
 	altKey := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> code [
 
 	^ code
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> code: anObject [
 
 	code := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> ctrlKey [
 
 	^ ctrlKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> ctrlKey: anObject [
 
 	ctrlKey := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpC2sEventKeyDown >> initializeWithNativeEvent: e [
 
 	key := e key.
@@ -67,49 +69,49 @@ SpC2sEventKeyDown >> initializeWithNativeEvent: e [
 	repeat := e repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> key [
 
 	^ key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> key: anObject [
 
 	key := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> metaKey [
 
 	^ metaKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> metaKey: anObject [
 
 	metaKey := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> repeat [
 
 	^ repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> repeat: anObject [
 
 	repeat := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> shiftKey [
 
 	^ shiftKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpC2sEventKeyDown >> shiftKey: anObject [
 
 	shiftKey := anObject

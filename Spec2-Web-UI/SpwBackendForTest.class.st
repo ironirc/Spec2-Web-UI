@@ -1,19 +1,21 @@
 Class {
-	#name : #SpwBackendForTest,
-	#superclass : #SpAbstractBackendForTest,
+	#name : 'SpwBackendForTest',
+	#superclass : 'SpAbstractBackendForTest',
 	#instVars : [
 		'app'
 	],
-	#category : #'Spec2-Web-UI-tests'
+	#category : 'Spec2-Web-UI-tests',
+	#package : 'Spec2-Web-UI',
+	#tag : 'tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBackendForTest >> assertHasHeader: anAdapter [ 
 	
 	self assert: anAdapter innerWidget isHeadersVisible
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 SpwBackendForTest >> assertIcon: aGtkImage equals: aForm [ 
 	
 	(aForm isNil and: [ aGtkImage isNil ]) ifTrue: [ ^ self ].
@@ -24,7 +26,7 @@ SpwBackendForTest >> assertIcon: aGtkImage equals: aForm [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SpwBackendForTest >> assertImage: aGtkImage equals: aForm [ 
 	
 	| pixbuf |
@@ -38,7 +40,7 @@ SpwBackendForTest >> assertImage: aGtkImage equals: aForm [
 
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 SpwBackendForTest >> assertList: aTreeTableAdapter displayItems: aCollection [ 
 	| iter |
 	
@@ -48,20 +50,20 @@ SpwBackendForTest >> assertList: aTreeTableAdapter displayItems: aCollection [
 		iter next ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 SpwBackendForTest >> assertListHeaderOf: aGtkTreeView equals: aCollection [
 
 	self assert: (aGtkTreeView columns collect: [ :c | c title ]) asArray = aCollection asArray
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwBackendForTest >> canChangeFonts [
 	
 	^ false
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 SpwBackendForTest >> clickFirstRowAndColumn: anAdapter [ 
 	| path |
 	path := (GtkTreePath newFromArray: #(1)) autoRelease.	
@@ -71,25 +73,25 @@ SpwBackendForTest >> clickFirstRowAndColumn: anAdapter [
 			column: w columns first ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpwBackendForTest >> denyHasHeader: anAdapter [ 
 	
 	self assert: anAdapter innerWidget isHeadersVisible not
 ]
 
-{ #category : #simulating }
+{ #category : 'simulating' }
 SpwBackendForTest >> doubleClickFirstRowAndColumn: anAdapter [ 
 	
 	self clickFirstRowAndColumn: anAdapter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpwBackendForTest >> isGtkBackend [
 
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SpwBackendForTest >> openInstanceOf: aTest [ 
 		
 	aTest window ifNil: [ 
@@ -98,7 +100,7 @@ SpwBackendForTest >> openInstanceOf: aTest [
 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SpwBackendForTest >> runTest: aBlockClosure [ 
 		
 	app := SpApplication new.
